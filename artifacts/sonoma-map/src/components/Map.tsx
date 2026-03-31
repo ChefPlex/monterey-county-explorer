@@ -1,0 +1,263 @@
+import { useState, useRef, useEffect, useCallback } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
+import L from "leaflet";
+import { 
+  useGetMarkers, 
+  useCreateMarker, 
+  useDeleteMarker, 
+  getGetMarkersQueryKey, 
+  getGetMarkerStatsQueryKey 
+} from "@workspace/api-client-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Loader2, Trash2, MapPin, Wine, Utensils } from "lucide-react";
+import { format } from "date-fns";
+
+// Fix Leaflet default icon issues
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+});
+
+// Create custom icons
+const createCustomIcon = (type: "winery" | "restaurant") => {
+  const isWinery = type === "winery";
+  const bgColor = isWinery ? "bg-primary" : "bg-secondary";
+  const iconSvg = isWinery 
+    ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z"/></svg>`
+    : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>`;
+    
+  return new L.DivIcon({
+    html: `<div class="${bgColor} text-white p-2 rounded-full shadow-md border-2 border-white flex items-center justify-center transition-transform hover:scale-110">${iconSvg}</div>`,
+    className: '',
+    iconSize: [36, 36],
+    iconAnchor: [18, 36],
+    popupAnchor: [0, -36]
+  });
+};
+
+const defaultIcon = new L.Icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+});
+
+interface MapEventsProps {
+  onMapClick: (latlng: L.LatLng) => void;
+}
+
+function MapEventsComponent({ onMapClick }: MapEventsProps) {
+  useMapEvents({
+    click(e) {
+      onMapClick(e.latlng);
+    },
+  });
+  return null;
+}
+
+export function MapComponent({ activeFilter }: { activeFilter: string }) {
+  const queryClient = useQueryClient();
+  const { data: markers = [], isLoading } = useGetMarkers({
+    query: { queryKey: getGetMarkersQueryKey() }
+  });
+  
+  const createMarker = useCreateMarker();
+  const deleteMarker = useDeleteMarker();
+  
+  const [draftMarker, setDraftMarker] = useState<L.LatLng | null>(null);
+  const [formData, setFormData] = useState({ name: "", note: "", category: "winery" as "winery" | "restaurant" });
+  
+  const handleMapClick = useCallback((latlng: L.LatLng) => {
+    setDraftMarker(latlng);
+    setFormData({ name: "", note: "", category: "winery" });
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!draftMarker || !formData.name) return;
+    
+    createMarker.mutate({
+      data: {
+        name: formData.name,
+        note: formData.note,
+        category: formData.category,
+        lat: draftMarker.lat,
+        lng: draftMarker.lng,
+      }
+    }, {
+      onSuccess: () => {
+        setDraftMarker(null);
+        queryClient.invalidateQueries({ queryKey: getGetMarkersQueryKey() });
+        queryClient.invalidateQueries({ queryKey: getGetMarkerStatsQueryKey() });
+      }
+    });
+  };
+
+  const handleDelete = (id: number) => {
+    deleteMarker.mutate({ id }, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: getGetMarkersQueryKey() });
+        queryClient.invalidateQueries({ queryKey: getGetMarkerStatsQueryKey() });
+      }
+    });
+  };
+
+  const filteredMarkers = markers.filter(marker => {
+    if (activeFilter === "all") return true;
+    return marker.category === activeFilter;
+  });
+
+  return (
+    <MapContainer 
+      center={[38.5, -122.8]} 
+      zoom={11} 
+      className="w-full h-full z-0"
+      zoomControl={false}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+      />
+      <MapEventsComponent onMapClick={handleMapClick} />
+      
+      {filteredMarkers.map(marker => (
+        <Marker 
+          key={marker.id} 
+          position={[marker.lat, marker.lng]}
+          icon={createCustomIcon(marker.category as "winery" | "restaurant")}
+        >
+          <Popup className="custom-popup min-w-[240px]">
+            <div className="p-1">
+              <div className="flex items-center justify-between mb-2">
+                <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium bg-muted text-muted-foreground uppercase tracking-wider">
+                  {marker.category === "winery" ? <Wine className="w-3 h-3" /> : <Utensils className="w-3 h-3" />}
+                  {marker.category}
+                </span>
+                <span className="text-[10px] text-muted-foreground font-mono">
+                  {format(new Date(marker.createdAt), 'MMM d, yyyy')}
+                </span>
+              </div>
+              <h3 className="font-serif text-lg font-bold text-foreground mb-1 leading-tight">{marker.name}</h3>
+              {marker.note && (
+                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{marker.note}</p>
+              )}
+              <div className="pt-3 mt-1 border-t border-border flex justify-end">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="h-8 px-2 text-destructive hover:text-destructive hover:bg-destructive/10"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(marker.id);
+                  }}
+                  disabled={deleteMarker.isPending}
+                >
+                  {deleteMarker.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4 mr-1.5" />}
+                  Remove
+                </Button>
+              </div>
+            </div>
+          </Popup>
+        </Marker>
+      ))}
+
+      {draftMarker && (
+        <Marker position={draftMarker} icon={defaultIcon}>
+          <Popup 
+            className="custom-popup min-w-[280px]"
+            eventHandlers={{
+              remove: () => setDraftMarker(null)
+            }}
+          >
+            <form onSubmit={handleSubmit} className="p-1 space-y-4">
+              <div className="mb-2">
+                <h3 className="font-serif text-lg font-bold text-foreground">Save this spot</h3>
+                <p className="text-xs text-muted-foreground">Add to your personal journal</p>
+              </div>
+              
+              <div className="space-y-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="name" className="text-xs font-medium text-foreground">Name</Label>
+                  <Input 
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))}
+                    placeholder="E.g. Scribe Winery"
+                    className="h-9 bg-background focus-visible:ring-1"
+                    autoFocus
+                  />
+                </div>
+                
+                <div className="space-y-1.5">
+                  <Label htmlFor="note" className="text-xs font-medium text-foreground">Notes</Label>
+                  <Textarea 
+                    id="note"
+                    value={formData.note}
+                    onChange={(e) => setFormData(p => ({ ...p, note: e.target.value }))}
+                    placeholder="What was memorable?"
+                    className="min-h-[80px] resize-none bg-background focus-visible:ring-1"
+                  />
+                </div>
+
+                <div className="space-y-2 pt-1">
+                  <Label className="text-xs font-medium text-foreground">Category</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setFormData(p => ({ ...p, category: "winery" }))}
+                      className={`flex items-center justify-center gap-2 py-2 px-3 rounded-md border text-sm font-medium transition-colors
+                        ${formData.category === "winery" 
+                          ? "bg-primary text-primary-foreground border-primary" 
+                          : "bg-background text-muted-foreground border-border hover:bg-muted"}`}
+                    >
+                      <Wine className="w-4 h-4" />
+                      Winery
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFormData(p => ({ ...p, category: "restaurant" }))}
+                      className={`flex items-center justify-center gap-2 py-2 px-3 rounded-md border text-sm font-medium transition-colors
+                        ${formData.category === "restaurant" 
+                          ? "bg-secondary text-secondary-foreground border-secondary" 
+                          : "bg-background text-muted-foreground border-border hover:bg-muted"}`}
+                    >
+                      <Utensils className="w-4 h-4" />
+                      Dining
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="pt-2 flex gap-2">
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="flex-1 h-9"
+                  onClick={() => setDraftMarker(null)}
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  type="submit" 
+                  className="flex-1 h-9"
+                  disabled={!formData.name || createMarker.isPending}
+                >
+                  {createMarker.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                  Save Spot
+                </Button>
+              </div>
+            </form>
+          </Popup>
+        </Marker>
+      )}
+    </MapContainer>
+  );
+}

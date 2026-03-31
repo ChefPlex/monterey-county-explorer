@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Sonoma County Map"
+version = "1.0.0"
+id = "artifacts/sonoma-map"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24822
+
+[services.development]
+run = "pnpm --filter @workspace/sonoma-map run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/sonoma-map", "run", "build" ]
+publicDir = "artifacts/sonoma-map/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24822"
+BASE_PATH = "/"

@@ -1,15 +1,16 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Sonoma County Map API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: markers
+    description: Map marker operations
 paths:
   /healthz:
     get:
@@ -24,6 +25,112 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /markers:
+    get:
+      operationId: getMarkers
+      tags: [markers]
+      summary: Get all markers
+      description: Returns all saved map markers
+      responses:
+        "200":
+          description: List of markers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Marker"
+    post:
+      operationId: createMarker
+      tags: [markers]
+      summary: Create a marker
+      description: Add a new marker to the map
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMarkerInput"
+      responses:
+        "201":
+          description: Created marker
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Marker"
+  /markers/{id}:
+    get:
+      operationId: getMarker
+      tags: [markers]
+      summary: Get a single marker
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Marker
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Marker"
+        "404":
+          description: Not found
+    put:
+      operationId: updateMarker
+      tags: [markers]
+      summary: Update a marker
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMarkerInput"
+      responses:
+        "200":
+          description: Updated marker
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Marker"
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteMarker
+      tags: [markers]
+      summary: Delete a marker
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+  /markers/stats:
+    get:
+      operationId: getMarkerStats
+      tags: [markers]
+      summary: Get marker statistics
+      description: Returns counts grouped by category
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarkerStats"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +140,72 @@ components:
           type: string
       required:
         - status
-
+    Marker:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        note:
+          type: string
+        category:
+          type: string
+          enum: [winery, restaurant]
+        lat:
+          type: number
+        lng:
+          type: number
+        createdAt:
+          type: string
+      required:
+        - id
+        - name
+        - note
+        - category
+        - lat
+        - lng
+        - createdAt
+    CreateMarkerInput:
+      type: object
+      properties:
+        name:
+          type: string
+        note:
+          type: string
+        category:
+          type: string
+          enum: [winery, restaurant]
+        lat:
+          type: number
+        lng:
+          type: number
+      required:
+        - name
+        - note
+        - category
+        - lat
+        - lng
+    UpdateMarkerInput:
+      type: object
+      properties:
+        name:
+          type: string
+        note:
+          type: string
+        category:
+          type: string
+          enum: [winery, restaurant]
+    MarkerStats:
+      type: object
+      properties:
+        total:
+          type: integer
+        wineries:
+          type: integer
+        restaurants:
+          type: integer
+      required:
+        - total
+        - wineries
+        - restaurants
