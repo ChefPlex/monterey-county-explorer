@@ -364,12 +364,59 @@ export default function MapScreen() {
 
   if (Platform.OS === "web") {
     return (
-      <View style={[styles.container, { backgroundColor: colors.muted }]} testID="map-screen">
+      <View style={[styles.container, { backgroundColor: colors.background }]} testID="map-screen">
+        <View style={[styles.webHeader, { paddingTop: topInset + 12, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+          <View style={styles.webHeaderRow}>
+            <Ionicons name="map" size={20} color={colors.primary} />
+            <Text style={[styles.webHeaderTitle, { color: colors.foreground }]}>Sonoma Map</Text>
+            <View style={[styles.countBadge, { backgroundColor: colors.primary }]}>
+              <Text style={[styles.countBadgeText, { color: colors.primaryForeground }]}>
+                {filteredMarkers.length}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.webFilterRow}>
+            {MAP_FILTERS.map((f) => {
+              const isActive = mapFilter === f.key;
+              const cnt = counts[f.key];
+              return (
+                <TouchableOpacity
+                  key={f.key}
+                  style={[
+                    styles.filterPill,
+                    {
+                      backgroundColor: isActive ? colors.primary : colors.background,
+                      borderColor: isActive ? colors.primary : colors.border,
+                    },
+                  ]}
+                  onPress={() => setMapFilter(f.key)}
+                  testID={`map-filter-${f.key}`}
+                >
+                  <Ionicons
+                    name={f.icon}
+                    size={13}
+                    color={isActive ? colors.primaryForeground : colors.mutedForeground}
+                  />
+                  <Text style={[styles.filterPillText, { color: isActive ? colors.primaryForeground : colors.foreground }]}>
+                    {f.label}
+                  </Text>
+                  {cnt > 0 && (
+                    <View style={[styles.filterPillCount, { backgroundColor: isActive ? "rgba(255,255,255,0.25)" : colors.muted }]}>
+                      <Text style={[styles.filterPillCountText, { color: isActive ? colors.primaryForeground : colors.mutedForeground }]}>
+                        {cnt}
+                      </Text>
+                    </View>
+                  )}
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </View>
         <View style={styles.webFallback}>
-          <Ionicons name="map" size={48} color={colors.border} />
+          <Ionicons name="map-outline" size={48} color={colors.border} />
           <Text style={[styles.webFallbackTitle, { color: colors.foreground }]}>Interactive Map</Text>
           <Text style={[styles.webFallbackText, { color: colors.mutedForeground }]}>
-            {markers.length} spots across Sonoma County
+            {filteredMarkers.length} spot{filteredMarkers.length !== 1 ? "s" : ""} visible
           </Text>
           <Text style={[styles.webFallbackSub, { color: colors.mutedForeground }]}>
             Scan the QR code in Expo Go on your iPhone to use the full map
@@ -470,6 +517,27 @@ export default function MapScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  webHeader: {
+    paddingHorizontal: 16,
+    paddingBottom: 14,
+    borderBottomWidth: 1,
+  },
+  webHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 14,
+  },
+  webHeaderTitle: {
+    fontSize: 20,
+    fontFamily: "Inter_700Bold",
+    flex: 1,
+  },
+  webFilterRow: {
+    flexDirection: "row",
+    gap: 8,
+    flexWrap: "wrap",
   },
   webFallback: {
     flex: 1,
