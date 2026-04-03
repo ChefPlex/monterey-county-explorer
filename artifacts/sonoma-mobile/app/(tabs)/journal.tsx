@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  FlatList,
+  SectionList,
   TouchableOpacity,
   ActivityIndicator,
   Platform,
@@ -24,6 +24,24 @@ const FILTERS: { key: FilterType; label: string; icon: IoniconsName }[] = [
   { key: "restaurant", label: "Dining", icon: "restaurant-outline" },
   { key: "farmstand", label: "Farms", icon: "leaf-outline" },
 ];
+
+// Regional latitude boundaries
+// North  ≥ 38.55:  Healdsburg, Alexander Valley, Geyserville, Dry Creek, Cloverdale
+// Central 38.35–38.55: Santa Rosa, Sebastopol, Russian River Valley, West County, Windsor, Glen Ellen
+// Southern < 38.35: Sonoma town, Petaluma, Carneros, Coast, Point Reyes
+const REGIONS = [
+  { key: "north", label: "North Sonoma" },
+  { key: "central", label: "Central Sonoma" },
+  { key: "south", label: "Southern Sonoma" },
+] as const;
+
+type RegionKey = typeof REGIONS[number]["key"];
+
+function getRegion(lat: number): RegionKey {
+  if (lat >= 38.55) return "north";
+  if (lat >= 38.35) return "central";
+  return "south";
+}
 
 function getCategoryColor(category: string, colors: ReturnType<typeof useColors>) {
   if (category === "winery") return colors.wineRed;
@@ -83,74 +101,13 @@ function SpotRow({ item }: { item: Marker }) {
   );
 }
 
-export default function JournalScreen() {
-  const colors = useColors();
-  const insets = useSafeAreaInsets();
-  const [activeFilter, setActiveFilter] = useState<FilterType>("all");
-
-  const { data: markers = [], isLoading } = useGetMarkers();
-  const { data: stats } = useGetMarkerStats();
-
-  const filteredMarkers = markers
-    .filter((m) => activeFilter === "all" || m.category === activeFilter)
-    .sort((a, b) => a.name.localeCompare(b.name));
-
-  const topInset = Platform.OS === "web" ? 67 : insets.top;
-  const bottomInset = Platform.OS === "web" ? 84 : insets.bottom;
-
-  const getCount = (filter: FilterType) => {
-    if (!stats) return 0;
-    if (filter === "all") return stats.total;
-    if (filter === "winery") return stats.wineries;
-    if (filter === "restaurant") return stats.restaurants;
-    if (filter === "farmstand") return stats.farmstands;
-    return 0;
-  };
-
+function SectionHeader({ title, count, colors }: { title: string; count: number; colors: ReturnType<typeof useColors> }) {
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]} testID="journal-screen">
-      <View style={[styles.header, { paddingTop: topInset + 12, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-        <Text style={[styles.headerTitle, { color: colors.foreground }]}>Journal</Text>
-        <Text style={[styles.headerSubtitle, { color: colors.mutedForeground }]}>
-          The places worth knowing
-        </Text>
-
-        <ScrollableFilters
-          filters={FILTERS}
-          activeFilter={activeFilter}
-          onSelect={setActiveFilter}
-          getCount={getCount}
-          colors={colors}
-        />
+    <View style={[styles.sectionHeader, { backgroundColor: colors.background }]}>
+      <Text style={[styles.sectionTitle, { color: colors.foreground }]}>{title}</Text>
+      <View style={[styles.sectionCount, { backgroundColor: colors.muted }]}>
+        <Text style={[styles.sectionCountText, { color: colors.mutedForeground }]}>{count}</Text>
       </View>
-
-      {isLoading ? (
-        <View style={styles.center}>
-          <ActivityIndicator color={colors.primary} size="large" />
-          <Text style={[styles.loadingText, { color: colors.mutedForeground }]}>Loading journal…</Text>
-        </View>
-      ) : filteredMarkers.length === 0 ? (
-        <View style={styles.center}>
-          <Ionicons name="map-outline" size={40} color={colors.border} />
-          <Text style={[styles.emptyTitle, { color: colors.foreground }]}>No spots yet</Text>
-          <Text style={[styles.emptySubtitle, { color: colors.mutedForeground }]}>
-            Long press the map to add your first spot
-          </Text>
-        </View>
-      ) : (
-        <FlatList
-          data={filteredMarkers}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <SpotRow item={item} />}
-          contentContainerStyle={[
-            styles.listContent,
-            { paddingBottom: bottomInset + 16 },
-          ]}
-          showsVerticalScrollIndicator={false}
-          scrollEnabled={filteredMarkers.length > 0}
-          testID="journal-list"
-        />
-      )}
     </View>
   );
 }
@@ -204,6 +161,104 @@ function ScrollableFilters({ filters, activeFilter, onSelect, getCount, colors }
   );
 }
 
+export default function JournalScreen() {
+  const colors = useColors();
+  const insets = useSafeAreaInsets();
+  const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+
+  const { data: markers = [], isLoading } = useGetMarkers();
+  const { data: stats } = useGetMarkerStats();
+
+  const topInset = Platform.OS === "web" ? 67 : insets.top;
+  const bottomInset = Platform.OS === "web" ? 84 : insets.bottom;
+
+  const getCount = (filter: FilterType) => {
+    if (!stats) return 0;
+    if (filter === "all") return stats.total;
+    if (filter === "winery") return stats.wineries;
+    if (filter === "restaurant") return stats.restaurants;
+    if (filter === "farmstand") return stats.farmstands;
+    return 0;
+  };
+
+  const sections = useMemo(() => {
+    const filtered = activeFilter === "all"
+      ? markers
+      : markers.filter((m) => m.category === activeFilter);
+
+    const byRegion: Record<RegionKey, Marker[]> = { north: [], central: [], south: [] };
+    for (const m of filtered) {
+      byRegion[getRegion(m.lat)].push(m);
+    }
+
+    return REGIONS
+      .map((r) => ({
+        key: r.key,
+        title: r.label,
+        data: byRegion[r.key].sort((a, b) => a.name.localeCompare(b.name)),
+      }))
+      .filter((s) => s.data.length > 0);
+  }, [markers, activeFilter]);
+
+  const totalVisible = sections.reduce((sum, s) => sum + s.data.length, 0);
+
+  return (
+    <View style={[styles.container, { backgroundColor: colors.background }]} testID="journal-screen">
+      <View style={[styles.header, { paddingTop: topInset + 12, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+        <Text style={[styles.headerTitle, { color: colors.foreground }]}>Journal</Text>
+        <Text style={[styles.headerSubtitle, { color: colors.mutedForeground }]}>
+          The places worth knowing
+        </Text>
+
+        <ScrollableFilters
+          filters={FILTERS}
+          activeFilter={activeFilter}
+          onSelect={setActiveFilter}
+          getCount={getCount}
+          colors={colors}
+        />
+      </View>
+
+      {isLoading ? (
+        <View style={styles.center}>
+          <ActivityIndicator color={colors.primary} size="large" />
+          <Text style={[styles.loadingText, { color: colors.mutedForeground }]}>Loading journal…</Text>
+        </View>
+      ) : totalVisible === 0 ? (
+        <View style={styles.center}>
+          <Ionicons name="map-outline" size={40} color={colors.border} />
+          <Text style={[styles.emptyTitle, { color: colors.foreground }]}>No spots yet</Text>
+          <Text style={[styles.emptySubtitle, { color: colors.mutedForeground }]}>
+            Long press the map to add your first spot
+          </Text>
+        </View>
+      ) : (
+        <SectionList
+          sections={sections}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => <SpotRow item={item} />}
+          renderSectionHeader={({ section }) => (
+            <SectionHeader
+              title={section.title}
+              count={section.data.length}
+              colors={colors}
+            />
+          )}
+          contentContainerStyle={[
+            styles.listContent,
+            { paddingBottom: bottomInset + 16 },
+          ]}
+          stickySectionHeadersEnabled
+          showsVerticalScrollIndicator={false}
+          testID="journal-list"
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          SectionSeparatorComponent={() => <View style={{ height: 4 }} />}
+        />
+      )}
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -253,10 +308,35 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontFamily: "Inter_700Bold",
   },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingHorizontal: 16,
+    paddingTop: 18,
+    paddingBottom: 8,
+  },
+  sectionTitle: {
+    fontSize: 13,
+    fontFamily: "Inter_700Bold",
+    textTransform: "uppercase",
+    letterSpacing: 0.8,
+  },
+  sectionCount: {
+    minWidth: 20,
+    height: 20,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 6,
+  },
+  sectionCountText: {
+    fontSize: 11,
+    fontFamily: "Inter_700Bold",
+  },
   listContent: {
     paddingHorizontal: 16,
-    paddingTop: 12,
-    gap: 10,
+    paddingTop: 4,
   },
   spotRow: {
     flexDirection: "row",

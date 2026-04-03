@@ -12,7 +12,7 @@ import {
   Platform,
   Linking,
 } from "react-native";
-import MapView, { Marker, LongPressEvent, Callout } from "react-native-maps";
+import MapView, { Marker, LongPressEvent } from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
@@ -27,13 +27,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { Marker as MarkerType } from "@workspace/api-client-react";
 
 type Category = "winery" | "restaurant" | "farmstand";
+type MapFilter = "all" | Category;
 
 type IoniconsName = React.ComponentProps<typeof Ionicons>["name"];
 
 const CATEGORY_LABELS: Record<Category, string> = {
-  winery: "Winery",
+  winery: "Wineries",
   restaurant: "Dining",
-  farmstand: "Farm",
+  farmstand: "Farms",
 };
 
 const CATEGORY_ICON_MAP: Record<Category, IoniconsName> = {
@@ -41,6 +42,13 @@ const CATEGORY_ICON_MAP: Record<Category, IoniconsName> = {
   restaurant: "restaurant",
   farmstand: "leaf",
 };
+
+const MAP_FILTERS: { key: MapFilter; label: string; icon: IoniconsName }[] = [
+  { key: "all", label: "All", icon: "map-outline" },
+  { key: "winery", label: "Wineries", icon: "wine-outline" },
+  { key: "restaurant", label: "Dining", icon: "restaurant-outline" },
+  { key: "farmstand", label: "Farms", icon: "leaf-outline" },
+];
 
 function getCategoryColor(category: Category, colors: ReturnType<typeof useColors>) {
   if (category === "winery") return colors.wineRed;
@@ -63,7 +71,7 @@ function SpotDetailSheet({ spot, onClose }: SpotSheetProps) {
 
   const catColor = getCategoryColor(spot.category as Category, colors);
   const catIcon = getCategoryIcon(spot.category as Category);
-  const catLabel = CATEGORY_LABELS[spot.category as Category] ?? spot.category;
+  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : "Farm";
 
   return (
     <Modal
@@ -228,6 +236,67 @@ function AddSpotSheet({ coordinate, onClose, onSave, saving }: AddSpotSheetProps
   );
 }
 
+interface MapFilterBarProps {
+  active: MapFilter;
+  onSelect: (f: MapFilter) => void;
+  counts: Record<MapFilter, number>;
+  colors: ReturnType<typeof useColors>;
+}
+
+function MapFilterBar({ active, onSelect, counts, colors }: MapFilterBarProps) {
+  return (
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={styles.filterBarContent}
+      style={styles.filterBarScroll}
+    >
+      {MAP_FILTERS.map((f) => {
+        const isActive = active === f.key;
+        const cnt = counts[f.key];
+        return (
+          <TouchableOpacity
+            key={f.key}
+            style={[
+              styles.filterPill,
+              {
+                backgroundColor: isActive ? colors.primary : colors.card,
+                borderColor: isActive ? colors.primary : colors.border,
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.12,
+                shadowRadius: 6,
+                elevation: 3,
+              },
+            ]}
+            onPress={() => {
+              Haptics.selectionAsync();
+              onSelect(f.key);
+            }}
+            testID={`map-filter-${f.key}`}
+          >
+            <Ionicons
+              name={f.icon}
+              size={13}
+              color={isActive ? colors.primaryForeground : colors.mutedForeground}
+            />
+            <Text style={[styles.filterPillText, { color: isActive ? colors.primaryForeground : colors.foreground }]}>
+              {f.label}
+            </Text>
+            {cnt > 0 && (
+              <View style={[styles.filterPillCount, { backgroundColor: isActive ? "rgba(255,255,255,0.25)" : colors.muted }]}>
+                <Text style={[styles.filterPillCountText, { color: isActive ? colors.primaryForeground : colors.mutedForeground }]}>
+                  {cnt}
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        );
+      })}
+    </ScrollView>
+  );
+}
+
 export default function MapScreen() {
   const insets = useSafeAreaInsets();
   const colors = useColors();
@@ -238,6 +307,18 @@ export default function MapScreen() {
 
   const [selectedSpot, setSelectedSpot] = useState<MarkerType | null>(null);
   const [addCoord, setAddCoord] = useState<{ latitude: number; longitude: number } | null>(null);
+  const [mapFilter, setMapFilter] = useState<MapFilter>("all");
+
+  const filteredMarkers = mapFilter === "all"
+    ? markers
+    : markers.filter((m) => m.category === mapFilter);
+
+  const counts: Record<MapFilter, number> = {
+    all: markers.length,
+    winery: markers.filter((m) => m.category === "winery").length,
+    restaurant: markers.filter((m) => m.category === "restaurant").length,
+    farmstand: markers.filter((m) => m.category === "farmstand").length,
+  };
 
   const handleMarkerPress = useCallback((marker: MarkerType) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -313,7 +394,7 @@ export default function MapScreen() {
         showsCompass={false}
         testID="map-view"
       >
-        {markers.map((marker) => {
+        {filteredMarkers.map((marker) => {
           const cat = marker.category as Category;
           const catColor = getCategoryColor(cat, colors);
           const catIcon = getCategoryIcon(cat);
@@ -349,8 +430,19 @@ export default function MapScreen() {
         <Ionicons name="map" size={16} color={colors.primary} />
         <Text style={[styles.headerPillText, { color: colors.foreground }]}>Sonoma</Text>
         <View style={[styles.countBadge, { backgroundColor: colors.primary }]}>
-          <Text style={[styles.countBadgeText, { color: colors.primaryForeground }]}>{markers.length}</Text>
+          <Text style={[styles.countBadgeText, { color: colors.primaryForeground }]}>
+            {filteredMarkers.length}
+          </Text>
         </View>
+      </View>
+
+      <View style={[styles.filterBarWrapper, { top: topInset + 56 }]}>
+        <MapFilterBar
+          active={mapFilter}
+          onSelect={setMapFilter}
+          counts={counts}
+          colors={colors}
+        />
       </View>
 
       <View style={[styles.hintBanner, { bottom: bottomInset + 8 }]}>
@@ -455,6 +547,45 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   countBadgeText: {
+    fontSize: 11,
+    fontFamily: "Inter_700Bold",
+  },
+  filterBarWrapper: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
+  filterBarScroll: {
+    flexGrow: 0,
+  },
+  filterBarContent: {
+    paddingHorizontal: 16,
+    gap: 8,
+    paddingVertical: 4,
+  },
+  filterPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 100,
+    borderWidth: 1.5,
+  },
+  filterPillText: {
+    fontSize: 13,
+    fontFamily: "Inter_600SemiBold",
+  },
+  filterPillCount: {
+    minWidth: 18,
+    height: 18,
+    borderRadius: 9,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 4,
+  },
+  filterPillCountText: {
     fontSize: 11,
     fontFamily: "Inter_700Bold",
   },
