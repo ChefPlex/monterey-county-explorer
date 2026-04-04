@@ -1,6 +1,11 @@
 import { db, markersTable } from "@workspace/db";
-import { count, eq } from "drizzle-orm";
+import { count, eq, inArray } from "drizzle-orm";
 import { logger } from "./lib/logger";
+
+// Entries removed from the curated list — deleted from DB on every boot
+const REMOVED_FROM_SEED = [
+  "Juju's — French-Moroccan Pop-Up at Acorn Cafe",
+];
 
 const SEED_DATA = [
   // ── WINERIES: RUSSIAN RIVER VALLEY ───────────────────────────────────────
@@ -67,14 +72,13 @@ const SEED_DATA = [
   { name: "SingleThread", note: "Kyle and Katina Connaughton's 3-Michelin-star omakase — eleven courses built on their farm behind the restaurant. The most serious table in Sonoma County.", category: "restaurant", lat: 38.6123, lng: -122.8697, website: "https://www.singlethreadfarms.com" },
   { name: "Valette", note: "Dustin Valette's flagship on Center Street — the room that put Healdsburg's culinary identity on the map. Deep Sonoma sourcing, honest technique, and hospitality that doesn't feel performed.", category: "restaurant", lat: 38.6121, lng: -122.8696, website: "https://www.valettehealdsburg.com" },
   { name: "Troubadour / Le Dîner", note: "A 7-course Michelin-listed tasting menu hidden inside a 20-seat bakery — SingleThread alumni running an extraordinary Thursday-through-Sunday dinner. Prepaid on Tock, no walk-ins. Book before you leave home.", category: "restaurant", lat: 38.6115, lng: -122.8710, website: "https://www.troubadourhbg.com" },
-  { name: "Juju's — French-Moroccan Pop-Up at Acorn Cafe", note: "Chef Jason Pringle cooking from his 97-year-old grandmother's recipes in a borrowed plaza café Thu–Sun evenings. Lamb shank tagine, poulet rôti with harissa potatoes, cheese cappelletti with beet and Meyer lemon. Nothing else like it in the county right now.", category: "restaurant", lat: 38.6105, lng: -122.8690, website: null },
   { name: "Folia Bar & Kitchen — Appellation Healdsburg", note: "Reed Palmer's three-course prix fixe at one of Wine Country's most striking new resort properties. Mt. Lassen trout, Mary's chicken, estate garden vegetables. The rooftop bar and panoramic plaza views earn a stop on their own.", category: "restaurant", lat: 38.6105, lng: -122.8692, website: "https://www.appellationhotels.com/hotels/california-healdsburg/dining/folia-bar-kitchen/" },
   { name: "Bistro Lagniappe", note: "The downtown Healdsburg table that's open seven nights a week — including Mondays when almost nothing else is. French-California comfort in a warm room that feels like it belongs to the town.", category: "restaurant", lat: 38.6116, lng: -122.8705, website: "https://www.lagniappehealdsburg.com" },
   { name: "The Matheson", note: "Dustin Valette's rooftop bar and restaurant on the plaza — three floors, a wood-fired kitchen, and the best view in downtown Healdsburg. The cocktail program is serious.", category: "restaurant", lat: 38.6102, lng: -122.8700, website: "https://www.thematheson.com" },
   { name: "Barndiva", note: "A beautiful garden room in the middle of Healdsburg — seasonal farm-to-table cooking in a converted barn with genuine warmth. The Saturday brunch with live music in the garden is one of the better weekend mornings in the county.", category: "restaurant", lat: 38.6096, lng: -122.8695, website: "https://www.barndiva.com" },
   { name: "Little Saint", note: "The Moshin family's plant-based restaurant and market on the plaza — genuinely inventive cooking that doesn't position itself as a compromise. Good for the table with mixed preferences.", category: "restaurant", lat: 38.6120, lng: -122.8719, website: "https://www.littlesainthealdsburg.com" },
   { name: "Baci Café & Wine Bar", note: "The one reliable dinner in downtown Healdsburg on a Monday. Italian classics, good pasta, a wine list full of Sonoma County names, and neighborhood ease when nothing else is open.", category: "restaurant", lat: 38.6117, lng: -122.8706, website: "https://www.bacicafeandwinebar.com" },
-  { name: "Acorn Cafe", note: "Breakfast and brunch anchor on the Healdsburg Plaza — the right start for any Healdsburg food day. After hours Thu–Sun it becomes Juju's French-Moroccan pop-up.", category: "restaurant", lat: 38.6105, lng: -122.8690, website: null },
+  { name: "Acorn Cafe", note: "Breakfast and brunch anchor on the Healdsburg Plaza — the right start for any Healdsburg food day. Dutch door, good coffee, solid morning food. Open every day including Mondays.", category: "restaurant", lat: 38.6105, lng: -122.8690, website: "https://www.acornhealdsburg.com" },
   { name: "Dry Creek Kitchen", note: "Charlie Palmer's flagship Healdsburg restaurant anchoring Hotel Healdsburg — Sonoma sourcing, wine-country ambience, and one of the most reliable kitchens on the plaza.", category: "restaurant", lat: 38.6108, lng: -122.8711, website: "https://drycreekkitchen.com" },
   { name: "Willi's Seafood & Raw Bar", note: "Mark and Terri Stark's lively raw bar on North Healdsburg Ave — oysters, crudo, ceviches, and tapas-style seafood plates in a room that never loses energy. The oyster happy hour is one of the best value stops in the county.", category: "restaurant", lat: 38.6120, lng: -122.8712, website: "https://www.starkrestaurants.com/willis-seafood" },
   { name: "Bravas Bar de Tapas", note: "The Stark group's Spanish tapas room on Center St — patatas bravas, croquetas, razor clams, and a sherry list that doesn't apologize for itself. The ideal pre- or post-winery hang in Healdsburg.", category: "restaurant", lat: 38.6129, lng: -122.8698, website: "https://www.starkrestaurants.com/bravas" },
@@ -181,6 +185,17 @@ export async function seedIfEmpty() {
 
 export async function correctCoordinates() {
   try {
+    // Remove entries that have been deleted from the curated seed list
+    if (REMOVED_FROM_SEED.length > 0) {
+      const deleted = await db
+        .delete(markersTable)
+        .where(inArray(markersTable.name, REMOVED_FROM_SEED))
+        .returning({ name: markersTable.name });
+      if (deleted.length > 0) {
+        logger.info({ names: deleted.map((r) => r.name) }, "Removed entries deleted from DB");
+      }
+    }
+
     logger.info("Correcting marker coordinates and websites to verified data...");
     let updated = 0;
     for (const spot of SEED_DATA) {
