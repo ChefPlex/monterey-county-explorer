@@ -51,6 +51,7 @@ const SEED_DATA = [
 
   // ── WINERIES: ALEXANDER VALLEY ───────────────────────────────────────────
   { name: "Jordan Winery", note: "The Alexander Valley estate that defined restrained California Cabernet. Stunning chateau, impeccable hospitality, and the best library tasting in the county.", category: "winery", lat: 38.661639, lng: -122.85018, website: "https://www.jordanwinery.com" },
+  { name: "Silver Oak Alexander Valley", note: "The definitive Alexander Valley Cabernet Sauvignon — aged in American oak for a house style that's unmistakably its own. The Geyserville estate is the original Silver Oak facility, and the hospitality here is serious. Worth the splurge and the drive.", category: "winery", lat: 38.723905, lng: -122.933053, website: "https://www.silveroak.com" },
   { name: "Francis Ford Coppola Winery", note: "Part winery, part resort — pools, bocce, Hollywood memorabilia. Great for groups and a genuinely fun afternoon.", category: "winery", lat: 38.6794, lng: -122.8875, website: "https://www.francisfordcoppolawinery.com" },
   { name: "Stonestreet Estate", note: "Mountain estate Cabernet at its Sonoma best. The Alexander Mountain terroir produces power with elegance.", category: "winery", lat: 38.669294, lng: -122.812386, website: "https://www.stonestreetwines.com" },
   { name: "Chalk Hill Estate", note: "1,300-acre estate with stunning views, warm hospitality, and terroir-driven Chardonnay that punches above its price.", category: "winery", lat: 38.568223, lng: -122.771005, website: "https://www.chalkhill.com" },
