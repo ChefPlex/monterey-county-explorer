@@ -108,7 +108,7 @@ function SpotRow({ item, isTablet }: SpotRowProps) {
             {item.note}
           </Text>
         ) : null}
-        {isTablet && item.website ? (
+        {item.website ? (
           <TouchableOpacity
             style={styles.inlineWebsiteLink}
             onPress={() => Linking.openURL(item.website!)}
