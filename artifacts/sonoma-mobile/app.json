@@ -3,7 +3,7 @@
     "name": "Sonoma",
     "slug": "sonoma-mobile",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "sonoma-mobile",
     "userInterfaceStyle": "automatic",
@@ -14,7 +14,7 @@
       "backgroundColor": "#6B2D3E"
     },
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": true
     },
     "android": {},
     "web": {
