@@ -82,46 +82,60 @@ interface SpotRowProps {
 
 function SpotRow({ item, isTablet }: SpotRowProps) {
   const colors = useColors();
+  const [expanded, setExpanded] = useState(false);
   const catColor = getCategoryColor(item.category, colors);
   const catBg = getCategoryBg(item.category, colors);
   const catLabel = getCategoryLabel(item.category);
   const catIcon = getCategoryIcon(item.category);
+  const hasMore = item.note && item.note.length > 80;
 
   return (
-    <View style={[
-      styles.spotRow,
-      { backgroundColor: colors.card, borderColor: colors.border },
-      isTablet && styles.spotRowTablet,
-    ]}>
+    <TouchableOpacity
+      activeOpacity={0.75}
+      onPress={() => (hasMore || item.website) ? setExpanded((v) => !v) : null}
+      style={[
+        styles.spotRow,
+        { backgroundColor: colors.card, borderColor: expanded ? catColor : colors.border },
+        isTablet && styles.spotRowTablet,
+      ]}
+    >
       <View style={[styles.spotIcon, { backgroundColor: catBg }, isTablet && styles.spotIconTablet]}>
         <Ionicons name={catIcon} size={isTablet ? 22 : 18} color={catColor} />
       </View>
       <View style={styles.spotInfo}>
-        <Text style={[styles.spotName, { color: colors.foreground }, isTablet && styles.spotNameTablet]} numberOfLines={1}>
+        <Text style={[styles.spotName, { color: colors.foreground }, isTablet && styles.spotNameTablet]}>
           {item.name}
         </Text>
         {item.note ? (
           <Text
             style={[styles.spotNote, { color: colors.mutedForeground }, isTablet && styles.spotNoteTablet]}
-            numberOfLines={isTablet ? 4 : 2}
+            numberOfLines={expanded ? undefined : (isTablet ? 3 : 2)}
           >
             {item.note}
           </Text>
         ) : null}
-        {item.website ? (
+        {(expanded || !hasMore) && item.website ? (
           <TouchableOpacity
             style={styles.inlineWebsiteLink}
-            onPress={() => Linking.openURL(item.website!)}
+            onPress={(e) => {
+              e.stopPropagation?.();
+              Linking.openURL(item.website!);
+            }}
           >
             <Ionicons name="globe-outline" size={13} color={catColor} />
             <Text style={[styles.inlineWebsiteLinkText, { color: catColor }]}>Visit Website</Text>
           </TouchableOpacity>
         ) : null}
+        {hasMore && (
+          <Text style={[styles.expandHint, { color: catColor }]}>
+            {expanded ? "Show less" : "Read more"}
+          </Text>
+        )}
       </View>
       <View style={[styles.catBadge, { backgroundColor: catBg }]}>
         <Text style={[styles.catBadgeText, { color: catColor }]}>{catLabel}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -673,6 +687,11 @@ const styles = StyleSheet.create({
   inlineWebsiteLinkText: {
     fontSize: 12,
     fontFamily: "Inter_600SemiBold",
+  },
+  expandHint: {
+    fontSize: 12,
+    fontFamily: "Inter_600SemiBold",
+    marginTop: 4,
   },
   catBadge: {
     paddingHorizontal: 8,
