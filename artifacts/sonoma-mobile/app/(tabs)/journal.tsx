@@ -105,6 +105,11 @@ function SpotRow({ item, isTablet }: SpotRowProps) {
         <Text style={[styles.spotName, { color: colors.foreground }, isTablet && styles.spotNameTablet]}>
           {item.name}
         </Text>
+        {item.city ? (
+          <Text style={[styles.cityLabel, { color: catColor }]}>
+            {item.city}
+          </Text>
+        ) : null}
         {item.note ? (
           <Text
             style={[styles.spotNote, { color: colors.mutedForeground }, isTablet && styles.spotNoteTablet]}
@@ -653,6 +658,14 @@ const styles = StyleSheet.create({
   spotNameTablet: {
     fontSize: 16,
     lineHeight: 22,
+  },
+  cityLabel: {
+    fontSize: 11,
+    fontFamily: "Inter_500Medium",
+    letterSpacing: 0.4,
+    textTransform: "uppercase",
+    marginTop: -1,
+    marginBottom: 1,
   },
   spotNote: {
     fontSize: 13,

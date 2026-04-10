@@ -59,6 +59,7 @@ export interface Marker {
   lat: number;
   lng: number;
   website?: string | null;
+  city?: string | null;
   createdAt: string;
 }
 
@@ -78,6 +79,7 @@ export interface CreateMarkerInput {
   lat: number;
   lng: number;
   website?: string | null;
+  city?: string | null;
 }
 
 export type UpdateMarkerInputCategory =
@@ -94,6 +96,7 @@ export interface UpdateMarkerInput {
   note?: string;
   category?: UpdateMarkerInputCategory;
   website?: string | null;
+  city?: string | null;
 }
 
 export interface MarkerStats {

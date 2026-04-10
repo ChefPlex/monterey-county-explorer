@@ -12,4 +12,5 @@ export interface UpdateMarkerInput {
   note?: string;
   category?: UpdateMarkerInputCategory;
   website?: string | null;
+  city?: string | null;
 }

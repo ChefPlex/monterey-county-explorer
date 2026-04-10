@@ -15,5 +15,6 @@ export interface Marker {
   lat: number;
   lng: number;
   website?: string | null;
+  city?: string | null;
   createdAt: string;
 }

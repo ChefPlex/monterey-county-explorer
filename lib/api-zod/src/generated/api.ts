@@ -27,6 +27,7 @@ export const GetMarkersResponseItem = zod.object({
   lat: zod.number(),
   lng: zod.number(),
   website: zod.string().nullish(),
+  city: zod.string().nullish(),
   createdAt: zod.string(),
 });
 export const GetMarkersResponse = zod.array(GetMarkersResponseItem);
@@ -42,6 +43,7 @@ export const CreateMarkerBody = zod.object({
   lat: zod.number(),
   lng: zod.number(),
   website: zod.string().nullish(),
+  city: zod.string().nullish(),
 });
 
 /**
@@ -59,6 +61,7 @@ export const GetMarkerResponse = zod.object({
   lat: zod.number(),
   lng: zod.number(),
   website: zod.string().nullish(),
+  city: zod.string().nullish(),
   createdAt: zod.string(),
 });
 
@@ -74,6 +77,7 @@ export const UpdateMarkerBody = zod.object({
   note: zod.string().optional(),
   category: zod.enum(["winery", "restaurant", "farmstand"]).optional(),
   website: zod.string().nullish(),
+  city: zod.string().nullish(),
 });
 
 export const UpdateMarkerResponse = zod.object({
@@ -84,6 +88,7 @@ export const UpdateMarkerResponse = zod.object({
   lat: zod.number(),
   lng: zod.number(),
   website: zod.string().nullish(),
+  city: zod.string().nullish(),
   createdAt: zod.string(),
 });
 

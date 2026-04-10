@@ -14,4 +14,5 @@ export interface CreateMarkerInput {
   lat: number;
   lng: number;
   website?: string | null;
+  city?: string | null;
 }
