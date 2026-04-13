@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "ymqVxr4Jy3kefHwvKT0vG"
@@ -12,3 +11,9 @@ id = "0PVm5LehU1QypfSatHpT2"
 uri = "file://artifacts/sonoma-mobile/assets/images/splash-icon.png"
 type = "image"
 title = "generated_image"
+
+[[outputs]]
+id = "fVd5FcmG_m8R9Eo5_qHMP"
+uri = "file://afternoon_changes.txt"
+type = "text"
+title = "Afternoon Changes — Reusable Feature Guide"
