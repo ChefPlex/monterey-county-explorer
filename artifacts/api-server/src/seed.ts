@@ -5,6 +5,7 @@ import { logger } from "./lib/logger";
 // Entries removed from the curated list — deleted from DB on every boot
 const REMOVED_FROM_SEED = [
   "Juju's — French-Moroccan Pop-Up at Acorn Cafe",
+  "Sceales Cellars",
 ];
 
 const SEED_DATA = [
@@ -47,7 +48,7 @@ const SEED_DATA = [
   { name: "Quivira Vineyards", city: "Healdsburg", note: "Biodynamic Dry Creek estate with certified-organic farming and a standout Zinfandel built on Rhône sensibility.", category: "winery", lat: 38.655807, lng: -122.936371, website: "https://www.quivirawine.com" },
   { name: "Dry Creek Vineyard", city: "Healdsburg", note: "The original Dry Creek label — and it shows. Consistent, honest, and the Fumé Blanc is a perennial benchmark.", category: "winery", lat: 38.6529, lng: -122.9240, website: "https://www.drycreekvineyard.com" },
   { name: "Mounts Family Winery", city: "Healdsburg", note: "Tiny family operation where you might meet the winemaker. Rare varietals, bocce court, local vibes.", category: "winery", lat: 38.657683, lng: -122.94432, website: "https://www.mountswinery.com" },
-  { name: "Ridge Lytton Springs", city: "Healdsburg", note: "Old-vine Zinfandel from one of California's most respected names. The Lytton Springs site is historic and essential.", category: "winery", lat: 38.6591, lng: -122.8858, website: "https://www.ridgewine.com" },
+  { name: "Ridge - Lytton Springs", city: "Healdsburg", note: "One of the great Zinfandel estates in California — the Lytton Springs vineyard on the Healdsburg/Geyserville border has been producing field-blend Zin since the 1970s. Ancient vines of Zinfandel, Petite Sirah, Carignane, and Mataro grown on volcanic hillside soils. Ridge makes it the same way it always has: hand-sorted fruit, native yeast, American oak, minimal intervention. The wine is structured, brooding, and built for the cellar — but the tasting room pours it at every stage. The Rhône whites are worth seeking out. Tasting room open daily on Lytton Springs Road.", category: "winery", lat: 38.6495, lng: -122.8816, website: "https://www.ridgewine.com/lytton-springs" },
 
   // ── WINERIES: ALEXANDER VALLEY ───────────────────────────────────────────
   { name: "Jordan Winery", city: "Healdsburg", note: "The Alexander Valley estate that defined restrained California Cabernet. Stunning chateau, impeccable hospitality, and the best library tasting in the county.", category: "winery", lat: 38.661639, lng: -122.85018, website: "https://www.jordanwinery.com" },
@@ -96,6 +97,7 @@ const SEED_DATA = [
   { name: "Poppy", city: "Glen Ellen", note: "The Girl & The Fig's Sondra Bernstein and John Toulze transformed the old Fig Café into this French countryside room in May 2025. Crispy poulet rôti, Coquilles Saint-Jacques, asparagus salad with Sonoma strawberries. Wed–Fri prix fixe includes wine.", category: "restaurant", lat: 38.3635, lng: -122.5246, website: "https://www.poppyglenellen.com" },
 
   // ── RESTAURANTS: SONOMA TOWN ──────────────────────────────────────────────
+  { name: "The Girl & The Fig", city: "Sonoma", note: "The Girl & the Fig is one of Sonoma Plaza's most beloved institutions — a French-country bistro that has been drawing locals and visitors alike since chef-owner Sondra Bernstein quietly opened it in Glen Ellen in 1997, then relocated to the northwest corner of the historic Sonoma Plaza in 2000.", category: "restaurant", lat: 38.2919, lng: -122.458, website: "https://www.thegirlandthefig.com" },
   { name: "Enclos", city: "Sonoma", note: "Two Michelin stars and a Green Star in its first year — chef Brian Limoges (Quince, Atelier Crenn) inside a restored 1880 Victorian half a block from Sonoma Plaza. The 11-course tasting menu is grounded in Stone Edge Farm's organic gardens. The hottest reservation in Northern California right now.", category: "restaurant", lat: 38.2916, lng: -122.4558, website: "https://enclos-sonoma.com" },
   { name: "Rosso Pizzeria — Sonoma Plaza", city: "Sonoma", note: "Wood-fired pizza, good salads, and the fried chicken with smashed potatoes that people drive across the county for. A Sonoma institution with honest prices.", category: "restaurant", lat: 38.2921, lng: -122.4561, website: "https://www.rossopizzeria.com" },
 
