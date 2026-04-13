@@ -1,0 +1,322 @@
+FEATURE ADDITIONS — AFTERNOON SESSION
+======================================
+These are generic, reusable patterns implemented across the web and mobile
+apps this afternoon. Each section describes what was built and how to
+replicate it in any Replit project with a similar React/Vite + Expo stack.
+Mike's Truck Garden seed data is excluded — that is Sonoma-specific.
+
+
+═══════════════════════════════════════════════════════════════════════════
+WEB APP (React + Vite)
+═══════════════════════════════════════════════════════════════════════════
+
+─────────────────────────────────────────────────────────────────────────
+1. WELCOME / SPLASH OVERLAY  (WelcomeOverlay.tsx)
+─────────────────────────────────────────────────────────────────────────
+What it does:
+  A full-screen modal overlay that appears on the user's first visit.
+  Displays an app introduction, a visual map/pin key, usage tips, and a
+  "Start Exploring" CTA button. Once dismissed it never auto-shows again
+  (stored in localStorage).
+
+Key implementation details:
+  - Component receives `open: boolean` and `onClose: () => void` props.
+  - The parent page checks localStorage on mount:
+      const seen = localStorage.getItem("welcome-seen");
+      if (!seen) setShowWelcome(true);
+  - On close, write the flag:
+      localStorage.setItem("welcome-seen", "1");
+  - The overlay uses `fixed inset-0 z-[2000]` with a dark backdrop
+    (bg-black/60 backdrop-blur-sm) and a centered card (max-w-sm).
+  - Includes: eyebrow label, large title, subtitle text, a legend section
+    with colored icon dots for each category, a tips box with bold key
+    terms, and a full-width primary CTA button.
+  - A small × close button sits in the top-right corner of the card.
+
+Reuse notes:
+  Swap out the legend categories and tip text for your app's content.
+  The localStorage key should be unique per app to avoid conflicts.
+
+
+─────────────────────────────────────────────────────────────────────────
+2. MY LIST — BOOKMARK SYSTEM  (useMyList.ts + MyList.tsx)
+─────────────────────────────────────────────────────────────────────────
+What it does:
+  Users can bookmark any item (spot, listing, pin, etc.) and build a
+  personal saved list. Persists across page refreshes via localStorage.
+  A floating button shows a count badge when items are saved; clicking
+  it opens a slide-up panel listing all saved items with remove buttons
+  and a "Clear all" option.
+
+useMyList.ts hook:
+  - State: `saved: Map<number, SavedItem>` (id → item object).
+  - Loads from localStorage on mount (key: "my-list" or similar).
+  - Exposes: `toggle(item)`, `remove(id)`, `clearAll()`, `isSaved(id)`.
+  - Every mutation calls `localStorage.setItem(key, JSON.stringify([...map.values()]))`.
+
+MyList.tsx component:
+  - Receives: `saved`, `onRemove`, `onClearAll`, `open`, `onToggleOpen`.
+  - Renders a circular button (bookmark icon + optional count badge).
+  - When `open`, renders an absolutely-positioned panel anchored to the
+    right (`right-0`) that opens upward (`bottom-[52px]`).
+  - Panel has: header row with title + "Clear all" link, scrollable list
+    of saved items, empty-state message when list is empty.
+  - Each list row has item name, category label, and an × remove button.
+
+Integration in parent page:
+  const { saved, toggle, remove, clearAll, isSaved } = useMyList();
+  const [showMyList, setShowMyList] = useState(false);
+  // Pass isSaved + toggle into each item's popup/card.
+  // Render <MyList ... /> in the fixed right-side control cluster.
+
+Reuse notes:
+  SavedItem interface can be as simple as `{ id, name, category }`.
+  Swap the localStorage key per app. The panel width (w-[280px]) can
+  be adjusted to fit your layout.
+
+
+─────────────────────────────────────────────────────────────────────────
+3. SAVE / BOOKMARK TOGGLE IN ITEM POPUPS (Leaflet map popups / cards)
+─────────────────────────────────────────────────────────────────────────
+What it does:
+  Inside each map popup (or card), a "Save" / "Saved ✓" toggle button
+  lets the user add or remove the item from My List without leaving the
+  popup.
+
+Implementation:
+  - In the popup render function, call `isSaved(item.id)` to get state.
+  - Render a button that calls `toggle(item)` on click.
+  - Button text: "Save" when not saved, "Saved ✓" (or filled bookmark
+    icon) when saved; use a distinct color (e.g., primary) when active.
+
+Reuse notes:
+  Works with any popup/modal/card component. No additional state needed
+  beyond the `useMyList` hook already wired into the parent.
+
+
+─────────────────────────────────────────────────────────────────────────
+4. CONTROL BUTTON CLUSTER — RIGHT SIDE (home.tsx layout)
+─────────────────────────────────────────────────────────────────────────
+What it does:
+  Groups the ? help button and My List button on the right side of the
+  screen, stacked vertically just above the primary FAB (e.g., an AI
+  assistant button). This makes all controls discoverable in one corner.
+
+Implementation:
+  - Wrapper: `fixed bottom-[72px] right-6 z-[999] flex flex-col items-end gap-2`
+  - The primary FAB sits at `fixed bottom-6 right-6` (defined separately).
+  - My List panel opens right-anchored (right-0) so it extends left.
+  - The first-use tooltip for the FAB is raised to `bottom-[180px]` to
+    clear the new button cluster.
+
+Reuse notes:
+  Adjust `bottom-[72px]` to match the height of your primary FAB button.
+  The cluster can hold any number of secondary action buttons.
+
+
+═══════════════════════════════════════════════════════════════════════════
+MOBILE APP (Expo / React Native)
+═══════════════════════════════════════════════════════════════════════════
+
+─────────────────────────────────────────────────────────────────────────
+5. GPS "NEAR ME" BUTTON  (expo-location + MapView.animateToRegion)
+─────────────────────────────────────────────────────────────────────────
+What it does:
+  A circular button in the bottom-right corner. Tapping it requests
+  location permission, gets the device's current coordinates, and
+  smoothly animates the map to center on the user with a close zoom level.
+  Haptic feedback fires on tap.
+
+Key implementation details:
+  - Package: expo-location (already available in Expo SDK).
+  - Request permission: `Location.requestForegroundPermissionsAsync()`.
+    Show a friendly Alert if denied.
+  - Get position: `Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High })`.
+  - Animate map: `mapRef.current?.animateToRegion({ latitude, longitude,
+    latitudeDelta: 0.05, longitudeDelta: 0.05 }, 800)`.
+  - Show `ActivityIndicator` inside the button while loading.
+  - Haptics: `Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)` on tap.
+  - Add to app.json: `"infoPlist": { "NSLocationWhenInUseUsageDescription": "..." }`
+    and `"android": { "permissions": ["ACCESS_FINE_LOCATION"] }`.
+
+Positioning:
+  `position: "absolute", bottom: bottomInset + 60, right: 16`
+  (adjust the 60 to clear your tab bar / bottom safe area).
+
+
+─────────────────────────────────────────────────────────────────────────
+6. SHARE A PIN / ITEM  (React Native Share API)
+─────────────────────────────────────────────────────────────────────────
+What it does:
+  A share icon button in the spot/item detail sheet triggers the native
+  iOS/Android share sheet, pre-populated with a formatted text message
+  containing the item name, category, location, website, and a credit line.
+
+Implementation:
+  import { Share } from "react-native";
+
+  function buildShareMessage(item) {
+    const parts = [];
+    parts.push(`${item.name} — ${categoryLabel}`);
+    if (item.city) parts.push(item.city);
+    if (item.note) parts.push("", item.note);
+    if (item.website) parts.push("", item.website);
+    parts.push("", "Shared via [Your App Name]");
+    return parts.join("\n");
+  }
+
+  const handleShare = async () => {
+    await Haptics.selectionAsync();
+    await Share.share({ message: buildShareMessage(item) });
+  };
+
+  - Add the share button (Ionicons "share-outline") to the detail sheet
+    header action row alongside the close button.
+
+Reuse notes:
+  Customize `buildShareMessage` for your data shape. No permissions needed.
+
+
+─────────────────────────────────────────────────────────────────────────
+7. MY LIST — MOBILE BOOKMARK SYSTEM  (AsyncStorage)
+─────────────────────────────────────────────────────────────────────────
+What it does:
+  Same concept as the web My List but using AsyncStorage for persistence.
+  A bookmark icon button in the detail sheet header saves/unsaves the item.
+  A floating bookmark button in the map corner shows a count badge and
+  opens a full-screen modal listing all saved items.
+
+useMobileMyList hook (defined inline or in a separate file):
+  - State: `Map<number, SavedSpot>` (id → { id, name, category }).
+  - On mount: `AsyncStorage.getItem(key)` → parse JSON → rebuild Map.
+  - `toggle(spot)`: add or remove, then `AsyncStorage.setItem(key, JSON)`.
+  - `remove(id)`, `clearAll()` follow the same persist pattern.
+  - `isSaved(id)` wrapped in `useCallback` for stable reference.
+
+Detail sheet integration (both phone modal and tablet panel):
+  - Add `onToggleSave`, `isSaved`, `onDelete`, `isDeleting` to sheet props.
+  - Render bookmark icon in header: filled when saved, outline when not.
+    Color changes to primary when saved.
+
+My List floating button:
+  - `position: "absolute", bottom: bottomInset + 112, right: 16`
+  - Shows count badge (small circle with number) when items are saved.
+  - Opens a Modal (pageSheet) with the saved list.
+
+My List modal:
+  - Empty state: large outline bookmark icon + instructional text.
+  - Populated state: ScrollView of rows, each with a category color dot,
+    item name, category label, and a filled bookmark button to unsave.
+  - Header has "Clear all" text button when list is non-empty.
+
+Package required: @react-native-async-storage/async-storage (v2.2.0+).
+
+
+─────────────────────────────────────────────────────────────────────────
+8. DELETE / REMOVE SPOTS WITH CONFIRMATION  (Alert + mutation)
+─────────────────────────────────────────────────────────────────────────
+What it does:
+  A "Remove spot" button at the bottom of the item detail sheet lets
+  users delete items they created. An Alert confirmation dialog prevents
+  accidental deletions. The sheet closes only on successful deletion;
+  errors surface as a separate Alert instead of silently failing.
+
+Implementation:
+  const handleDelete = () => {
+    Alert.alert("Remove spot", `Remove "${item.name}"?`, [
+      { text: "Cancel", style: "cancel" },
+      { text: "Remove", style: "destructive", onPress: () => onDelete(item.id) },
+    ]);
+  };
+
+  In the parent screen's onDelete callback:
+    deleteMutation.mutate({ id }, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(...);
+        removeFromMyList(id);
+        setSelectedItem(null);   // closes the sheet
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      },
+      onError: () => {
+        Alert.alert("Could not remove", "Something went wrong. Please try again.");
+      },
+    });
+
+  - Button shows ActivityIndicator while `isDeleting` is true.
+  - Button style: bordered row with trash icon + "Remove spot" text in
+    destructive (red) color.
+
+Reuse notes:
+  Wire `useDeleteMarker` (or equivalent delete mutation) from your API
+  client. Pass `onDelete` and `isDeleting` as props into the detail sheet.
+
+
+─────────────────────────────────────────────────────────────────────────
+9. WELCOME SPLASH MODAL — MOBILE  (WelcomeSplashModal component)
+─────────────────────────────────────────────────────────────────────────
+What it does:
+  A transparent Modal with a dark overlay that appears on first launch.
+  Shows the app name, a pin/category legend with colored icon dots, a
+  tips section, and a "Start Exploring" button. Stores a seen-flag in
+  AsyncStorage so it only shows once. Can always be re-opened via the
+  ? help button.
+
+Implementation:
+  const WELCOME_KEY = "app-welcome-seen";
+
+  // In MapScreen (or root component):
+  const [showWelcome, setShowWelcome] = useState(false);
+  useEffect(() => {
+    AsyncStorage.getItem(WELCOME_KEY).then(v => { if (!v) setShowWelcome(true); });
+  }, []);
+  const handleCloseWelcome = useCallback(() => {
+    setShowWelcome(false);
+    AsyncStorage.setItem(WELCOME_KEY, "1");
+  }, []);
+
+  Modal props: `animationType="fade"`, `transparent`, `statusBarTranslucent`.
+  Layout:
+    - Outer view: flex:1, dark semi-transparent background, centered content.
+    - Card: white/card-colored rounded container (borderRadius: 20, shadow).
+    - Header section (with bottom border): eyebrow text, large title,
+      subtitle paragraph, × close button (absolute top-right of header).
+    - Legend section: "MAP KEY" label + rows of [colored dot icon | name + description].
+    - Tips box: rounded rectangle with 3 tip lines, bold key terms.
+    - CTA button: full-width, primary color, "Start Exploring".
+
+Reuse notes:
+  Replace PIN_LEGEND array entries with your app's categories/types.
+  Change WELCOME_KEY string to be unique per app.
+
+
+─────────────────────────────────────────────────────────────────────────
+10. BOTTOM-RIGHT FLOATING BUTTON STACK
+─────────────────────────────────────────────────────────────────────────
+What it does:
+  Three circular floating action buttons are stacked vertically in the
+  bottom-right corner, each with a distinct purpose and consistent spacing.
+
+Layout (phone, from bottom to top):
+  - Near Me (GPS):  bottom = bottomInset + 60,  right = 16
+  - My List:        bottom = bottomInset + 112,  right = 16
+  - ? Help:         bottom = bottomInset + 160,  right = 16
+
+  Each button is 40–44px wide/tall, borderRadius = half width, with a
+  subtle shadow (elevation: 5 on Android). The background matches the
+  card/surface color for seamless integration with dark/light mode.
+
+Spacing formula:
+  button_n_bottom = button_(n-1)_bottom + button_height + gap
+  With button_height = 44, gap = 8:
+    slot 0 (bottom): 60
+    slot 1:          60 + 44 + 8 = 112
+    slot 2:          112 + 44 + 8 = 164  (rounded to 160)
+
+Count badge on My List button:
+  Absolutely positioned (top: -2, right: -2) small circle (16×16,
+  borderRadius: 8) in primary color with white text showing item count.
+  Only renders when count > 0.
+
+Reuse notes:
+  Add or remove buttons from the stack by adjusting the bottom offsets.
+  Keep `right: 16` consistent across all buttons for visual alignment.
