@@ -1,4 +1,4 @@
-import { Wine, Utensils, Leaf, X } from "lucide-react";
+import { Wine, Utensils, Leaf, Store, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface WelcomeOverlayProps {
@@ -25,6 +25,12 @@ const PIN_TYPES = [
     description: "Where the real ingredients come from",
     color: "bg-[#6f7d3c]",
   },
+  {
+    icon: Store,
+    label: "Artisan Producers",
+    description: "Makers of cider, spirits, cheese, and more",
+    color: "bg-[#c06a2d]",
+  },
 ];
 
 export function WelcomeOverlay({ open, onClose }: WelcomeOverlayProps) {
@@ -48,7 +54,7 @@ export function WelcomeOverlay({ open, onClose }: WelcomeOverlayProps) {
             Sonoma County
           </h1>
           <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-            149 personally curated spots — wineries, restaurants, and farm stands — verified by a professional chef who actually goes to all of them.
+            155 personally curated spots — wineries, restaurants, farm stands, and artisan producers — verified by a professional chef who actually goes to all of them.
           </p>
         </div>
 

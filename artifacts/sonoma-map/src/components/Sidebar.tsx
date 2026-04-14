@@ -1,12 +1,12 @@
 import { useGetMarkerStats, useGetMarkers, getGetMarkersQueryKey, getGetMarkerStatsQueryKey } from "@workspace/api-client-react";
-import { Wine, Utensils, MapPin, Loader2, Leaf, ExternalLink } from "lucide-react";
+import { Wine, Utensils, MapPin, Loader2, Leaf, Store, ExternalLink } from "lucide-react";
 import { format } from "date-fns";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
-  activeFilter: "all" | "winery" | "restaurant" | "farmstand";
-  setActiveFilter: (filter: "all" | "winery" | "restaurant" | "farmstand") => void;
+  activeFilter: "all" | "winery" | "restaurant" | "farmstand" | "producer";
+  setActiveFilter: (filter: "all" | "winery" | "restaurant" | "farmstand" | "producer") => void;
 }
 
 export function Sidebar({ activeFilter, setActiveFilter }: SidebarProps) {
@@ -26,6 +26,7 @@ export function Sidebar({ activeFilter, setActiveFilter }: SidebarProps) {
     .sort((a, b) => a.name.localeCompare(b.name));
 
   const farmstands = (stats as any)?.farmstands ?? 0;
+  const producers = (stats as any)?.producers ?? 0;
 
   return (
     <div className="w-80 h-full bg-card border-r border-border shadow-xl flex flex-col z-10 relative">
@@ -73,7 +74,7 @@ export function Sidebar({ activeFilter, setActiveFilter }: SidebarProps) {
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-3 gap-2">
           <button 
             onClick={() => setActiveFilter("restaurant")}
             className={cn(
@@ -104,6 +105,22 @@ export function Sidebar({ activeFilter, setActiveFilter }: SidebarProps) {
               {statsLoading ? "-" : farmstands}
             </span>
             <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">Farms</span>
+          </button>
+
+          <button 
+            onClick={() => setActiveFilter("producer")}
+            className={cn(
+              "flex flex-col items-center justify-center p-3 rounded-xl border transition-all",
+              activeFilter === "producer" 
+                ? "bg-background border-[#c06a2d]/20 shadow-sm ring-1 ring-[#c06a2d]/30" 
+                : "bg-transparent border-transparent hover:bg-muted"
+            )}
+          >
+            <Store className={cn("w-5 h-5 mb-1.5", activeFilter === "producer" ? "text-[#c06a2d]" : "text-muted-foreground")} />
+            <span className="text-xl font-serif font-medium leading-none mb-1 text-foreground">
+              {statsLoading ? "-" : producers}
+            </span>
+            <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">Makers</span>
           </button>
         </div>
       </div>
@@ -138,10 +155,12 @@ export function Sidebar({ activeFilter, setActiveFilter }: SidebarProps) {
                     "p-1.5 rounded-full shrink-0 ml-2",
                     marker.category === "winery" ? "bg-primary/10 text-primary" 
                     : marker.category === "farmstand" ? "bg-[#6f7d3c]/10 text-[#6f7d3c]"
+                    : marker.category === "producer" ? "bg-[#c06a2d]/10 text-[#c06a2d]"
                     : "bg-secondary/10 text-secondary"
                   )}>
                     {marker.category === "winery" ? <Wine className="w-3.5 h-3.5" /> 
                     : marker.category === "farmstand" ? <Leaf className="w-3.5 h-3.5" />
+                    : marker.category === "producer" ? <Store className="w-3.5 h-3.5" />
                     : <Utensils className="w-3.5 h-3.5" />}
                   </div>
                 </div>

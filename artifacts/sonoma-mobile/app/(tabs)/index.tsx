@@ -32,7 +32,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import type { Marker as MarkerType } from "@workspace/api-client-react";
 
-type Category = "winery" | "restaurant" | "farmstand";
+type Category = "winery" | "restaurant" | "farmstand" | "producer";
 type MapFilter = "all" | Category;
 
 type IoniconsName = React.ComponentProps<typeof Ionicons>["name"];
@@ -41,12 +41,14 @@ const CATEGORY_LABELS: Record<Category, string> = {
   winery: "Wineries",
   restaurant: "Dining",
   farmstand: "Farms",
+  producer: "Makers",
 };
 
 const CATEGORY_ICON_MAP: Record<Category, IoniconsName> = {
   winery: "wine",
   restaurant: "restaurant",
   farmstand: "leaf",
+  producer: "storefront",
 };
 
 const MAP_FILTERS: { key: MapFilter; label: string; icon: IoniconsName }[] = [
@@ -54,11 +56,13 @@ const MAP_FILTERS: { key: MapFilter; label: string; icon: IoniconsName }[] = [
   { key: "winery", label: "Wineries", icon: "wine-outline" },
   { key: "restaurant", label: "Dining", icon: "restaurant-outline" },
   { key: "farmstand", label: "Farms", icon: "leaf-outline" },
+  { key: "producer", label: "Makers", icon: "storefront-outline" },
 ];
 
 function getCategoryColor(category: Category, colors: ReturnType<typeof useColors>) {
   if (category === "winery") return colors.wineRed;
   if (category === "restaurant") return colors.accent;
+  if (category === "producer") return colors.goldAccent;
   return colors.farmGreen;
 }
 
@@ -132,7 +136,7 @@ interface SpotSheetProps {
 }
 
 function buildShareMessage(spot: MarkerType) {
-  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : "Farm Stand";
+  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : spot.category === "producer" ? "Producer" : "Farm Stand";
   const parts: string[] = [
     `${spot.name} — ${catLabel} in Sonoma County`,
     "",
@@ -149,7 +153,7 @@ function SpotDetailModal({ spot, onClose, onToggleSave, isSaved, onDelete, isDel
 
   const catColor = getCategoryColor(spot.category as Category, colors);
   const catIcon = getCategoryIcon(spot.category as Category);
-  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : "Farm";
+  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : spot.category === "producer" ? "Producer" : "Farm";
   const saved = isSaved(spot.id);
 
   const handleShare = async () => {
@@ -247,7 +251,7 @@ function SpotDetailPanel({ spot, onClose, onToggleSave, isSaved, onDelete, isDel
 
   const catColor = getCategoryColor(spot.category as Category, colors);
   const catIcon = getCategoryIcon(spot.category as Category);
-  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : "Farm";
+  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : spot.category === "producer" ? "Producer" : "Farm";
   const saved = isSaved(spot.id);
 
   const handleShare = async () => {
@@ -351,6 +355,11 @@ const PIN_LEGEND = [
     label: "Farm Stands & Markets",
     description: "Where the real ingredients come from",
   },
+  {
+    category: "producer" as Category,
+    label: "Artisan Producers",
+    description: "Makers of cider, spirits, cheese, and more",
+  },
 ];
 
 function WelcomeSplashModal({ visible, onClose }: { visible: boolean; onClose: () => void }) {
@@ -377,7 +386,7 @@ function WelcomeSplashModal({ visible, onClose }: { visible: boolean; onClose: (
               Sonoma County
             </Text>
             <Text style={[styles.welcomeSubtitle, { color: colors.mutedForeground }]}>
-              149 personally curated spots — wineries, restaurants, and farm stands — verified by a professional chef who actually goes to all of them.
+              155 personally curated spots — wineries, restaurants, farm stands, and artisan producers — verified by a professional chef who actually goes to all of them.
             </Text>
           </View>
 
@@ -501,7 +510,7 @@ function AddSpotSheet({ coordinate, onClose, onSave, saving }: AddSpotSheetProps
 
         <Text style={[styles.fieldLabel, { color: colors.mutedForeground }]}>Category</Text>
         <View style={styles.categoryRow}>
-          {(["winery", "restaurant", "farmstand"] as Category[]).map((cat) => {
+          {(["winery", "restaurant", "farmstand", "producer"] as Category[]).map((cat) => {
             const catColor = getCategoryColor(cat, colors);
             const selected = category === cat;
             return (
@@ -673,6 +682,7 @@ export default function MapScreen() {
     winery: markers.filter((m) => m.category === "winery").length,
     restaurant: markers.filter((m) => m.category === "restaurant").length,
     farmstand: markers.filter((m) => m.category === "farmstand").length,
+    producer: markers.filter((m) => m.category === "producer").length,
   };
 
   const handleMarkerPress = useCallback((marker: MarkerType) => {
@@ -1001,7 +1011,7 @@ export default function MapScreen() {
               {[...myListSaved.values()].map((s) => {
                 const catColor = getCategoryColor(s.category as Category, colors);
                 const catIcon = getCategoryIcon(s.category as Category);
-                const catLabel = s.category === "winery" ? "Winery" : s.category === "restaurant" ? "Dining" : "Farm";
+                const catLabel = s.category === "winery" ? "Winery" : s.category === "restaurant" ? "Dining" : s.category === "producer" ? "Producer" : "Farm";
                 return (
                   <View
                     key={s.id}

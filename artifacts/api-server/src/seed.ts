@@ -197,6 +197,12 @@ const SEED_DATA = [
   { name: "Alchemist Farm", city: "Sebastopol", note: "NPIP-certified rare-breed poultry hatchery on Appian Way in Sebastopol — they breed the specialty laying hens behind the most interesting egg cartons in Sonoma County. Azure Eggers, Olive Eggers, Sage Eggers, French Blue Copper Marans, German Bielefelders, and more. Pre-orders open online each season; chicks available for pickup or shipping. Not a farmstand — this is where serious small farmers and backyard flock builders source their birds.", category: "farmstand", lat: 38.459811, lng: -122.871487, website: "https://www.alchemistfarm.com" },
   { name: "Lao Saetern's Strawberry Stand", city: "Sebastopol", note: "A beloved roadside stand on Sebastopol Ave — just-picked super-sweet strawberries with lines that prove it. Expect occasional one-basket-per-person rationing at peak. Open Tue–Fri 9am–6pm, Sat 9am–6pm, Sun 9am–5pm. Seasonal.", category: "farmstand", lat: 38.4090014, lng: -122.8015088, website: null },
   { name: "Kokopelli Farm", city: "Freestone", note: "By appointment only — call 707-829-8185 before you go. Boysenberries, blackberries, and raspberries grown on Cunningham Road near Freestone, plus an on-site farmstand. Worth the planning.", category: "farmstand", lat: 38.359278, lng: -122.804831, website: null },
+  { name: "Tilted Shed Ciderworks", city: "Windsor", note: "Sonoma County's benchmark natural cidermaker, working with heirloom and organic apples since 2011. The tasting room at Artisan Alley pours flights, by the glass, or by the can in a no-frills warehouse space that feels nothing like a winery — which is exactly the point. Slow Food Snail of Approval. Kids and dogs welcome. Open Fri 2–7pm, Sat 12–5pm.", category: "producer", lat: 38.5370116, lng: -122.8074661, website: "https://www.tiltedshed.com" },
+  { name: "The Epicurean Connection", city: "Sonoma", note: "Sheana Davis and Ben Sessions have been making award-winning cheese and teaching cheesemaking classes in Sonoma for over 30 years. The warehouse shop carries their cheeses, local jams, olive oil, meats, and pantry staples. Hands-on classes — ricotta, butter, fresh chèvre — are one of the best culinary experiences in the county. Slow Food Snail of Approval. Shop open Fri–Sat 9am–12pm; classes Thu–Sat at 12–2pm and 3:30–5:30pm.", category: "producer", lat: 38.2853358, lng: -122.4363887, website: "https://www.theepicureanconnection.com" },
+  { name: "Lala's Jam Bar and Urban Farmstand", city: "Petaluma", note: "The only dedicated jam shop in Sonoma County — a little yellow cottage on Washington Street where Leslie Goodrich makes small-batch, low-sugar jams from locally gleaned fruit. Sunday jam-making classes available. Also stocks curated local Sonoma County food products. Slow Food Snail of Approval. Open Fri–Mon 10am–5pm.", category: "producer", lat: 38.2414598, lng: -122.6327351, website: "https://www.lalasjams.com" },
+  { name: "Ambix Spirits", city: "Sebastopol", note: "David Klein's Calvados-style apple brandy distillery on a 4-acre Sebastopol orchard planted with 200+ heritage apple varieties. Tastings are $15 and include a short orchard and distillery tour. One of the most distinctive and least-known stops in West County. Slow Food Snail of Approval. Open by appointment Fri–Sun 12–4pm.", category: "producer", lat: 38.4252416, lng: -122.8320427, website: "https://www.ambixspirits.com" },
+  { name: "Maison Porcella", city: "Windsor", note: "Franco-American chef Marc-Henri Jean-Baptiste's authentic French charcuterie shop and bistro in Windsor. House-made pâté, boudin blanc, cassoulet, grab-and-go croque monsieur pastries, and a curated selection of French and local wines. Also at Healdsburg and Sonoma farmers markets. Slow Food Snail of Approval. Retail Tue–Sat 10am–6pm; lunch Tue–Sat 12–2pm; dinner Tue–Sat 5:30–7pm by reservation.", category: "producer", lat: 38.5434448, lng: -122.8017952, website: "https://www.maisonporcella.com" },
+  { name: "Maison Porcella", city: "Windsor", note: "Franco-American chef Marc-Henri Jean-Baptiste's authentic French charcuterie shop and bistro in Windsor. House-made pâté, boudin blanc, cassoulet, grab-and-go croque monsieur pastries, and a curated selection of French and local wines. Also at Healdsburg and Sonoma farmers markets. Slow Food Snail of Approval. Retail Tue–Sat 10am–6pm; lunch Tue–Sat 12–2pm; dinner Tue–Sat 5:30–7pm by reservation.", category: "restaurant", lat: 38.5434448, lng: -122.8017952, website: "https://www.maisonporcella.com" },
 ];
 
 export async function seedIfEmpty() {
@@ -211,10 +217,10 @@ export async function seedIfEmpty() {
       return;
     }
 
-    // Insert any new seed entries not yet in the database
-    const rows = await db.select({ name: markersTable.name }).from(markersTable);
-    const existingNames = new Set(rows.map((r) => r.name));
-    const missing = SEED_DATA.filter((s) => !existingNames.has(s.name));
+    // Insert any new seed entries not yet in the database (key: name+category to allow duplicates like Maison Porcella)
+    const rows = await db.select({ name: markersTable.name, category: markersTable.category }).from(markersTable);
+    const existingKeys = new Set(rows.map((r) => `${r.name}||${r.category}`));
+    const missing = SEED_DATA.filter((s) => !existingKeys.has(`${s.name}||${s.category}`));
     if (missing.length > 0) {
       const result = await db.insert(markersTable).values(missing).returning({ name: markersTable.name });
       logger.info({ count: result.length, names: result.map((r) => r.name) }, "Inserted new seed entries");
@@ -239,12 +245,12 @@ export async function correctCoordinates() {
       }
     }
 
-    // Remove duplicate entries — keep the highest ID for each name
+    // Remove duplicate entries — keep the highest ID for each name+category pair
     const deduped = await db.execute(sql`
       DELETE FROM ${markersTable}
       WHERE id IN (
         SELECT id FROM (
-          SELECT id, ROW_NUMBER() OVER (PARTITION BY name ORDER BY id DESC) AS rn
+          SELECT id, ROW_NUMBER() OVER (PARTITION BY name, category ORDER BY id DESC) AS rn
           FROM ${markersTable}
         ) sub WHERE rn > 1
       )
