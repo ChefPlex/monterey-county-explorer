@@ -386,7 +386,7 @@ function WelcomeSplashModal({ visible, onClose }: { visible: boolean; onClose: (
               Sonoma County
             </Text>
             <Text style={[styles.welcomeSubtitle, { color: colors.mutedForeground }]}>
-              158 personally curated spots — 53 wineries, 63 restaurants, 37 farm stands, and 5 artisan producers (creameries, cideries, spirits, and more) — verified by a professional chef who actually goes to all of them.
+              159 personally curated spots — 53 wineries, 64 restaurants, 37 farm stands, and 5 artisan producers (creameries, cideries, spirits, and more) — verified by a professional chef who actually goes to all of them.
             </Text>
           </View>
 
