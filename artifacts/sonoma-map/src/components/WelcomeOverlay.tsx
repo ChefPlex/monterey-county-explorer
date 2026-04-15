@@ -54,7 +54,7 @@ export function WelcomeOverlay({ open, onClose }: WelcomeOverlayProps) {
             Sonoma County
           </h1>
           <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-            160 personally curated spots — 53 wineries, 65 restaurants, 37 farm stands, and 5 artisan producers (creameries, cideries, spirits, and more) — verified by a professional chef who actually goes to all of them.
+            161 personally curated spots — 53 wineries, 65 restaurants, 38 farm stands, and 5 artisan producers (creameries, cideries, spirits, and more) — verified by a professional chef who actually goes to all of them.
           </p>
         </div>
 
