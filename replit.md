@@ -114,3 +114,71 @@ React + Vite frontend. Leaflet.js interactive map of Sonoma County. Features:
 ### `scripts` (`@workspace/scripts`)
 
 Utility scripts package. Each script is a `.ts` file in `src/` with a corresponding npm script in `package.json`. Run scripts via `pnpm --filter @workspace/scripts run <script>`. Scripts can import any workspace package (e.g., `@workspace/db`) by adding it as a dependency in `scripts/package.json`.
+
+---
+
+## Sonoma Explorer — Project Notes
+
+### GPS Coordinate Verification Protocol
+
+**Always use this three-step process before committing any pin coordinate. GPS accuracy is critical.**
+
+1. **OSM Nominatim** — search by business name first:
+   ```
+   https://nominatim.openstreetmap.org/search?q=<Business+Name+City+CA>&format=json&limit=3
+   ```
+   If a POI result is returned (type: `amenity`, `tourism`, etc.), prefer it — it's the actual building footprint.
+
+2. **Photon cross-check** — corroborate the Nominatim result:
+   ```
+   https://photon.komoot.io/api/?q=<Business+Name>&limit=3
+   ```
+   Both sources should agree within ~50 metres. If they diverge, investigate further.
+
+3. **Fallback geocoders** (use if no POI exists in OSM/Photon):
+   - **US Census TIGER geocoder** (address-based, very accurate for US addresses):
+     ```
+     https://geocoding.geo.census.gov/geocoder/locations/address?street=<STREET>&city=<CITY>&state=CA&benchmark=2020&format=json
+     ```
+   - **Google Maps** — extract coordinates from the URL: `!3d<LAT>!4d<LON>` pattern, or from Squarespace site config JSON for restaurant/winery websites.
+
+**Never use address geocoding alone as the sole source.** Always cross-check at least two independent sources. Document the source used when adding a pin.
+
+---
+
+### Category System
+
+4 categories (plain `text` field — no enum constraint in DB):
+
+| Category | Color | Hex | Icon |
+|---|---|---|---|
+| `winery` | Wine red | Tailwind `primary` | Wine glass |
+| `restaurant` | Amber | Tailwind `secondary` | Utensils |
+| `farmstand` | Sage green | `#6f7d3c` | Leaf |
+| `producer` | Terracotta | `#c06a2d` | Store |
+
+Producers = artisan makers (creameries, cideries, spirits, etc.) that don't fit winery/restaurant/farmstand.
+
+---
+
+### Database & Seed Notes
+
+- All spot additions go into `artifacts/api-server/src/seed.ts` first, then run the seed script.
+- Production DB is read-only; production sync is triggered on deploy via `correctCoordinates()`.
+- Splash screen counts are **dynamic** — pulled live from `GET /api/markers/stats`. No need to update hardcoded numbers when spots are added.
+- Pins at the same property (e.g. Preston Farm & Winery winery + farmstand) must be offset by ~0.0003° so they don't stack.
+
+---
+
+### Mobile App
+
+- Bundle ID: `com.sonomachefapp.sonoma`
+- GitHub: `ChefPlex/sonoma-explorer` (primary repo)
+- App Store version must always be higher than the last approved build. Current version tracked in `artifacts/sonoma-mobile/app.json`.
+- Build number is auto-incremented by EAS — do not hardcode it.
+
+---
+
+### Known Coordinate Flags
+
+- **Epicurean Connection**: OSM POI still shows old 122 W Napa St address. Correct location is 19670 8th St E, Sonoma → `38.2869338, -122.4342651`. Update when next editing that pin.
