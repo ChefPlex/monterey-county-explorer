@@ -181,4 +181,4 @@ Producers = artisan makers (creameries, cideries, spirits, etc.) that don't fit 
 
 ### Known Coordinate Flags
 
-- **Epicurean Connection**: OSM POI still shows old 122 W Napa St address. Correct location is 19670 8th St E, Sonoma → `38.2869338, -122.4342651`. Update when next editing that pin.
+None outstanding.

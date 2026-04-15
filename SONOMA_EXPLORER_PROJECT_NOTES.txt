@@ -124,11 +124,7 @@ lib/api-client-react/src/generated/api.ts — generated React Query hooks
 
 KNOWN COORDINATE FLAGS
 ----------------------
-Epicurean Connection (Sonoma):
-  OSM POI still shows OLD address: 122 W Napa St
-  CORRECT location: 19670 8th St E, Sonoma
-  CORRECT coordinates: 38.2869338, -122.4342651
-  — Update this pin the next time that entry is edited.
+None outstanding. All known pin corrections have been applied.
 
 
 PREVIOUSLY VERIFIED PIN CORRECTIONS (for reference)
