@@ -1,0 +1,47 @@
+I have an existing chef-curated interactive map app built in this repo — currently configured for Sonoma County. I need you to re-localize it completely for Monterey County, California, including the Santa Lucia Highlands wine region. The tech stack, structure, and design should stay identical. Here is everything you need to know:
+
+WHAT TO CHANGE
+
+    Replace all references to "Sonoma County" with "Monterey County" throughout the app (UI, splash screen, AI persona, page titles, app name)
+    Replace "Sonoma Chef" AI assistant with "Monterey Chef" — same structure, different county expertise
+    Clear out all existing seed data (the 161 Sonoma spots) — start with an empty database, or a small set of real Monterey seed spots if you can verify them accurately
+    Update the mobile app name, bundle ID (suggest: com.chefplex.montereyexplorer), and splash screen copy
+    Update the map's default center coordinates and zoom to focus on Monterey County (roughly 36.6002, -121.8947, zoom 10)
+
+GEOGRAPHY TO COVER
+
+Monterey County is large and diverse. Priority regions:
+
+    Santa Lucia Highlands — high-elevation AVA, Pinot Noir and Chardonnay country (Pisoni Vineyard, Roar, Lucia, Morgan, Hahn Estate, Wrath)
+    Carmel Valley — boutique wineries, warm inland microclimate (Bernardus, Folktale, Albatross Ridge, Chesebro)
+    Carmel-by-the-Sea — restaurants, galleries, walkable village
+    Monterey Peninsula — Fisherman's Wharf area, cannery row, Pacific Grove, Pebble Beach
+    Salinas Valley — "Salad Bowl of the World" — farms, farmstands, Earthbound Farm, field-to-table producers
+    Big Sur Coast — Nepenthe, Post Ranch Inn, coastal dining
+
+AI CHEF PERSONA — KEY CHANGES
+
+Update the system prompt to reflect Monterey's specific food culture:
+
+    Expertise: Santa Lucia Highlands viticulture, Salinas Valley agriculture, coastal seafood (Dungeness crab, abalone, sardine heritage), Big Sur foraging culture
+    Tone pillars stay the same (Bourdain-grounded, Slow Food values, ingredient-forward)
+    Seasonal produce shifts: artichokes from Castroville, strawberries from Watsonville corridor, Salinas lettuce and brassicas, coastal mushrooms
+    Wine focus: Pinot Noir and Chardonnay from SLH and Carmel Valley AVAs — not Zinfandel or Cabernet
+
+CATEGORIES — KEEP EXACTLY THE SAME
+
+    winery (wine red)
+    restaurant (amber)
+    farmstand (sage green #6f7d3c)
+    producer (terracotta #c06a2d)
+
+COORDINATE VERIFICATION — CRITICAL
+GPS accuracy is non-negotiable. Use the same three-step protocol documented in replit.md for every single pin before committing it: OSM Nominatim → Photon cross-check → Census TIGER fallback. Never commit a coordinate from a single source alone.
+
+DO NOT CHANGE
+
+    Tech stack (React/Vite/Leaflet, Express, PostgreSQL, Drizzle, Expo)
+    Design system, color palette, font choices
+    The category system or map pin colors
+    The dynamic splash screen count (pulls from /api/markers/stats — already wired up)
+    The sidebar, filtering, bookmarking, and AI chat panel structure
