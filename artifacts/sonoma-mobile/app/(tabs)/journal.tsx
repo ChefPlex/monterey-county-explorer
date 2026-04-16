@@ -27,21 +27,21 @@ const FILTERS: { key: FilterType; label: string; icon: IoniconsName }[] = [
   { key: "farmstand", label: "Farms", icon: "leaf-outline" },
 ];
 
-// Regional latitude boundaries
-// North  ≥ 38.55:  Healdsburg, Alexander Valley, Geyserville, Dry Creek, Cloverdale
-// Central 38.35–38.55: Santa Rosa, Sebastopol, Russian River Valley, West County, Windsor, Glen Ellen
-// Southern < 38.35: Sonoma town, Petaluma, Carneros, Coast, Point Reyes
+// Regional latitude boundaries for Monterey County
+// North  ≥ 36.65:  Salinas, Castroville, Watsonville corridor, Moss Landing
+// Central 36.45–36.65: Monterey Peninsula, Carmel, Carmel Valley, Pacific Grove, Pebble Beach
+// Southern < 36.45: Big Sur, south Salinas Valley, south county
 const REGIONS = [
-  { key: "north", label: "North", fullLabel: "North Sonoma" },
-  { key: "central", label: "Central", fullLabel: "Central Sonoma" },
-  { key: "south", label: "Southern", fullLabel: "Southern Sonoma" },
+  { key: "north", label: "North", fullLabel: "Northern Monterey" },
+  { key: "central", label: "Central", fullLabel: "Peninsula & Carmel" },
+  { key: "south", label: "South", fullLabel: "Big Sur & South" },
 ] as const;
 
 type RegionKey = typeof REGIONS[number]["key"];
 
 function getRegion(lat: number): RegionKey {
-  if (lat >= 38.55) return "north";
-  if (lat >= 38.35) return "central";
+  if (lat >= 36.65) return "north";
+  if (lat >= 36.45) return "central";
   return "south";
 }
 

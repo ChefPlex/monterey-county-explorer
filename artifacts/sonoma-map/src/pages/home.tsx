@@ -9,9 +9,9 @@ import { useMyList } from "@/hooks/useMyList";
 export default function Home() {
   const [activeFilter, setActiveFilter] = useState<"all" | "winery" | "restaurant" | "farmstand" | "producer">("all");
 
-  const [showWelcome, setShowWelcome] = useState(() => !localStorage.getItem("sonoma-welcomed"));
+  const [showWelcome, setShowWelcome] = useState(() => !localStorage.getItem("monterey-welcomed"));
   const handleCloseWelcome = () => {
-    localStorage.setItem("sonoma-welcomed", "1");
+    localStorage.setItem("monterey-welcomed", "1");
     setShowWelcome(false);
   };
 

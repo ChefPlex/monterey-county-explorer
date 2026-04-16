@@ -105,11 +105,12 @@ React client-side hooks for voice chat (`useVoiceRecorder`, `useVoiceStream`, `u
 
 ### `artifacts/sonoma-map` (`@workspace/sonoma-map`)
 
-React + Vite frontend. Leaflet.js interactive map of Sonoma County. Features:
+React + Vite frontend. Leaflet.js interactive map of **Monterey County**. Features:
 - Custom winery/restaurant map markers with earthy terracotta/sage palette (Playfair Display + Plus Jakarta Sans)
-- Sidebar with stats, filtering, and spot list
+- Sidebar ("Monterey Journal") with stats, filtering, and spot list
+- Map centered on Monterey Peninsula [36.6002, -121.8947] zoom 10
 - Click-to-add markers with name, notes, category
-- **Sonoma Chef AI assistant** — floating chat panel powered by GPT, uses the full Sonoma Chef persona (culinary authority, Slow Food values, ingredient-forward, seasonal awareness). Embedded at bottom-right of the map.
+- **Monterey Chef AI assistant** — floating chat panel powered by GPT, uses the full Monterey Chef persona (Santa Lucia Highlands wine authority, Salinas Valley agriculture, Big Sur, Slow Food values, ingredient-forward, seasonal awareness). Embedded at bottom-right of the map.
 
 ### `scripts` (`@workspace/scripts`)
 
@@ -117,7 +118,7 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 
 ---
 
-## Sonoma Explorer — Project Notes
+## Monterey Explorer — Project Notes
 
 ### GPS Coordinate Verification Protocol
 
@@ -164,7 +165,7 @@ Producers = artisan makers (creameries, cideries, spirits, etc.) that don't fit 
 ### Database & Seed Notes
 
 - All spot additions go into `artifacts/api-server/src/seed.ts` first, then run the seed script.
-- Production DB is read-only; production sync is triggered on deploy via `correctCoordinates()`.
+- Production DB is read-only; reseed triggered on deploy via `seedIfEmpty()`.
 - Splash screen counts are **dynamic** — pulled live from `GET /api/markers/stats`. No need to update hardcoded numbers when spots are added.
 - Pins at the same property (e.g. Preston Farm & Winery winery + farmstand) must be offset by ~0.0003° so they don't stack.
 
@@ -172,8 +173,8 @@ Producers = artisan makers (creameries, cideries, spirits, etc.) that don't fit 
 
 ### Mobile App
 
-- Bundle ID: `com.sonomachefapp.sonoma`
-- GitHub: `ChefPlex/sonoma-explorer` (primary repo)
+- Bundle ID: `com.chefplex.montereyexplorer`
+- GitHub: `ChefPlex/monterey-explorer` (primary repo)
 - App Store version must always be higher than the last approved build. Current version tracked in `artifacts/sonoma-mobile/app.json`.
 - Build number is auto-incremented by EAS — do not hardcode it.
 

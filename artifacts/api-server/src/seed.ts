@@ -3,281 +3,325 @@ import { count, eq, inArray, sql } from "drizzle-orm";
 import { logger } from "./lib/logger";
 
 // Entries removed from the curated list — deleted from DB on every boot
-const REMOVED_FROM_SEED = [
-  "Juju's — French-Moroccan Pop-Up at Acorn Cafe",
-  "Sceales Cellars",
-  "Ridge Lytton Springs",
-  "Balletto Winery",
-  "Mikes Truck Garden",
-  "Sarmentine",
-];
+const REMOVED_FROM_SEED: string[] = [];
 
 const SEED_DATA = [
-  // ── WINERIES: RUSSIAN RIVER VALLEY ───────────────────────────────────────
-  { name: "Williams Selyem", city: "Healdsburg", note: "The benchmark Russian River Pinot. Allocation-heavy, appointment-only, and absolutely worth the effort. Old-vine purity at its finest.", category: "winery", lat: 38.5202, lng: -122.8670, website: "https://www.williamsselyem.com" },
-  { name: "Kosta Browne", city: "Sebastopol", note: "World-class Pinot Noir with a lush, precise house style. Get an appointment if you can — this is a bucket-list tasting.", category: "winery", lat: 38.404975, lng: -122.819864, website: "https://www.kostabrowne.com" },
-  { name: "Merry Edwards", city: "Sebastopol", note: "Old-vine Russian River Pinot royalty. Merry's wines are textbook Sonoma — elegant, cool-climate, endlessly drinkable.", category: "winery", lat: 38.4349, lng: -122.8549, website: "https://www.merryedwards.com" },
-  { name: "Lynmar Estate", city: "Sebastopol", note: "Stunning Sebastopol estate with impeccable Pinot and Chardonnay. The grounds alone are worth the drive.", category: "winery", lat: 38.4423, lng: -122.8442, website: "https://www.lynmarwinery.com" },
-  { name: "Gary Farrell", city: "Healdsburg", note: "Perched above the RRV with sweeping views. Single-vineyard Pinots that show exactly what this appellation can do.", category: "winery", lat: 38.505617, lng: -122.901910, website: "https://www.garyfarrellwinery.com" },
-  { name: "Freeman Winery", city: "Sebastopol", note: "Intimate and unhurried. Redwood grove setting, cool wine cave, and Burgundian-inspired Pinots that reward attention.", category: "winery", lat: 38.4095, lng: -122.8831, website: "https://www.freemanwinery.com" },
-  { name: "Littorai", city: "Sebastopol", note: "Biodynamic, Burgundian, and deeply serious. Ted Lemon's coastal Pinot and Chardonnay are among California's finest.", category: "winery", lat: 38.38484, lng: -122.865157, website: "https://www.littorai.com" },
-  { name: "Paul Mathew Vineyards", city: "Graton", note: "Meet the actual winemakers. Husband-and-wife operation in Graton pouring single-vineyard Pinots with old-world soul.", category: "winery", lat: 38.4346, lng: -122.8693, website: "https://paulmathewvineyards.com" },
-  { name: "Inman Family Wines", city: "Santa Rosa", note: "Kathleen Inman farms organically on Piner Road and makes only what she grows — Pinot Noir, Chardonnay, and Pinot Gris from the Russian River Valley. The Endless Crush Rosé is a seasonal benchmark. Unpretentious, honest, and worth every minute.", category: "winery", lat: 38.466937, lng: -122.816188, website: "https://www.inmanfamilywines.com" },
-  { name: "Pax Wine Cellars", city: "Sebastopol", note: "Downtown Sebastopol gem for Rhône-variety fanatics. The Syrah here is exceptional — buy a bottle and settle in.", category: "winery", lat: 38.403847, lng: -122.821326, website: "https://www.paxwines.com" },
-  { name: "Landmark Vineyards", city: "Kenwood", note: "Historic Kenwood tasting room with estate Chardonnay and Pinot. A reliable, refined stop without the appointment fuss.", category: "winery", lat: 38.4266, lng: -122.5562, website: "https://www.landmarkwine.com" },
-  { name: "Domaine de la Rivière", city: "Healdsburg", note: "Relatively new but already collecting accolades. Pinot Noir and Chardonnay with old-world grace and genuine hospitality.", category: "winery", lat: 38.5297, lng: -122.7999, website: "https://www.domaineriviere.com" },
+  // ── WINERIES: CARMEL VALLEY ────────────────────────────────────────────────
+  {
+    name: "Bernardus Winery",
+    city: "Carmel Valley",
+    note: "The flagship Carmel Valley estate. Winemaker Dean DeKorth's Marinus Bordeaux blend is the benchmark for the appellation — structured, age-worthy, and genuinely Carmel Valley in character. On-property restaurant with Cal Stamenov in the kitchen makes this a full culinary destination. Appointment tastings available in the vineyard cave.",
+    category: "winery",
+    lat: 36.4734,
+    lng: -121.7296,
+    website: "https://bernardus.com",
+  },
+  {
+    name: "Folktale Winery",
+    city: "Carmel Valley",
+    note: "The hospitality standout in the valley. Live music weekends, a full food menu, and a portfolio ranging from sparkling to Pinot Noir. The grounds are stunning and the vibe is the opposite of stuffy. Great for an afternoon that turns into an evening.",
+    category: "winery",
+    lat: 36.5097,
+    lng: -121.8160,
+    website: "https://folktalewinery.com",
+  },
+  {
+    name: "Wrath Winery",
+    city: "Carmel Valley",
+    note: "Focused, serious wines from Santa Lucia Highlands fruit. Michael Michaud built his career in the SLH — the Chardonnay and Pinot Noir here show what the appellation does better than anywhere in California. Quiet tasting room, knowledgeable pours. If you're serious about SLH, this is a required stop.",
+    category: "winery",
+    lat: 36.4810,
+    lng: -121.7205,
+    website: "https://wrathwines.com",
+  },
+  {
+    name: "Morgan Winery",
+    city: "Carmel Valley",
+    note: "The original Santa Lucia Highlands champion. Dan Lee planted in the SLH before anyone else believed in it. The Double L Vineyard Pinot is the reference point for the appellation — bright, savory, and unmistakably coastal. Carmel Valley Village tasting room is an easy walk from the main strip.",
+    category: "winery",
+    lat: 36.4800,
+    lng: -121.7210,
+    website: "https://morganwinery.com",
+  },
+  {
+    name: "Holman Ranch",
+    city: "Carmel Valley",
+    note: "400 acres of Carmel Valley hillside with a cave tasting room that earns the drive. Their Pinot Noir and Chardonnay from the estate vineyard show genuine SLH restraint. One of the most beautiful properties in the county — the setting alone justifies the appointment.",
+    category: "winery",
+    lat: 36.4895,
+    lng: -121.7312,
+    website: "https://holmanranch.com",
+  },
+  {
+    name: "Chesebro Wines",
+    city: "Carmel Valley",
+    note: "Small-production, family-run, and poured by the people who made it. Chesebro sources from Carmel Valley vineyards and keeps the tasting room personal and unpretentious. The kind of stop that reminds you why wine country should feel like meeting someone, not touring an attraction.",
+    category: "winery",
+    lat: 36.4805,
+    lng: -121.7197,
+    website: "https://cheesebrewines.com",
+  },
+  {
+    name: "Joullian Vineyards",
+    city: "Carmel Valley",
+    note: "Classic Carmel Valley stop, family-owned since the 1980s. Cabernet Sauvignon from the warm inland microclimate is genuinely good; the Riesling and Chardonnay from cooler blocks are underrated. Tasting room in the Village is low-key and friendly.",
+    category: "winery",
+    lat: 36.5080,
+    lng: -121.8148,
+    website: "https://joullian.com",
+  },
 
-  // ── WINERIES: SONOMA VALLEY ───────────────────────────────────────────────
-  { name: "Benziger Family Winery", city: "Glen Ellen", note: "The essential biodynamic stop in Glen Ellen. The tram tour actually teaches you something, and the setting is gorgeous.", category: "winery", lat: 38.3608, lng: -122.5428, website: "https://www.benziger.com" },
-  { name: "Imagery Estate Winery", city: "Glen Ellen", note: "Artist-label wines, a working art gallery, and a patio that doesn't feel like a tourist trap. Underrated and worth it.", category: "winery", lat: 38.3601, lng: -122.5037, website: "https://www.imagerywinery.com" },
-  { name: "Gundlach Bundschu", city: "Sonoma", note: "California's oldest family winery. \"Gun Bun\" does it right — beautiful grounds, great events, and an underrated Gewürztraminer.", category: "winery", lat: 38.274716, lng: -122.425212, website: "https://www.gunbun.com" },
-  { name: "Scribe Winery", city: "Sonoma", note: "Hacienda vibes near Sonoma Plaza, excellent pét-nat and sparkling, and a food program built around the land.", category: "winery", lat: 38.271284, lng: -122.423063, website: "https://www.scribewinery.com" },
-  { name: "Buena Vista Winery", city: "Sonoma", note: "California's first premium winery (1857). The history alone is worth a visit, and the wines hold their own.", category: "winery", lat: 38.2995, lng: -122.4220, website: "https://www.buenavistawinery.com" },
-  { name: "Chateau St. Jean", city: "Kenwood", note: "1920s chateau grandeur in Kenwood. Award-winning wines, manicured grounds, and breathtaking mountain views.", category: "winery", lat: 38.4237, lng: -122.5539, website: "https://www.chateaustjean.com" },
-  { name: "B. Wise Winery", city: "Kenwood", note: "A cave tasting experience unlike anything else — dramatic barrel-vaulted tunnels in the Moon Mountain District.", category: "winery", lat: 38.415646, lng: -122.548062, website: "https://www.bwisevineyards.com" },
-  { name: "Repris Winery", city: "Glen Ellen", note: "The Moon Mountain ATV tour is as memorable as the wine. Cabernet planted in the 1880s. Rare and remarkable.", category: "winery", lat: 38.349782, lng: -122.459800, website: "https://repriswines.com" },
-  { name: "Three Sticks Wines", city: "Sonoma", note: "Pre-Gold Rush adobe setting from 1842. Designed by Ken Fulk with the ambience of another era. Pinot and Chard.", category: "winery", lat: 38.2924, lng: -122.4589, website: "https://www.threestickswines.com" },
-  { name: "Hamel Family Wines", city: "Glen Ellen", note: "Certified biodynamic, dry-farmed since 2018. Cave tours, library tastings, Bordeaux-style blends. Appointment only.", category: "winery", lat: 38.345814, lng: -122.494018, website: "https://www.hamelfamilywines.com" },
-  { name: "Hanzell Vineyards", city: "Sonoma", note: "Founded in 1953 by an ambassador inspired by Burgundy. Bird's-eye Sonoma Valley views and benchmark Chardonnay.", category: "winery", lat: 38.3111, lng: -122.4630, website: "https://www.hanzell.com" },
-  { name: "Viansa Winery", city: "Sonoma", note: "Tuscan-inspired estate with Italian varietals, a deli marketplace, and picnic tables overlooking the valley.", category: "winery", lat: 38.20847, lng: -122.451805, website: "https://www.viansa.com" },
-  { name: "Mayo Family Winery", city: "Kenwood", note: "Absurd value for a deep-dive tasting in Kenwood. Many wines, attentive pours, zero pretension. A local secret.", category: "winery", lat: 38.4185, lng: -122.5488, website: "https://www.mayofamilywinery.com" },
-  { name: "St. Francis Winery", city: "Kenwood", note: "Certified Sustainable family-owned estate. The food and wine pairing experience here is among Sonoma's best.", category: "winery", lat: 38.435496, lng: -122.578090, website: "https://www.stfranciswinery.com" },
-  { name: "Coursey Graves", city: "Santa Rosa", note: "French-inspired at 1,500 feet on Bennett Mountain. Panoramic views, Monet-style gardens, and luxury private tastings.", category: "winery", lat: 38.4000405, lng: -122.604536, website: "https://www.courseygraves.com" },
+  // ── WINERIES: SANTA LUCIA HIGHLANDS ────────────────────────────────────────
+  {
+    name: "Hahn Family Wines",
+    city: "Soledad",
+    note: "Estate winery in the heart of the Santa Lucia Highlands at 1,200 feet elevation. The cool marine-influenced climate produces Pinot Noir and Chardonnay with real texture and grip. The tasting room has sweeping views of the Salinas Valley floor and runs the full range from accessible to single-vineyard serious.",
+    category: "winery",
+    lat: 36.3961,
+    lng: -121.3390,
+    website: "https://hahnwinery.com",
+  },
+  {
+    name: "Scheid Family Wines",
+    city: "Greenfield",
+    note: "One of the most respected growers in Monterey County — over 4,000 acres under vine in the Salinas Valley — now pouring their own label. The Greenfield tasting room is a no-fuss destination for understanding what the valley floor and hillside vineyards produce at different elevations and exposures.",
+    category: "winery",
+    lat: 36.3244,
+    lng: -121.2455,
+    website: "https://scheidvineyards.com",
+  },
 
-  // ── WINERIES: DRY CREEK VALLEY ───────────────────────────────────────────
-  { name: "Ferrari-Carano Vineyards", city: "Healdsburg", note: "Villa grandeur in Dry Creek. Stately rose gardens, early tastings, and a Fumé Blanc that earns its reputation.", category: "winery", lat: 38.711403, lng: -122.978236, website: "https://www.ferrari-carano.com" },
-  { name: "Mauritson Wines", city: "Healdsburg", note: "Sixth-generation family Zinfandel. Honest, direct, and exactly what Dry Creek Valley should taste like.", category: "winery", lat: 38.6504, lng: -122.9120, website: "https://www.mauritsonwines.com" },
-  { name: "Truett Hurst", city: "Healdsburg", note: "Biodynamic holistic farm with goats, sheep, chickens, and great Zinfandel. The eco-estate tour is a genuine delight.", category: "winery", lat: 38.681545, lng: -122.939729, website: "https://www.truetthurst.com" },
-  { name: "DaVero Farms & Winery", city: "Healdsburg", note: "Biodynamic farm and winery on Westside Road with the Slow Food 'good, clean, fair' credential built in. Walk-in tastings available Thursday–Monday when space permits; full farm, food pairing, and olive oil tasting experiences bookable by reservation. The courtyard is a genuine farm visit — biodynamically grown fruit trees, olive groves, native plants, butterfly gardens, baby pigs, and picnic tables. This is not a tasting room with a garden: it is a working farm that also makes wine. The olive oil program is serious and worth seeking out separately.", category: "winery", lat: 38.6035834, lng: -122.8839846, website: "https://www.davero.com" },
-  { name: "Preston Farm & Winery", city: "Healdsburg", note: "No tour needed — winemaking operations visible in the courtyard. Feels like a European village bodega. Old-school cool.", category: "winery", lat: 38.7030, lng: -122.9674, website: "https://www.prestonfarmandwinery.com" },
-  { name: "Preston Farm & Winery — Farmstand", city: "Healdsburg", note: "The working farm side of Preston — estate olive oil pressed on-site, house-baked bread (usually sourdough), farm eggs, seasonal vegetables, and garden produce sold directly at the property on W Dry Creek Rd. The kind of farmstand that only exists because the farm is real. Pick up bread and oil on the way out after tasting.", category: "farmstand", lat: 38.7033, lng: -122.9671, website: "https://www.prestonfarmandwinery.com" },
-  { name: "Quivira Vineyards", city: "Healdsburg", note: "Biodynamic Dry Creek estate with certified-organic farming and a standout Zinfandel built on Rhône sensibility.", category: "winery", lat: 38.655807, lng: -122.936371, website: "https://www.quivirawine.com" },
-  { name: "Dry Creek Vineyard", city: "Healdsburg", note: "The original Dry Creek label — and it shows. Consistent, honest, and the Fumé Blanc is a perennial benchmark.", category: "winery", lat: 38.6529, lng: -122.9240, website: "https://www.drycreekvineyard.com" },
-  { name: "Mounts Family Winery", city: "Healdsburg", note: "Tiny family operation where you might meet the winemaker. Rare varietals, bocce court, local vibes.", category: "winery", lat: 38.657683, lng: -122.94432, website: "https://www.mountswinery.com" },
-  { name: "Ridge - Lytton Springs", city: "Healdsburg", note: "One of the great Zinfandel estates in California — the Lytton Springs vineyard on the Healdsburg/Geyserville border has been producing field-blend Zin since the 1970s. Ancient vines of Zinfandel, Petite Sirah, Carignane, and Mataro grown on volcanic hillside soils. Ridge makes it the same way it always has: hand-sorted fruit, native yeast, American oak, minimal intervention. The wine is structured, brooding, and built for the cellar — but the tasting room pours it at every stage. The Rhône whites are worth seeking out. Tasting room open daily on Lytton Springs Road.", category: "winery", lat: 38.6495, lng: -122.8816, website: "https://www.ridgewine.com/lytton-springs" },
+  // ── WINERIES: CARMEL (TASTING ROOMS) ───────────────────────────────────────
+  {
+    name: "Albatross Ridge",
+    city: "Carmel",
+    note: "Tasting room in Carmel village, estate vineyard high in the Santa Lucia Highlands at 2,200 feet — one of the highest in Monterey County. The elevation and marine influence produce Pinot Noir that is leaner and more savory than Sonoma Coast equivalents. Worth a stop if you're walking Carmel's tasting row.",
+    category: "winery",
+    lat: 36.5558,
+    lng: -121.9234,
+    website: "https://albatrossridge.com",
+  },
+  {
+    name: "A Taste of Monterey",
+    city: "Monterey",
+    note: "The most efficient single stop for understanding Monterey wine without driving the appellation. Over 70 local wines available by the glass, flight, or bottle, plus retail. Cannery Row location has bay views. The staff knows the producers personally — ask what they're excited about.",
+    category: "winery",
+    lat: 36.6188,
+    lng: -121.8948,
+    website: "https://atasteofmonterey.com",
+  },
 
-  // ── WINERIES: ALEXANDER VALLEY ───────────────────────────────────────────
-  { name: "Jordan Winery", city: "Healdsburg", note: "The Alexander Valley estate that defined restrained California Cabernet. Stunning chateau, impeccable hospitality, and the best library tasting in the county.", category: "winery", lat: 38.661639, lng: -122.85018, website: "https://www.jordanwinery.com" },
-  { name: "Silver Oak Alexander Valley", city: "Healdsburg", note: "The definitive Alexander Valley Cabernet Sauvignon — aged in American oak for a house style that's unmistakably its own. The Highway 128 estate is the original Silver Oak facility, and the hospitality here is serious. Worth the splurge and the drive.", category: "winery", lat: 38.669521, lng: -122.810190, website: "https://www.silveroak.com" },
-  { name: "Francis Ford Coppola Winery", city: "Geyserville", note: "Part winery, part resort — pools, bocce, Hollywood memorabilia. Great for groups and a genuinely fun afternoon.", category: "winery", lat: 38.6794, lng: -122.8875, website: "https://www.francisfordcoppolawinery.com" },
-  { name: "Stonestreet Estate", city: "Healdsburg", note: "Mountain estate Cabernet at its Sonoma best. The Alexander Mountain terroir produces power with elegance.", category: "winery", lat: 38.669294, lng: -122.812386, website: "https://www.stonestreetwines.com" },
-  { name: "Chalk Hill Estate", city: "Healdsburg", note: "1,300-acre estate with stunning views, warm hospitality, and terroir-driven Chardonnay that punches above its price.", category: "winery", lat: 38.570102, lng: -122.774271, website: "https://www.chalkhill.com" },
-  { name: "Medlock Ames", city: "Healdsburg", note: "Modern rural-hipster done right. Founded by two college friends in 1998 with organic farming at the center.", category: "winery", lat: 38.6664533, lng: -122.8222575, website: "https://www.medlockames.com" },
-  { name: "Banshee Wines", city: "Geyserville", note: "Geyserville estate winery in Alexander Valley with a focused program of single-vineyard Pinot Noir from the Western Sonoma Coast and Sonoma County. Tasting flights include Sauvignon Blanc, Chardonnay, Rosé, and bold Cabernet alongside the Pinots. Walk-ins welcome; reserve ahead for larger groups.", category: "winery", lat: 38.682145, lng: -122.835281, website: "https://www.bansheewines.com" },
+  // ── RESTAURANTS ─────────────────────────────────────────────────────────────
+  {
+    name: "Nepenthe",
+    city: "Big Sur",
+    note: "The cathedral of Big Sur dining — terraced into the cliff at 808 feet with one of the great restaurant views in California. The Ambrosia burger has been feeding travelers since 1949 and hasn't been embarrassed by time. Arrive for lunch before the afternoon coast fog closes in. The phonix is the original structure. An institution, earned.",
+    category: "restaurant",
+    lat: 36.2541,
+    lng: -121.8124,
+    website: "https://nepenthebigsusr.com",
+  },
+  {
+    name: "Aubergine at L'Auberge Carmel",
+    city: "Carmel",
+    note: "The best table on the Monterey Peninsula. Justin Cogley's seasonal tasting menu is among the most technically accomplished in Northern California — hyper-local, precise, and entirely worth the price. The bread service alone sets a standard. Book weeks ahead and come hungry.",
+    category: "restaurant",
+    lat: 36.5551,
+    lng: -121.9231,
+    website: "https://auberginecarmel.com",
+  },
+  {
+    name: "Cantinetta Luca",
+    city: "Carmel",
+    note: "Reliable Italian in the village with genuinely good house-made pasta and a wine list weighted toward Monterey County producers. The charcuterie board is serious. If you're staying in Carmel and need a good dinner without a tasting menu investment, this is the answer.",
+    category: "restaurant",
+    lat: 36.5557,
+    lng: -121.9241,
+    website: "https://cantinettaluca.com",
+  },
+  {
+    name: "Passionfish",
+    city: "Pacific Grove",
+    note: "The neighborhood restaurant Pacific Grove deserves and almost doesn't know it has. Ted Walter's wine list is famously well-priced — zero markup on most bottles is the stated goal — and the sustainable seafood is sourced with real intention. Book ahead. The regulars fill it.",
+    category: "restaurant",
+    lat: 36.6275,
+    lng: -121.9170,
+    website: "https://passionfish.net",
+  },
+  {
+    name: "The Sardine Factory",
+    city: "Monterey",
+    note: "A Cannery Row institution since 1968. The Captain's Room is old-school California fine dining at its most theatrical — vaulted ceilings, full service, the works. The abalone bisque has been on the menu for decades for good reason. An important historical stop for understanding Monterey's dining history.",
+    category: "restaurant",
+    lat: 36.6197,
+    lng: -121.8964,
+    website: "https://sardinefactory.com",
+  },
+  {
+    name: "Cultura Comida y Bebida",
+    city: "Carmel",
+    note: "The best argument that Carmel's restaurant scene is getting more interesting. Local sourcing, a Mexican-inflected menu built around what's in season in the Salinas Valley, and a natural wine list that would hold its own in San Francisco. Genuinely exciting cooking in a town not always known for it.",
+    category: "restaurant",
+    lat: 36.5557,
+    lng: -121.9228,
+    website: "https://culturacarmel.com",
+  },
+  {
+    name: "Tarpy's Roadhouse",
+    city: "Monterey",
+    note: "The classic for a reason. Stone farmhouse building, wood-fired cooking, and a menu built for people who actually eat — not people performing a dining experience. The prime rib is a weekend ritual for half the Peninsula. Reliable, honest, and genuinely good.",
+    category: "restaurant",
+    lat: 36.6049,
+    lng: -121.8615,
+    website: "https://tarpys.com",
+  },
+  {
+    name: "Café Rustica",
+    city: "Carmel Valley",
+    note: "The Carmel Valley Village gathering spot. Wood-fired pizzas, solid pasta, and a patio that captures everything right about warm Carmel Valley evenings. Unpretentious, consistent, and fills up with locals during the week — which tells you everything you need to know.",
+    category: "restaurant",
+    lat: 36.4804,
+    lng: -121.7197,
+    website: "https://caferusticacarmelvalley.com",
+  },
+  {
+    name: "The Fish Hopper",
+    city: "Monterey",
+    note: "Cannery Row seafood with bay views. Not a destination in the Aubergine sense, but an honest, well-run seafood restaurant that does justice to the local catch. Good for Dungeness crab in season. The clam chowder is better than most on the Row.",
+    category: "restaurant",
+    lat: 36.6181,
+    lng: -121.8971,
+    website: "https://fishhopper.com",
+  },
+  {
+    name: "Wild Fish",
+    city: "Pacific Grove",
+    note: "Small, focused, and genuinely committed to sustainable local seafood. Pacific Grove's quiet gem. The menu changes with what came off the boats. No swordfish, no farmed salmon — Wild Fish means it. Book ahead; it seats very few.",
+    category: "restaurant",
+    lat: 36.6261,
+    lng: -121.9205,
+    website: "https://wild-fish.com",
+  },
+  {
+    name: "Sierra Mar at Post Ranch Inn",
+    city: "Big Sur",
+    note: "A 1,200-foot cliff perch with one of the most dramatic dining rooms in California. The cuisine leans organic and local; the wine list is genuinely exceptional. The price reflects the setting — but the setting is legitimately extraordinary. Lunch is more accessible than dinner. Reserve the moment you book lodging.",
+    category: "restaurant",
+    lat: 36.2366,
+    lng: -121.8091,
+    website: "https://postranchinn.com/dining",
+  },
 
-  // ── WINERIES: HEALDSBURG ─────────────────────────────────────────────────
-  { name: "Seghesio Family Vineyards", city: "Healdsburg", note: "The Healdsburg Zinfandel standard. Multi-generational, Italian-rooted, and pours with the ease of family confidence.", category: "winery", lat: 38.6175, lng: -122.8754, website: "https://www.seghesio.com" },
-  { name: "Locals Tasting Room", city: "Geyserville", note: "One tasting room, seven small producers. The smartest first stop in Geyserville for scoping what you want to pursue.", category: "winery", lat: 38.706447, lng: -122.9038695, website: "https://www.localstastingroom.com" },
-  { name: "Bricoleur Vineyards", city: "Windsor", note: "Stunning RRV estate south of Healdsburg. Picnic wagons, bocce, rose gardens, and consistently elegant wines.", category: "winery", lat: 38.5248187, lng: -122.8321646, website: "https://www.bricoleurvineyards.com" },
-  { name: "J Vineyards & Winery", city: "Healdsburg", note: "Top California sparkling wine producer. The Bubble Room five-course pairing is a legitimate destination dining experience.", category: "winery", lat: 38.5729, lng: -122.8424, website: "https://www.jwine.com" },
-  { name: "Passalacqua Winery", city: "Healdsburg", note: "A Dry Creek Valley family story that starts in 1865 — Francesco Passalacqua emigrated from Genoa, planted grapes immediately, and opened Fitch Mountain Cellars in 1895. His granddaughter Edith reopened after Prohibition as one of the first women to make wine and own a winery in California; her original label still goes on every bottle of Estate Zinfandel. Small number of tastings daily by appointment only, 11am–3:30pm. West side of Lambert Bridge Road just south of the Dry Creek General Store.", category: "winery", lat: 38.654176, lng: -122.927202, website: "https://www.passalacquawinery.com" },
-  { name: "Orsi Family Vineyards", city: "Healdsburg", note: "Family estate on 70 acres two minutes from downtown Healdsburg, serious about Italian varietals that rarely show up in California: Aglianico, Sagrantino, Montepulciano, Negroamaro, and Fiano alongside Sangiovese and Zinfandel. The family's Italian roots inform every bottle. Open Thu–Sun 10:30am–4:30pm; reservations recommended, walk-ins on a limited basis.", category: "winery", lat: 38.6055582, lng: -122.8744873, website: "https://orsifamilyvineyards.com" },
-  { name: "Idlewild Wines", city: "Healdsburg", note: "Sam Bilbro's love letter to the wines of Piedmont — Arneis, Dolcetto, Barbera, Nebbiolo — grown on Mendocino County vineyards and poured steps off the Healdsburg Plaza. One of the most compelling Italian-varietal projects in California. Open Wed–Sun 11am–5pm, by appointment.", category: "winery", lat: 38.6111964, lng: -122.8690209, website: "https://www.idlewildwines.com" },
-  { name: "Zina Hyde Cunningham Winery", city: "Sonoma", note: "Sunset patio, fireplace inside, cheese boards, and intimate Sonoma Plaza tastings. The evening wind-down.", category: "winery", lat: 38.292095, lng: -122.4564658, website: "https://www.zinawinery.com" },
+  // ── FARM STANDS & MARKETS ─────────────────────────────────────────────────
+  {
+    name: "Earthbound Farm Farm Stand",
+    city: "Carmel Valley",
+    note: "The farm that launched organic on a national scale — Earthbound Farm started as a 2.5-acre raspberry plot in Carmel Valley in 1984. The farm stand on Carmel Valley Road sells their full produce range alongside prepared foods, seasonal smoothies, and ready-to-eat bowls. Walk the certified organic demonstration garden while you're there. A piece of California food history.",
+    category: "farmstand",
+    lat: 36.5225,
+    lng: -121.8680,
+    website: "https://earthboundfarm.com",
+  },
+  {
+    name: "Gizdich Ranch",
+    city: "Watsonville",
+    note: "Pick-your-own apples and olallieberries in the coastal foothills above Watsonville, operating since 1937. The ranch makes their own pies, juices, and preserves on-site using estate fruit. A genuine working farm in a county whose agricultural output most people never see. Seasonal operation — call ahead for pick-your-own availability.",
+    category: "farmstand",
+    lat: 36.9128,
+    lng: -121.7706,
+    website: "https://gizdich-ranch.com",
+  },
+  {
+    name: "Monterey Bay Certified Farmers Market — Monterey",
+    city: "Monterey",
+    note: "The Monterey Peninsula's best weekly market, drawing farms from across the Salinas Valley floor and coastal hills. Castroville artichoke growers, Watsonville strawberry farms, coastal microgreens, and specialty produce direct from growers. Tuesday and Saturday in the Old Monterey Marketplace. The most direct connection to what's actually growing in the county right now.",
+    category: "farmstand",
+    lat: 36.6001,
+    lng: -121.8932,
+    website: "https://montereybayfarmers.org",
+  },
+  {
+    name: "Carmel Valley Village Farmers Market",
+    city: "Carmel Valley",
+    note: "Small but honest weekly market in the Village. Local farms, backyard growers, valley honey, and seasonal vegetables. Worth pairing with a tasting room stop — it runs Sunday mornings in the Village.",
+    category: "farmstand",
+    lat: 36.4800,
+    lng: -121.7202,
+    website: "https://montereybayfarmers.org",
+  },
 
-  // ── WINERIES: CARNEROS / PETALUMA ────────────────────────────────────────
-  { name: "The Donum Estate", city: "Sonoma", note: "50+ monumental sculptures on 200 acres plus world-class Pinot and Chardonnay. Art and wine in full Carneros elegance.", category: "winery", lat: 38.2305, lng: -122.4017, website: "https://www.thedonumestate.com" },
-  { name: "Schug Carneros Estate", city: "Sonoma", note: "German-born winemaker Walter Schug's legacy estate. Benchmark Carneros Pinot and Chardonnay in a quiet setting.", category: "winery", lat: 38.232941, lng: -122.471127, website: "https://www.schugwinery.com" },
-  { name: "Region Wine Bar", city: "Sebastopol", note: "Downtown Sebastopol's finest pour. 50+ wines by the taste via self-pour machines. The ideal first stop before any winery day.", category: "restaurant", lat: 38.404153, lng: -122.819711, website: "https://drinkregion.com" },
-
-  // ── RESTAURANTS: HEALDSBURG ───────────────────────────────────────────────
-  { name: "SingleThread", city: "Healdsburg", note: "Kyle and Katina Connaughton's 3-Michelin-star omakase — eleven courses built on their farm behind the restaurant. The most serious table in Sonoma County.", category: "restaurant", lat: 38.6123, lng: -122.8697, website: "https://www.singlethreadfarms.com" },
-  { name: "Valette", city: "Healdsburg", note: "Dustin Valette's flagship on Center Street — the room that put Healdsburg's culinary identity on the map. Deep Sonoma sourcing, honest technique, and hospitality that doesn't feel performed.", category: "restaurant", lat: 38.6121, lng: -122.8696, website: "https://www.valettehealdsburg.com" },
-  { name: "Troubadour / Le Dîner", city: "Healdsburg", note: "A 7-course Michelin-listed tasting menu hidden inside a 20-seat bakery — SingleThread alumni running an extraordinary Thursday-through-Sunday dinner. Prepaid on Tock, no walk-ins. Book before you leave home.", category: "restaurant", lat: 38.6115, lng: -122.8710, website: "https://www.troubadourhbg.com" },
-  { name: "Folia Bar & Kitchen — Appellation Healdsburg", city: "Healdsburg", note: "Reed Palmer's three-course prix fixe at one of Wine Country's most striking new resort properties. Mt. Lassen trout, Mary's chicken, estate garden vegetables. The rooftop bar and panoramic plaza views earn a stop on their own.", category: "restaurant", lat: 38.6105, lng: -122.8692, website: "https://www.appellationhotels.com/hotels/california-healdsburg/dining/folia-bar-kitchen/" },
-  { name: "Bistro Lagniappe", city: "Healdsburg", note: "Chef-owner Jacob Harth's French-inspired farmhouse kitchen in downtown Healdsburg — wood-fired cooking built around pasture-raised meats, line-caught fish, and regenerative farm produce. Open seven nights a week, including Mondays when almost nothing else on this corridor is.", category: "restaurant", lat: 38.6116, lng: -122.8705, website: "https://www.lagniappehealdsburg.com" },
-  { name: "The Matheson", city: "Healdsburg", note: "Dustin Valette's rooftop bar and restaurant on the plaza — three floors, a wood-fired kitchen, and the best view in downtown Healdsburg. The cocktail program is serious.", category: "restaurant", lat: 38.6102, lng: -122.8700, website: "https://www.thematheson.com" },
-  { name: "Barndiva", city: "Healdsburg", note: "A beautiful garden room in the middle of Healdsburg — seasonal farm-to-table cooking in a converted barn with genuine warmth. The Saturday brunch with live music in the garden is one of the better weekend mornings in the county.", category: "restaurant", lat: 38.6096, lng: -122.8695, website: "https://www.barndiva.com" },
-  { name: "Little Saint", city: "Healdsburg", note: "The Moshin family's plant-based restaurant and market on the plaza — genuinely inventive cooking that doesn't position itself as a compromise. Good for the table with mixed preferences.", category: "restaurant", lat: 38.6120, lng: -122.8719, website: "https://www.littlesainthealdsburg.com" },
-  { name: "Lo & Behold Bar + Kitchen", city: "Healdsburg", note: "Voted Best Bar and Best Restaurant in Healdsburg. Global comfort food built from the owners' own farm — house-made noodles with kimchi, duck confit with panang curry, beef brisket tacos — with a cocktail program grown from the same soil. The garden patio is one of the best outdoor rooms in the county. Open Sundays and Mondays when most of downtown Healdsburg is dark.", category: "restaurant", lat: 38.609016, lng: -122.870078, website: "https://www.loandbeholdca.com" },
-  { name: "Baci Café & Wine Bar", city: "Healdsburg", note: "The one reliable dinner in downtown Healdsburg on a Monday. Italian classics, good pasta, a wine list full of Sonoma County names, and neighborhood ease when nothing else is open.", category: "restaurant", lat: 38.6117, lng: -122.8706, website: "https://www.bacicafeandwinebar.com" },
-  { name: "Acorn Cafe", city: "Healdsburg", note: "Breakfast and brunch anchor on the Healdsburg Plaza — the right start for any Healdsburg food day. Dutch door, good coffee, solid morning food. Open every day including Mondays.", category: "restaurant", lat: 38.6105, lng: -122.8690, website: "https://www.acornhealdsburg.com" },
-  { name: "Dry Creek Kitchen", city: "Healdsburg", note: "Charlie Palmer's flagship Healdsburg restaurant anchoring Hotel Healdsburg — Sonoma sourcing, wine-country ambience, and one of the most reliable kitchens on the plaza.", category: "restaurant", lat: 38.6108, lng: -122.8711, website: "https://drycreekkitchen.com" },
-  { name: "Willi's Seafood & Raw Bar", city: "Healdsburg", note: "Mark and Terri Stark's lively raw bar on North Healdsburg Ave — oysters, crudo, ceviches, and tapas-style seafood plates in a room that never loses energy. The oyster happy hour is one of the best value stops in the county.", category: "restaurant", lat: 38.6120, lng: -122.8712, website: "https://www.starkrestaurants.com/willis-seafood" },
-  { name: "Bravas Bar de Tapas", city: "Healdsburg", note: "The Stark group's Spanish tapas room on Center St — patatas bravas, croquetas, razor clams, and a sherry list that doesn't apologize for itself. The ideal pre- or post-winery hang in Healdsburg.", category: "restaurant", lat: 38.6129, lng: -122.8698, website: "https://www.starkrestaurants.com/bravas" },
-  { name: "Sarmentine - Petaluma", city: "Petaluma", note: "Organic French bakery, Petaluma location at 840 Petaluma Blvd North. Traditional French bread-making using local organic ingredients, long-fermented levain, croissants, baguettes, and pastries alongside café service. Open Mon–Fri 7:30am–4pm, Sat–Sun 7:30am–3pm.", category: "restaurant", lat: 38.244385, lng: -122.6442278, website: "https://www.sarmentine.com/visit-us" },
-  { name: "Sarmentine - Santa Rosa", city: "Santa Rosa", note: "Organic French bakery, Santa Rosa location at 52 Mission Circle, Suite 112 (corner of Hwy 12 & Mission Blvd, Rincon Valley). Traditional French bread-making using local organic ingredients, long-fermented levain, croissants, baguettes, and pastries alongside café service. Open Mon–Fri 7:30am–4pm, Sat–Sun 7:30am–3pm.", category: "restaurant", lat: 38.4579, lng: -122.6740, website: "https://www.sarmentine.com/visit-us" },
-  { name: "Sarmentine - Sebastopol", city: "Sebastopol", note: "Organic French bakery, Sebastopol location at The Barlow (6760 McKinley St, Suite 150). Traditional French bread-making using local organic ingredients, long-fermented levain, croissants, baguettes, and pastries alongside café service. Open Mon–Fri 7:30am–4pm, Sat–Sun 7:30am–4pm.", category: "restaurant", lat: 38.4041445, lng: -122.8204416, website: "https://www.sarmentine.com/visit-us" },
-  { name: "Quail & Condor Bakery", city: "Healdsburg", note: "Slow Food Snail of Approval and one of the three serious bread programs in Sonoma County — now at 44 Mill St in Healdsburg, a larger 3,650-square-foot space with a full breakfast menu alongside the loaves. Wood-fired baking, long fermentation, locally milled grain. Open Mon and Thu–Sun 8am–3pm, closed Tue–Wed.", category: "restaurant", lat: 38.6077, lng: -122.8713, website: "https://www.quailandcondor.com" },
-  { name: "Nightingale Breads", city: "Forestville", note: "Slow Food Snail of Approval artisan bread bakery at 6665 Front Street in Forestville — wood-fired organic loaves in a traditional oven. French baguettes, rosemary focaccia, and sourdoughs. Also carries local cheeses, jams, and olive oils. Open Thu–Fri 11am–4pm, Sat–Sun 10am–3pm, closed Mon–Wed.", category: "restaurant", lat: 38.4738, lng: -122.8928, website: "https://www.nightingalebreads.com" },
-
-  // ── RESTAURANTS: ALEXANDER VALLEY / GEYSERVILLE ───────────────────────────
-  { name: "Jimtown Store", city: "Healdsburg", note: "The historic 1895 country store tucked into the Alexander Valley vines on Highway 128. Fresh-prepared food, homebaked goods, famous chocolate pudding, and the perfect anchor for any Alexander Valley wine day. Open Mondays — rare on this corridor.", category: "restaurant", lat: 38.6688, lng: -122.8172, website: "https://www.jimtown.com" },
-  { name: "Cyrus", city: "Geyserville", note: "Douglas Keane's multi-act dining experience in Geyserville — champagne and canapés, interactive chef's table, main dining room, and a dessert room with a molten chocolate fountain. The Sunday Family Meal ($55 gochujang fried chicken) and Kisetsu Ramen popup are easier ways in.", category: "restaurant", lat: 38.706427, lng: -122.9005122, website: "https://www.cyrusrestaurant.com" },
-  { name: "Diavola", city: "Geyserville", note: "The loud, delicious Geyserville table for pizza, pasta, and house-cured salumi. Chef Dino Bugica has been making charcuterie and working that wood oven for years without losing the plot. The best stop after a Dry Creek or Alexander Valley wine day.", category: "restaurant", lat: 38.7063, lng: -122.9041, website: "https://www.diavolapizzeria.com" },
-  { name: "Geyserville Gun Club", city: "Geyserville", note: "The essential Alexander Valley stop — Slow Food Snail of Approval, wood-fired cooking, and a room that earns its reputation without trying. The burger is a local institution. The wood-fired specials rotate with the season and the bar program leans on regional spirits. Relaxed, confident, and one of the most satisfying meals in the upper county.", category: "restaurant", lat: 38.7064, lng: -122.9042, website: "https://www.geyservillegunclub.com" },
-  { name: "Catelli's", city: "Geyserville", note: "Fourth-generation Italian-American family restaurant on Geyserville Avenue — Domenica Catelli runs the place her great-grandparents opened, and it shows in every detail. House-made pasta, deep Sonoma County sourcing, and a room that feels like it belongs to the town. The Supper Club nights are worth planning around.", category: "restaurant", lat: 38.7066592, lng: -122.9046923, website: "https://www.mycatellis.com" },
-
-  // ── RESTAURANTS: KENWOOD / GLEN ELLEN ────────────────────────────────────
-  { name: "Stella", city: "Kenwood", note: "Ari Weiswasser and chef de cuisine Bryant Minuche's Italian-California room in the old Cafe Citti space, opened March 2025. Roman tonnarelli, lumache with spring pea pesto, burrata with 12-year balsamic. Open every night including Mondays — exceptional on this corridor.", category: "restaurant", lat: 38.4181, lng: -122.5503, website: "https://www.stellakenwood.com" },
-  { name: "Glen Ellen Star", city: "Glen Ellen", note: "Ari Weiswasser's original wood-fired room in Glen Ellen — the table that put the Sonoma Valley back on the serious food map. Brick chicken, ember-roasted vegetables, produce from the farm behind the restaurant.", category: "restaurant", lat: 38.3643, lng: -122.5246, website: "https://www.glenellenstar.com" },
-  { name: "Poppy", city: "Glen Ellen", note: "The Girl & The Fig's Sondra Bernstein and John Toulze transformed the old Fig Café into this French countryside room in May 2025. Crispy poulet rôti, Coquilles Saint-Jacques, asparagus salad with Sonoma strawberries. Wed–Fri prix fixe includes wine.", category: "restaurant", lat: 38.3635, lng: -122.5246, website: "https://www.poppyglenellen.com" },
-
-  // ── RESTAURANTS: SONOMA TOWN ──────────────────────────────────────────────
-  { name: "The Girl & The Fig", city: "Sonoma", note: "The Girl & the Fig is one of Sonoma Plaza's most beloved institutions — a French-country bistro that has been drawing locals and visitors alike since chef-owner Sondra Bernstein quietly opened it in Glen Ellen in 1997, then relocated to the northwest corner of the historic Sonoma Plaza in 2000.", category: "restaurant", lat: 38.293948, lng: -122.45883, website: "https://www.thegirlandthefig.com" },
-  { name: "Enclos", city: "Sonoma", note: "Two Michelin stars and a Green Star in its first year — chef Brian Limoges (Quince, Atelier Crenn) inside a restored 1880 Victorian half a block from Sonoma Plaza. The 11-course tasting menu is grounded in Stone Edge Farm's organic gardens. The hottest reservation in Northern California right now.", category: "restaurant", lat: 38.2916, lng: -122.4558, website: "https://enclos-sonoma.com" },
-  { name: "Rosso Pizzeria — Sonoma Plaza", city: "Sonoma", note: "Wood-fired pizza, good salads, and the fried chicken with smashed potatoes that people drive across the county for. A Sonoma institution with honest prices.", category: "restaurant", lat: 38.2921, lng: -122.4561, website: "https://www.rossopizzeria.com" },
-  { name: "Belfare", city: "Petaluma", note: "A Petaluma fried chicken institution with a loyal following across Sonoma County — widely regarded as one of the best fried chicken sandwiches in the county. Brick-and-mortar on South McDowell Blvd in Petaluma, also at local farmers markets. Mon–Fri lunch hours.", category: "restaurant", lat: 38.2359, lng: -122.6023, website: "https://belfaresonoma.com" },
-
-  // ── RESTAURANTS: PETALUMA ─────────────────────────────────────────────────
-  { name: "Bijou", city: "Petaluma", note: "Chef Stéphane Saint Louis (Table Culture Provisions) opened this French bistro in the former Easy Rider space in June 2025. Steak frites with sauce au poivre, cod brandade croquettes, and gâteau St. Honoré from pastry chef Sylvain Parsy. Open Mondays — almost unique at this quality level.", category: "restaurant", lat: 38.2355, lng: -122.6418, website: "https://restaurantbijou.com" },
-  { name: "Table Culture Provisions", city: "Petaluma", note: "The Michelin-recognized 7-course tasting menu from chefs Stéphane Saint Louis and Steven Vargas — Michelin-level cooking at neighborhood prices. Social Hour Wed–Thu 4–6 PM offers à la carte access. Nothing else like it in the county.", category: "restaurant", lat: 38.2316, lng: -122.6351, website: "https://www.tcprovision.com" },
-  { name: "Seared", city: "Petaluma", note: "Petaluma's anchor for steak, seafood, and barrel-aged cocktails — Beeman Ranch beef, line-caught halibut, and a wine list leaning Sonoma County. The hanger steak with truffled parmesan frites is the order.", category: "restaurant", lat: 38.2355, lng: -122.6407, website: "https://www.searedpetaluma.com" },
-  { name: "Della Fattoria", city: "Petaluma", note: "The family-owned Petaluma bakery whose bread shows up on half the menus in the county. The rosemary boule and wood-fired breads are reasons to detour off the 101. Breakfast and lunch daily; dinner Thu–Sat. Eat the bread at the source.", category: "restaurant", lat: 38.2350, lng: -122.6409, website: "https://dellafattoria.com" },
-  { name: "The Shuckery", city: "Petaluma", note: "Bohemian's Best Oyster Room two years running, inside the historic Hotel Petaluma. Chef Matt Meyer and Jazmine Lalicker run an oyster-forward room with a wine list that won Best in Sonoma County. Spring is peak season for Tomales Bay oysters.", category: "restaurant", lat: 38.2356, lng: -122.6422, website: "https://www.theshuckeryca.com" },
-  { name: "Lagunitas Brewing Company", city: "Petaluma", note: "The flagship Lagunitas taproom in Petaluma — open-air seating, live music calendar, rotating one-off brews from the on-site Disorderly House brewhouse. Jumbo Bavarian pretzel and smoked chicken wings are the food orders. Bring the dog. Open daily.", category: "restaurant", lat: 38.2721, lng: -122.6627, website: "https://www.lagunitas.com" },
-  { name: "Lunchette", city: "Petaluma", note: "Petaluma's favorite lunch counter — Slow Food Snail of Approval and a local institution that overdelivers on its casual format. Short menu built around what's available, executed with the kind of care that makes regulars possessive about the place. Arrive early; things sell out. 25 4th St, Petaluma. Mon–Fri only.", category: "restaurant", lat: 38.2329, lng: -122.6397, website: "https://www.lunchettepetaluma.com" },
-  { name: "Fishetarian Fish Market", city: "Bodega Bay", note: "The go-to fish market and counter on the Bodega Bay waterfront — sustainable sourcing, daily catches, fish tacos, chowder, and fish and chips with direct views of the bay. Opened 2012 by Shane and Dana Lucas. Outdoor seating. 599 Highway 1, Bodega Bay. Open daily.", category: "restaurant", lat: 38.3264, lng: -123.0411, website: "https://www.fishetarianfishmarket.com" },
-
-  // ── RESTAURANTS: SEBASTOPOL / WEST COUNTY ────────────────────────────────
-  { name: "Goldfinch", city: "Sebastopol", note: "Modern American bistro cooking around an open wood fire in Sebastopol's Livery on Main — chef Rodrigo Mendoza's seasonal, local, polished room. One of the strongest additions to the Sebastopol dining scene in years. Open Mondays.", category: "restaurant", lat: 38.4019, lng: -122.8238, website: "https://www.goldfinchsebastopol.com" },
-  { name: "Acre Pasta", city: "Sebastopol", note: "House-made pasta every morning, honest prices, and a rotating menu that takes the produce seriously. Spaghetti with Sunday red sauce at $12. The lumache with porcini cream is the sleeper hit.", category: "restaurant", lat: 38.4038, lng: -122.8203, website: "https://www.acrepasta.com" },
-  { name: "Ramen Gaijin", city: "Sebastopol", note: "House-made noodles, serious broth, and an izakaya menu built around local ingredients and Japanese technique. Happy hour 2:30–4:30 PM Tue–Sat. The broth tastes like someone spent two days on it.", category: "restaurant", lat: 38.4025, lng: -122.8237, website: "https://www.ramengaijin.com" },
-  { name: "Fern Bar", city: "Sebastopol", note: "Modern American food, genuinely excellent zero-proof cocktails, spirits, and live music in a plant-filled Barlow room. Happy hour daily 3–5 PM. The best long hang in Sebastopol — and the best non-alcoholic cocktail program in the county.", category: "restaurant", lat: 38.4033, lng: -122.8212, website: "https://www.fernbar.com" },
-  { name: "Handline", city: "Sebastopol", note: "Sustainable seafood with a seasonal porch that's one of the best outdoor happy-hour spots in West County. A communal table under a giant live oak, soft-serve ice cream, and kids welcome. Smoked trout chowder and fish tacos are the orders.", category: "restaurant", lat: 38.3923, lng: -122.8174, website: "https://www.handline.com" },
-  { name: "Underwood Bar and Bistro", city: "Graton", note: "The longtime West County anchor in the tiny village of Graton — steak frites, flatbreads, a serious bar. The flat iron steak frites with mushroom-shallot butter and chipotle sauce has earned its place on the permanent menu.", category: "restaurant", lat: 38.4363, lng: -122.8687, website: "https://www.underwoodgraton.com" },
-  { name: "Valley Bar + Bottle", city: "Sonoma", note: "Natural wine bar and restaurant on Sonoma Plaza — twice awarded the Michelin Bib Gourmand. The bottle list skews small-production and organic, the kitchen is farm-driven, and the format rewards a long, slow evening. Wine, brunch, and weekday lunch. 487 1st Street West, Sonoma Plaza. Not to be confused with Region Wine Bar in Sebastopol.", category: "restaurant", lat: 38.2923312, lng: -122.4591929, website: "https://www.valleybarandbottle.com" },
-  { name: "Goguette Bread", city: "Santa Rosa", note: "Slow Food Snail of Approval French bakery at 59 Montgomery Dr in Santa Rosa — sourdough-only breads, brioche, and stone-milled in-house flour. A 20-plus-year levain, gray sea salt, and organic grain. Open Wed–Sat 1:30–9pm, closed Sun–Tue. Order ahead online; high demand means sell-outs are common.", category: "restaurant", lat: 38.4423, lng: -122.7035, website: "https://www.goguettebread.com" },
-
-  // ── RESTAURANTS: SANTA ROSA ───────────────────────────────────────────────
-  { name: "Rosso Pizzeria — Santa Rosa", city: "Santa Rosa", note: "The beloved Sonoma pizza institution — wood-fired pizza program and a fried chicken with smashed potatoes and caramelized pancetta that is already among the best casual bites in the county.", category: "restaurant", lat: 38.4422, lng: -122.7035, website: "https://www.rossopizzeria.com" },
-  { name: "Augie's French", city: "Santa Rosa", note: "Mark and Terri Stark's lively French bistro on 4th Street — steak frites, mussels, classic bistro sauces, and a room built for date nights and small groups. The wine list tilts French and local, which is exactly right.", category: "restaurant", lat: 38.4403, lng: -122.7147, website: "https://www.starkrestaurants.com/augies" },
-  { name: "Bird & The Bottle", city: "Santa Rosa", note: "The Santa Rosa table for shareable plates, a busy bar, and wood-fired cooking. Best with a group that wants to order widely and pass everything around the table. One of Santa Rosa's most reliable rooms. Open Mondays.", category: "restaurant", lat: 38.4445, lng: -122.7057, website: "https://www.starkrestaurants.com/bird-the-bottle" },
-  { name: "Stark's Steak & Seafood", city: "Santa Rosa", note: "The Santa Rosa anchor for serious steak — Beeman Ranch beef, a wine list that leans Sonoma, and a happy hour that regulars treat as a standing appointment. The $6 martini on Tuesdays is the local secret.", category: "restaurant", lat: 38.4389, lng: -122.7232, website: "https://www.starkrestaurants.com/starks" },
-  { name: "Grata Italian Eatery", city: "Windsor", note: "Chef-owner Eric Foster's Italian kitchen — one of the most underappreciated rooms in north Sonoma County. House-made gnudi, burrata with preserved lemon honey, caramelized pear and endive bruschetta. Open Mondays.", category: "restaurant", lat: 38.5472, lng: -122.8127, website: "https://grataitalianeatery.toast.site" },
-  { name: "Willi's Wine Bar", city: "Santa Rosa", note: "The Stark group's original and arguably their most beloved — 40-plus wines by the glass, a small-plates menu built for grazing, and a warm room that rewards repeat visits. The anchor of the Old Redwood Hwy food corridor north of Santa Rosa.", category: "restaurant", lat: 38.4925, lng: -122.7423, website: "https://www.starkrestaurants.com/willis-wine-bar" },
-  { name: "The Spinster Sisters", city: "Santa Rosa", note: "One of Santa Rosa's most important restaurants — Slow Food Snail of Approval and a farm-to-table anchor built by chef Liza Hinman. Weekend brunch is a local institution: deviled eggs with house-cured salmon, chicken hash with poached eggs, and a biscuit program worth planning around. Dinner rotates with the season and Sonoma County farms. The cocktail program is exceptional. This is the kind of place that sets the tone for an entire region.", category: "restaurant", lat: 38.4329139, lng: -122.7151556, website: "https://www.thespinstersisters.com" },
-
-  // ── RESTAURANTS: FORESTVILLE / RUSSIAN RIVER ──────────────────────────────
-  { name: "BaSo Annex (Bazaar Sonoma)", city: "Forestville", note: "After fire hit the original Bazaar Sonoma, chef Sean Quan and Jenny Phan opened an interim café with their best dishes — zhong dumplings with house chili crisp, Taiwan braised pork rice, mapo tofu. Prices $9–$24. One of the most interesting kitchens in the county at the most honest price point.", category: "restaurant", lat: 38.4735, lng: -122.8920, website: "https://www.bazaar-sonoma.com" },
-  { name: "Farmhouse Inn Restaurant", city: "Forestville", note: "New à la carte format as of March 2026 under chef Julio Aguilera — upscale casual cooking in one of the RRV's most beautiful properties. Burrata, Caesar, grilled broccolini, steak with pommes purée and lobster butter.", category: "restaurant", lat: 38.496969, lng: -122.900899, website: "https://www.farmhouseinn.com" },
-  { name: "boon eat + drink", city: "Guerneville", note: "Crista Luedtke's farm-to-table California bistro anchoring Guerneville's food scene since 2009. Primarily organic, a house garden, and a menu that genuinely shifts with the season. The anchor of a good Guerneville evening.", category: "restaurant", lat: 38.5022, lng: -122.9984, website: "https://eatatboon.com" },
-
-  // ── RESTAURANTS: SONOMA COAST / POINT REYES ───────────────────────────────
-  { name: "Terrapin Creek Cafe", city: "Bodega Bay", note: "Michelin-recognized in Bodega Bay with a kitchen that punches far above its coastal roadside setting. Pan-roasted Hokkaido scallops with sunchoke purée, charred octopus, Mediterranean fish stew. Open Mondays.", category: "restaurant", lat: 38.3391, lng: -123.0482, website: "https://www.terrapincreekcafe.com" },
-  { name: "Rocker Oysterfeller's", city: "Valley Ford", note: "Southern comfort on Highway 1 in Valley Ford — grassfed smashburgers, buttermilk fried chicken with Lagunitas ale and caraway gravy, and Tomales Bay oysters raw or grilled. Dollar Oyster Mondays all day.", category: "restaurant", lat: 38.3178, lng: -122.9245, website: "https://www.rockeroysterfellers.com" },
-  { name: "Saltwater Oyster Depot", city: "Inverness", note: "Small coastal oyster room in Inverness across from Tomales Bay — reservation-only dinners, locally sourced seafood, and a menu that changes weekly based on what's fresh. Currently closed through end of year; check the website before making the drive.", category: "restaurant", lat: 38.0966, lng: -122.8521, website: "https://www.saltwateroysterdepot.com" },
-  { name: "Hog Island Oyster Boat Bar", city: "Marshall", note: "The outdoor oyster table right on the water in Marshall — raw oysters, BBQ oysters, and Tomales Bay as your setting. Reservations required; standby fills fast. No better version of this experience exists in Northern California.", category: "restaurant", lat: 38.1622, lng: -122.8937, website: "https://hogislandoysters.com/restaurants/marshall/" },
-  { name: "Nick's Cove", city: "Marshall", note: "Sustainable coastal cooking from Marin and Sonoma farms in one of the best bay settings on the California coast. Live music through spring. Good for a solo lunch, a date dinner, or a group with a shared love of the coastline.", category: "restaurant", lat: 38.205288, lng: -122.922111, website: "https://www.nickscove.com" },
-  { name: "Station House Cafe", city: "Point Reyes Station", note: "The newly renovated community anchor in Point Reyes Station — local, seasonal, and relaxed in the best way. Live music and specials through the spring calendar. A place that actually belongs to its town.", category: "restaurant", lat: 38.0681, lng: -122.8062, website: "https://www.stationhousecafe.com" },
-
-  // ── FARMSTANDS ────────────────────────────────────────────────────────────
-  { name: "Cloverdale Certified Farmers Market", city: "Cloverdale", note: "Community-built certified market at the heart of Alexander Valley wine country — Sundays April through November. Local farmers, food purveyors, and craft. CalFresh/Market Match accepted. The most local market in the northern coverage area.", category: "farmstand", lat: 38.7985, lng: -122.9838, website: "https://www.farmtrails.org/experience/cloverdale-certified-farmers-market/" },
-  { name: "Showa Farm", city: "Cloverdale", note: "By appointment only — call (707) 404-8144 before you go. 26070 River Road, Cloverdale. Alexander Valley farm with over a hundred goats, sheep, burros, and other animals. Known for small-batch organic extra virgin olive oil. A genuinely memorable farm visit — the owner keeps a working fire engine on site for kids. Not a walk-up stand; plan it as a destination appointment.", category: "farmstand", lat: 38.767279, lng: -122.965884, website: "https://showa-farm.com" },
-  { name: "Healdsburg Certified Farmers Market", city: "Healdsburg", note: "One of California's original 22 certified markets, running since 1978. Most produce grown within 10 miles of the plaza. Saturdays April–December and Tuesdays May–September. Wild fish, pasture-finished meat, heirloom vegetables, baked goods.", category: "farmstand", lat: 38.6116, lng: -122.8697, website: "https://www.healdsburgfarmersmarket.org" },
-  { name: "Journeyman Meat Co.", city: "Healdsburg", note: "Pete and Cathy Seghesio left Seghesio Family Vineyards to build something deeply personal — a salumeria rooted in their family's late-1800s Italian legacy. Pete studied with Italian masters before opening this butcher shop and salumeria on Center Street. Every product is sourced, cut, cured, and seasoned in Sonoma County. The butcher counter is one of the most curated in California. Wine barrel–smoked hams, salumi boards, a short cafe menu, and a glass of wine to go with it. Wed–Sun 11am–7pm, Mon 10am–5pm, closed Tuesdays.", category: "farmstand", lat: 38.612404, lng: -122.869757, website: "https://journeymanmeat.com" },
-  { name: "Dry Creek Peach & Produce", city: "Healdsburg", note: "The last dedicated organic peach orchard in Dry Creek Valley — thirty-plus varieties of white and yellow peaches, tree-ripened, hand-picked, hand-packed. Season runs Memorial Day through Labor Day (late May through early September). When the New York Times asked Alice Waters what she'd order for her last supper, she said a Last Chance peach from this orchard.", category: "farmstand", lat: 38.699729, lng: -122.957231, website: "https://www.drycreekpeach.com" },
-  { name: "SingleThread Farm Store", city: "Healdsburg", note: "Kyle and Katina Connaughton's working farm behind the 3-Michelin-star restaurant — open to the public Thu–Sun. The same produce, flowers, and pantry items grown for the restaurant kitchen. The only place in the county where you can buy what a 3-star kitchen grows.", category: "farmstand", lat: 38.649354, lng: -122.911344, website: "https://www.singlethreadfarms.com" },
-  { name: "Front Porch Farm", city: "Healdsburg", note: "Organic flower and vegetable farm along the Russian River — sixty-plus flower varieties, u-pick Saturdays, river picnic access with all materials provided. The prettiest u-pick in northern Sonoma County.", category: "farmstand", lat: 38.623018, lng: -122.829135, website: "https://www.fpfarm.com" },
-  { name: "Windsor Certified Farmers Market", city: "Windsor", note: "50-plus vendors on the Town Green — Sundays April through December, plus Thursday Summer Nights June–August. Certified organic produce, artisan bakeries, cheeses, seasonal produce festivals, and live music every week.", category: "farmstand", lat: 38.5477, lng: -122.8133, website: "https://www.windsorfarmersmarket.com" },
-  { name: "Wise Acre Farm — Egg Vending Machine", city: "Windsor", note: "Tiffany Holbrook's free-range egg farm stocks California's first farm egg vending machine 24/7 with a rainbow of varieties. Grade AA, CA SEFS compliant. Also at Healdsburg Saturday Market in summer. Yes, it's exactly what it sounds like.", category: "farmstand", lat: 38.563202, lng: -122.812501, website: "https://www.farmtrails.org" },
-  { name: "Santa Rosa Original Certified Farmers Market", city: "Santa Rosa", note: "The oldest and largest farmers market in Sonoma County — running continuously since 1967. Sixty-five-plus local farmers every Saturday at the Luther Burbank Center for the Arts. Voted Best Farmers Market in Sonoma County year after year. Slow Food Snail of Approval.", category: "farmstand", lat: 38.49338, lng: -122.748927, website: "https://www.thesantarosafarmersmarket.com" },
-  { name: "Santa Rosa Community Farmers Market", city: "Santa Rosa", note: "A second year-round certified market in Santa Rosa at Farmers Lane Plaza — Wednesdays and Saturdays. More relaxed than the Luther Burbank flagship, strong neighborhood following. CalFresh/Market Match accepted.", category: "farmstand", lat: 38.4333, lng: -122.6891, website: "https://www.farmtrails.org" },
-  { name: "Mike's Truck Garden", city: "Fulton", note: "Roadside vegetable stand on River Road in Fulton — locally grown seasonal produce direct from the farm. Follow on Instagram for what's available and stand hours.", category: "farmstand", lat: 38.496611, lng: -122.773970, website: "https://www.instagram.com/mikestruckgarden/" },
-  { name: "Tierra Vegetables Farmstand", city: "Santa Rosa", note: "Wayne and Lee James have farmed this suburban Santa Rosa plot since 1980 and sell only what they grow — 30-plus varieties of heirloom dried beans, masa from heirloom corn, fresh and dried chiles, and pantry staples. The heirloom bean selection alone is worth a special trip.", category: "farmstand", lat: 38.511664, lng: -122.771735, website: "https://www.tierravegetables.com" },
-  { name: "Sebastopol Certified Farmers Market", city: "Sebastopol", note: "Every Sunday regardless of season — the best Sunday morning ritual in West County. First strawberries, snap peas, and asparagus start arriving in March. Sits on the West County Regional Trail. Produce arrives fast and the crowd thins by 11.", category: "farmstand", lat: 38.4024, lng: -122.8236, website: "https://www.sebastopolfarmersmarket.org" },
-  { name: "Redwood Hill Farm / Capracopia", city: "Sebastopol", note: "Regenerative goat dairy with hands-on cheesemaking farm tours — spring is baby goat season, the best time to visit. Small farmstand carries olive oil, goat milk soaps, and cut flowers. The spring tours are legitimately joyful.", category: "farmstand", lat: 38.453455, lng: -122.903056, website: "https://redwoodhillfarm.org" },
-  { name: "Gold Ridge Organic Farms", city: "Sebastopol", note: "Heritage apple varieties direct from the orchard, plus fresh-pressed olive oil in fall — watch it flow from the press on-site in October. Annual Apple Blossom Festival in spring. One of the last heritage apple operations in the region.", category: "farmstand", lat: 38.346656, lng: -122.806499, website: "https://goldridgeorganicfarms.com" },
-  { name: "EARTHseed Farm", city: "Sebastopol", note: "California's first Afro-Indigenous permaculture farm, founded by Pandora Thomas. U-pick days, guided farm tours, farm stays, and a seasonal farm store. Celebrates African agricultural traditions through regenerative practices. Unlike any other farm experience in the county.", category: "farmstand", lat: 38.436967, lng: -122.881816, website: "https://www.earthseedfarm.org" },
-  { name: "Forestville Certified Farmers Market", city: "Forestville", note: "Tuesday evenings June through late August under the oak trees in downtown Forestville — live music, wine, cold beer, and farm-fresh produce alongside the West County Regional Trail. One of the most atmospheric small markets in the county.", category: "farmstand", lat: 38.4736, lng: -122.8983, website: "https://www.farmtrails.org/experience/forestville-farmers-market/" },
-  { name: "Guerneville Certified Farmers Market", city: "Guerneville", note: "Thursday evenings June through August behind St. Hubert's Hall — operated by the same group as the Santa Rosa Original, with the same Slow Food Snail of Approval. The Russian River crowd is its own thing. A summer Thursday here has a completely different energy from any other market in the county.", category: "farmstand", lat: 38.5027, lng: -122.9977, website: "https://www.farmtrails.org/experience/guerneville-certified-farmers-market/" },
-  { name: "Occidental Community Farmers Market", city: "Occidental", note: "Thursday evenings May through October on Main Street in this tiny redwood-hills hamlet — fresh produce, prepared foods, crafts, and live music in a setting unlike any other market in the region. There is no better Thursday evening in West County.", category: "farmstand", lat: 38.4077, lng: -122.9418, website: "https://www.farmtrails.org" },
-  { name: "The Fork at Point Reyes Farmstead Cheese", city: "Point Reyes Station", note: "A reservation-only food experience on one of the county's most beautiful working dairy farms. Spring is the best season for fresh chèvre and young cheeses. This is what farm-to-table actually feels like — an actual farm, with cows, a cheese cave, and a story you can eat.", category: "farmstand", lat: 38.097813, lng: -122.832019, website: "https://www.pointreyescheese.com" },
-
-  // ── FARMSTANDS: ADDITIONAL CURATED PICKS ─────────────────────────────────
-  { name: "The Patch", city: "Sonoma", note: "Farmer Lazaro Calderon has been working this 6-acre downtown Sonoma plot for 25 years. A genuine farm institution inside city limits — come summer, the heirloom tomatoes are the reason to go.", category: "farmstand", lat: 38.295980, lng: -122.453624, website: null },
-  { name: "Oak Hill Farm", city: "Glen Ellen", note: "45 acres in production in Glen Ellen — 200 varieties of fruits and vegetables, housemade honey, fresh eggs, soaps, and flowers. One of the most ambitious farm stores in the county. Open Wednesday through Sunday, April through late December.", category: "farmstand", lat: 38.350228, lng: -122.499052, website: "https://www.oakhillfarm.net" },
-  { name: "Suncatcher Farm", city: "Petaluma", note: "Vibrant produce and herbal blends from a roadside stand in Petaluma run by former sound engineer Patrick Krier. The energy here is different from any other farm in the county — follow on Instagram for stand hours.", category: "farmstand", lat: 38.2529, lng: -122.7006, website: "https://www.instagram.com/suncatcher_farm" },
-  { name: "Sonoma Farm Fresh", city: "Penngrove", note: "Regenerative farming on Petaluma Hill Road in Penngrove — u-pick days, an honor stand, and seasonal farm dinners. A genuine slow-food operation worth going out of your way for.", category: "farmstand", lat: 38.3063, lng: -122.6665, website: "https://www.sonomafarmfresh.com" },
-  { name: "Flatbed Farm", city: "Glen Ellen", note: "A Glen Ellen farm that does pickles, syrups, cut flowers, and a full wellness and yoga program. Genuinely idiosyncratic in the best way — part farmstand, part community gathering place.", category: "farmstand", lat: 38.3673, lng: -122.5243, website: "http://www.flatbedfarm.com" },
-  { name: "Petaluma Bounty Farm", city: "Petaluma", note: "Three-acre community farm on Shasta Ave in Petaluma selling vegetables, fruits, and flowers on a sliding scale with discounts for those in need. Open Thursdays May through December — a farmstand with a conscience.", category: "farmstand", lat: 38.2472, lng: -122.6437, website: "https://www.petalumabounty.org" },
-  { name: "Walker Apples", city: "Sebastopol", note: "The Walker family has farmed this Sebastopol plot for nearly 70 years — 25-plus varieties beginning with Gravensteins in late July and running through fall. The real deal for apple season in Sonoma County.", category: "farmstand", lat: 38.433228, lng: -122.901474, website: "https://www.farmtrails.org/business/walker-apples/" },
-  { name: "Bees N Blooms", city: "Santa Rosa", note: "An 11-acre garden and farmstand in Santa Rosa anchored by a lavender maze at its peak mid-May through mid-July. Also runs classes in healthy soils, beekeeping, and pollinator habitat — an unusual stop with genuine depth.", category: "farmstand", lat: 38.399355, lng: -122.695325, website: "https://beesnblooms.com" },
-  { name: "Starcross Family Confraternity Farm", city: "Annapolis", note: "A monastic farming community in Annapolis producing cold-pressed extra virgin olive oil, olive leaf tea, and blackberry jam. Honor-system stand open daily from 8 a.m. Far west county — plan around it.", category: "farmstand", lat: 38.718205, lng: -123.345582, website: "https://starcross.org" },
-  { name: "Tenfold Farmstand", city: "Petaluma", note: "Organic vegetables and flowers at a former 1895 schoolhouse in Petaluma — the historic space hosts concerts, classes, and a small mercantile with baked goods and crafts alongside the produce stand.", category: "farmstand", lat: 38.2736, lng: -122.6696, website: "https://www.tenfoldfarmstand.com" },
-
-  // ── FARMSTANDS: WEST COUNTY / SEBASTOPOL ─────────────────────────────────
-  { name: "West County Community Farm", city: "Sebastopol", note: "Diversified CSA farm nestled along the Laguna de Santa Rosa just outside Sebastopol — over 200 varieties of vegetables, flowers, herbs, strawberries, and specialty crops. Members choose their own harvest, u-pick flowers and herbs, and visit the farm 7 days a week, sunrise to sunset. CSA program currently full; join the waitlist online.", category: "farmstand", lat: 38.3863154, lng: -122.8010149, website: "https://www.westcountycommunityfarm.com" },
-  { name: "Mycopia Mushrooms", city: "Sebastopol", note: "2901 Gravenstein Hwy N, Sebastopol — the first company to commercially cultivate shiitake in the US. Periodic farm sales 1–2pm; varieties include Trumpet Royale and Grey Oyster direct from the growers. Card only, no cash. Check Facebook (@MycopiaMushrooms) for upcoming sale dates before making the drive.", category: "farmstand", lat: 38.4338089, lng: -122.854987, website: "https://mycopia.com" },
-  { name: "Singing Frogs Farm", city: "Sebastopol", note: "No-till, ecologically intensive farming at its most rigorous — 80-plus vegetable varieties, 20 fruit varieties, and 70 flower varieties on Ferguson Road in Sebastopol. One of the county's most respected regenerative operations.", category: "farmstand", lat: 38.4086719, lng: -122.8683552, website: "https://www.singingfrogsfarm.com" },
-  { name: "Alchemist Farm", city: "Sebastopol", note: "NPIP-certified rare-breed poultry hatchery on Appian Way in Sebastopol — they breed the specialty laying hens behind the most interesting egg cartons in Sonoma County. Azure Eggers, Olive Eggers, Sage Eggers, French Blue Copper Marans, German Bielefelders, and more. Pre-orders open online each season; chicks available for pickup or shipping. Not a farmstand — this is where serious small farmers and backyard flock builders source their birds.", category: "farmstand", lat: 38.459811, lng: -122.871487, website: "https://www.alchemistfarm.com" },
-  { name: "Lao Saetern's Strawberry Stand", city: "Sebastopol", note: "A beloved roadside stand on Sebastopol Ave — just-picked super-sweet strawberries with lines that prove it. Expect occasional one-basket-per-person rationing at peak. Open Tue–Fri 9am–6pm, Sat 9am–6pm, Sun 9am–5pm. Seasonal.", category: "farmstand", lat: 38.4090014, lng: -122.8015088, website: null },
-  { name: "Kokopelli Farm", city: "Freestone", note: "By appointment only — call 707-829-8185 before you go. Boysenberries, blackberries, and raspberries grown on Cunningham Road near Freestone, plus an on-site farmstand. Worth the planning.", category: "farmstand", lat: 38.359278, lng: -122.804831, website: null },
-  { name: "Tilted Shed Ciderworks", city: "Windsor", note: "Sonoma County's benchmark natural cidermaker, working with heirloom and organic apples since 2011. The tasting room at Artisan Alley pours flights, by the glass, or by the can in a no-frills warehouse space that feels nothing like a winery — which is exactly the point. Slow Food Snail of Approval. Kids and dogs welcome. Open Fri 2–7pm, Sat 12–5pm.", category: "producer", lat: 38.5365894, lng: -122.8051012, website: "https://www.tiltedshed.com" },
-  { name: "The Epicurean Connection", city: "Sonoma", note: "Sheana Davis and Ben Sessions have been making award-winning cheese and teaching cheesemaking classes in Sonoma for over 30 years. The warehouse shop carries their cheeses, local jams, olive oil, meats, and pantry staples. Hands-on classes — ricotta, butter, fresh chèvre — are one of the best culinary experiences in the county. Slow Food Snail of Approval. Shop open Fri–Sat 9am–12pm; classes Thu–Sat at 12–2pm and 3:30–5:30pm.", category: "producer", lat: 38.2869338, lng: -122.4342651, website: "https://www.theepicureanconnection.com" },
-  { name: "Lala's Jam Bar and Urban Farmstand", city: "Petaluma", note: "The only dedicated jam shop in Sonoma County — a little yellow cottage on Washington Street where Leslie Goodrich makes small-batch, low-sugar jams from locally gleaned fruit. Sunday jam-making classes available. Also stocks curated local Sonoma County food products. Slow Food Snail of Approval. Open Fri–Mon 10am–5pm.", category: "producer", lat: 38.2414598, lng: -122.6327351, website: "https://www.lalasjams.com" },
-  { name: "Ambix Spirits", city: "Sebastopol", note: "David Klein's Calvados-style apple brandy distillery on a 4-acre Sebastopol orchard planted with 200+ heritage apple varieties. Tastings are $15 and include a short orchard and distillery tour. One of the most distinctive and least-known stops in West County. Slow Food Snail of Approval. Open by appointment Fri–Sun 12–4pm.", category: "producer", lat: 38.4250521, lng: -122.8319794, website: "https://www.ambixspirits.com" },
-  { name: "Maison Porcella", city: "Windsor", note: "Franco-American chef Marc-Henri Jean-Baptiste's authentic French charcuterie shop and bistro in Windsor. House-made pâté, boudin blanc, cassoulet, grab-and-go croque monsieur pastries, and a curated selection of French and local wines. Also at Healdsburg and Sonoma farmers markets. Slow Food Snail of Approval. Retail Tue–Sat 10am–6pm; lunch Tue–Sat 12–2pm; dinner Tue–Sat 5:30–7pm by reservation.", category: "producer", lat: 38.5434448, lng: -122.8017952, website: "https://www.maisonporcella.com" },
-  { name: "Maison Porcella", city: "Windsor", note: "Franco-American chef Marc-Henri Jean-Baptiste's authentic French charcuterie shop and bistro in Windsor. House-made pâté, boudin blanc, cassoulet, grab-and-go croque monsieur pastries, and a curated selection of French and local wines. Also at Healdsburg and Sonoma farmers markets. Slow Food Snail of Approval. Retail Tue–Sat 10am–6pm; lunch Tue–Sat 12–2pm; dinner Tue–Sat 5:30–7pm by reservation.", category: "restaurant", lat: 38.5434448, lng: -122.8017952, website: "https://www.maisonporcella.com" },
+  // ── ARTISAN PRODUCERS ─────────────────────────────────────────────────────
+  {
+    name: "Carmel Valley Coffee Roasting Co.",
+    city: "Carmel Valley",
+    note: "The Village coffee institution. Small-batch roasting, knowledgeable staff, and the kind of laid-back porch energy that makes Carmel Valley what it is. A proper stop before a morning of tasting rooms.",
+    category: "producer",
+    lat: 36.4797,
+    lng: -121.7199,
+    website: "https://carmelvalleycoffee.com",
+  },
+  {
+    name: "The Big Sur Bakery",
+    city: "Big Sur",
+    note: "Wood-fired, focused, and genuinely beloved by the Big Sur community. Breakfast and lunch in a converted gas station with a bakery attached. The pastries come from a real oven using real flour, and the lunch menu follows the season. An honest, slow-food-without-the-label operation in one of the most expensive corridors of real estate in California.",
+    category: "producer",
+    lat: 36.2547,
+    lng: -121.8025,
+    website: "https://bigsurbakery.com",
+  },
+  {
+    name: "Acme Artisan Cheese",
+    city: "Monterey",
+    note: "Local cheese board stop on the Peninsula — Monterey County Jack, aged varieties, and a rotating selection of California farmstead cheeses. Worth picking up before a picnic in Carmel Valley or a wine-with-cheese afternoon at a tasting room that allows outside food.",
+    category: "producer",
+    lat: 36.5990,
+    lng: -121.8880,
+    website: "https://acmecheese.com",
+  },
 ];
 
 export async function seedIfEmpty() {
   try {
-    const [row] = await db.select({ count: count() }).from(markersTable);
-    const existing = Number(row?.count ?? 0);
-
-    if (existing === 0) {
-      logger.info("Database is empty — seeding initial data...");
-      const result = await db.insert(markersTable).values(SEED_DATA).returning({ name: markersTable.name });
-      logger.info({ count: result.length }, "Seed complete");
-      return;
-    }
-
-    // Insert any new seed entries not yet in the database (key: name+category to allow duplicates like Maison Porcella)
-    const rows = await db.select({ name: markersTable.name, category: markersTable.category }).from(markersTable);
-    const existingKeys = new Set(rows.map((r) => `${r.name}||${r.category}`));
-    const missing = SEED_DATA.filter((s) => !existingKeys.has(`${s.name}||${s.category}`));
-    if (missing.length > 0) {
-      const result = await db.insert(markersTable).values(missing).returning({ name: markersTable.name });
-      logger.info({ count: result.length, names: result.map((r) => r.name) }, "Inserted new seed entries");
-    } else {
-      logger.info({ existing }, "Database already seeded — skipping");
-    }
-  } catch (err) {
-    logger.error({ err }, "Seed failed — continuing without seeding");
-  }
-}
-
-export async function correctCoordinates() {
-  try {
-    // Remove entries that have been deleted from the curated seed list
+    // Purge any entries that have been removed from the curated list
     if (REMOVED_FROM_SEED.length > 0) {
       const deleted = await db
         .delete(markersTable)
         .where(inArray(markersTable.name, REMOVED_FROM_SEED))
         .returning({ name: markersTable.name });
       if (deleted.length > 0) {
-        logger.info({ names: deleted.map((r) => r.name) }, "Removed entries deleted from DB");
+        logger.info({ removed: deleted.map((d) => d.name) }, "Removed deprecated markers");
       }
     }
 
-    // Remove duplicate entries — keep the highest ID for each name+category pair
-    const deduped = await db.execute(sql`
-      DELETE FROM ${markersTable}
-      WHERE id IN (
-        SELECT id FROM (
-          SELECT id, ROW_NUMBER() OVER (PARTITION BY name, category ORDER BY id DESC) AS rn
-          FROM ${markersTable}
-        ) sub WHERE rn > 1
-      )
-      RETURNING name
-    `);
-    if (deduped.rows.length > 0) {
-      logger.info({ count: deduped.rows.length }, "Duplicate entries removed");
+    // Count existing markers — if any exist, skip seeding
+    const [{ value: existingCount }] = await db
+      .select({ value: count() })
+      .from(markersTable);
+
+    if (existingCount > 0) {
+      logger.info({ count: existingCount }, "Markers table already populated — skipping seed");
+      return;
     }
 
-    logger.info("Correcting marker data to verified values...");
-    let updated = 0;
-    for (const spot of SEED_DATA) {
-      const result = await db
-        .update(markersTable)
-        .set({ lat: spot.lat, lng: spot.lng, note: spot.note, website: spot.website ?? null, city: spot.city ?? null })
-        .where(eq(markersTable.name, spot.name))
-        .returning({ id: markersTable.id });
-      updated += result.length;
-    }
-    logger.info({ updated }, "Marker data correction complete");
+    // Insert Monterey seed data
+    const inserted = await db
+      .insert(markersTable)
+      .values(
+        SEED_DATA.map((entry) => ({
+          name: entry.name,
+          city: entry.city,
+          note: entry.note ?? null,
+          category: entry.category as "winery" | "restaurant" | "farmstand" | "producer",
+          lat: String(entry.lat),
+          lng: String(entry.lng),
+          website: entry.website ?? null,
+        }))
+      )
+      .returning({ id: markersTable.id, name: markersTable.name });
+
+    logger.info({ count: inserted.length }, "Monterey seed data inserted");
   } catch (err) {
-    logger.error({ err }, "Coordinate correction failed");
+    logger.error({ err }, "Seed failed");
+    throw err;
   }
 }

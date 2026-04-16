@@ -1,6 +1,6 @@
 import app from "./app";
 import { logger } from "./lib/logger";
-import { seedIfEmpty, correctCoordinates } from "./seed";
+import { seedIfEmpty } from "./seed";
 
 const rawPort = process.env["PORT"];
 
@@ -24,6 +24,5 @@ app.listen(port, (err) => {
 
   logger.info({ port }, "Server listening");
   seedIfEmpty()
-    .then(() => correctCoordinates())
-    .catch((e) => logger.error({ err: e }, "Seed/correction error"));
+    .catch((e) => logger.error({ err: e }, "Seed error"));
 });
