@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MapComponent } from "@/components/Map";
 import { Sidebar } from "@/components/Sidebar";
-import { SonomaChef } from "@/components/SonomaChef";
+import { MontereyChef } from "@/components/SonomaChef";
 import { WelcomeOverlay } from "@/components/WelcomeOverlay";
 import { MyList } from "@/components/MyList";
 import { useMyList } from "@/hooks/useMyList";
@@ -27,7 +27,7 @@ export default function Home() {
           onToggleSave={toggle}
           isSaved={isSaved}
         />
-        <SonomaChef />
+        <MontereyChef />
 
         {/* Right-side controls — stacked above the Chef FAB */}
         <div className="fixed bottom-[72px] right-6 z-[999] flex flex-col items-end gap-2">

@@ -14,9 +14,10 @@ export function Sidebar({ activeFilter, setActiveFilter }: SidebarProps) {
     query: { queryKey: getGetMarkerStatsQueryKey() }
   });
   
-  const { data: markers = [], isLoading: markersLoading } = useGetMarkers({
+  const { data: markersRaw, isLoading: markersLoading } = useGetMarkers({
     query: { queryKey: getGetMarkersQueryKey() }
   });
+  const markers = Array.isArray(markersRaw) ? markersRaw : [];
 
   const filteredMarkers = markers
     .filter(marker => {

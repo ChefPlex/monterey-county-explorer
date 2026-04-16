@@ -71,7 +71,7 @@ const PROMPTS = [
   "What makes Passionfish worth it?",
 ];
 
-export function SonomaChef() {
+export function MontereyChef() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
