@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monterey County & Santa Lucia Highlands — A Sonoma Chef Field Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment:    #f5f0e8;
+    --ink:         #2c2317;
+    --wine:        #6b2737;
+    --olive:       #5a6a3a;
+    --gold:        #b8893a;
+    --teal:        #2d6b6e;
+    --cream:       #faf7f0;
+    --muted:       #8a7d68;
+    --rule:        #d4c9a8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+  }
+
+  /* ─── MASTHEAD ─── */
+  .masthead {
+    background: var(--wine);
+    color: var(--parchment);
+    text-align: center;
+    padding: 3rem 2rem 2.5rem;
+    border-bottom: 4px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5f0e8' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .masthead h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .masthead-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: rgba(245,240,232,0.75);
+    margin-top: 0.5rem;
+  }
+  .slow-food-note {
+    margin-top: 1.5rem;
+    display: inline-block;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(184,137,58,0.4);
+    padding: 0.5rem 1.5rem;
+    border-radius: 2px;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+  }
+
+  /* ─── LAYOUT ─── */
+  .wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  /* ─── INTRO ─── */
+  .intro {
+    border-left: 4px solid var(--gold);
+    padding-left: 1.5rem;
+    margin-bottom: 3rem;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: #4a3e2e;
+  }
+
+  /* ─── SECTION HEADERS ─── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 3rem 0 1.5rem;
+  }
+  .section-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .icon-wine   { background: var(--wine);  color: var(--parchment); }
+  .icon-fork   { background: var(--olive); color: var(--parchment); }
+  .icon-farm   { background: var(--teal);  color: var(--parchment); }
+  .icon-craft  { background: var(--gold);  color: var(--ink); }
+  .icon-pub    { background: var(--muted); color: var(--parchment); }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--ink);
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 0.3rem;
+    flex: 1;
+  }
+
+  /* ─── CARDS ─── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .card {
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1.25rem 1.4rem;
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 18px rgba(107,39,55,0.1); }
+  .card-accent {
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    border-radius: 4px 0 0 4px;
+  }
+  .accent-wine  { background: var(--wine); }
+  .accent-olive { background: var(--olive); }
+  .accent-teal  { background: var(--teal); }
+  .accent-gold  { background: var(--gold); }
+  .accent-muted { background: var(--muted); }
+
+  .card-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+  .card-location {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+  .card-desc {
+    font-size: 0.92rem;
+    color: #4a3e2e;
+    line-height: 1.6;
+  }
+  .card-tag {
+    display: inline-block;
+    margin-top: 0.65rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    border: 1px solid currentColor;
+  }
+  .tag-wine   { color: var(--wine); }
+  .tag-farm   { color: var(--olive); }
+  .tag-craft  { color: var(--teal); }
+  .tag-slow   { color: var(--gold); }
+
+  /* ─── SLOW FOOD BOX ─── */
+  .slow-food-box {
+    background: linear-gradient(135deg, #faf6ec 0%, #f0e8d4 100%);
+    border: 1px solid var(--gold);
+    border-left: 5px solid var(--gold);
+    border-radius: 4px;
+    padding: 1.5rem 1.75rem;
+    margin: 2.5rem 0;
+  }
+  .slow-food-box h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.2rem;
+    color: var(--wine);
+    margin-bottom: 0.5rem;
+  }
+  .slow-food-box p {
+    font-size: 0.95rem;
+    color: #4a3e2e;
+  }
+  .slow-food-box ul {
+    margin: 0.75rem 0 0 1.2rem;
+    font-size: 0.95rem;
+    color: #4a3e2e;
+  }
+  .slow-food-box li { margin-bottom: 0.3rem; }
+
+  /* ─── AVA EXPLAINER ─── */
+  .ava-box {
+    background: var(--wine);
+    color: var(--parchment);
+    border-radius: 4px;
+    padding: 1.5rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .ava-box h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .ava-box p { font-size: 0.95rem; opacity: 0.88; line-height: 1.65; }
+
+  /* ─── MARKETS BAR ─── */
+  .markets-bar {
+    background: var(--olive);
+    color: var(--parchment);
+    border-radius: 4px;
+    padding: 1.5rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .markets-bar h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    color: #d6e4a0;
+    margin-bottom: 0.65rem;
+  }
+  .markets-bar ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.4rem 1.5rem;
+    font-size: 0.9rem;
+    opacity: 0.92;
+  }
+  .markets-bar li::before { content: '→ '; color: #d6e4a0; }
+
+  /* ─── PUBLICATIONS ─── */
+  .pub-row {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .pub-card {
+    flex: 1 1 250px;
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--teal);
+    border-radius: 4px;
+    padding: 1.1rem 1.25rem;
+    font-size: 0.92rem;
+  }
+  .pub-card strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+    color: var(--teal);
+  }
+
+  /* ─── SONOMA CHEF NOTE ─── */
+  .sc-note {
+    margin-top: 3.5rem;
+    border-top: 2px solid var(--rule);
+    padding-top: 2rem;
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .sc-note strong { color: var(--wine); font-style: normal; }
+
+  /* ─── HORIZONTAL RULE ─── */
+  hr.ornament {
+    border: none;
+    text-align: center;
+    margin: 2rem 0;
+    color: var(--muted);
+  }
+  hr.ornament::before { content: '✦ ✦ ✦'; letter-spacing: 0.5em; font-size: 0.8rem; }
+
+  @media (max-width: 600px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .pub-row { flex-direction: column; }
+    .masthead h1 { font-size: 1.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <p class="eyebrow">A Sonoma Chef Field Guide</p>
+  <h1>Monterey County &amp;<br><em>Santa Lucia Highlands</em></h1>
+  <p class="masthead-sub">Where the Salinas winds carry the cold breath of the Pacific straight into your glass</p>
+  <span class="slow-food-note">🐌 Informed by Slow Food Monterey &amp; Slow Food California</span>
+</header>
+
+<div class="wrapper">
+
+  <!-- INTRO -->
+  <div class="intro">
+    <p>South of the Santa Cruz Mountains, the coastal fog pushes inland through one of the most remarkable agricultural corridors in the country — a valley that feeds the nation its salad and pours some of California's most exciting cool-climate Pinot Noir. This is Monterey County: the Salinas Valley's lettuces and strawberries at eye level; the Santa Lucia Highlands' Burgundy-challenged vineyards etched into the mountain terraces above. The slow food traditions here aren't performative — they're baked into the soil, into Swiss dairy families who've been here since 1944, into abalone cages swaying beneath a commercial wharf. Come with an appetite and a corkscrew.</p>
+  </div>
+
+  <!-- SLOW FOOD -->
+  <div class="slow-food-box">
+    <h3>🐌 Slow Food in This Region</h3>
+    <p>Monterey County is connected to the broader <strong>Slow Food California</strong> network and the <strong>Slow Food South Bay</strong> chapter, which has organized seed-saving events, One Seed One Community programs, and farm-to-fork gatherings at venues like Asilomar on Monterey Bay. The region also draws on the deep slow food ethos embedded in <em>Edible Monterey Bay</em> — the area's essential quarterly publication — and organizations like <strong>Everyone's Harvest</strong> and the <strong>Monterey Bay Certified Farmers Markets</strong>, which have served the Central Coast since 1976. Restaurants and producers who lean into the Slow Food philosophy include:</p>
+    <ul>
+      <li>Support for small-scale, family-run farms and dairies</li>
+      <li>Sourcing from the county's 15+ certified farmers markets</li>
+      <li>Championing Monterey County's biodiversity — from artichokes to abalone</li>
+      <li>Preserving heritage breeds and heirloom seeds through events like EcoFarm at Asilomar</li>
+    </ul>
+  </div>
+
+  <!-- ─── RESTAURANTS ─── -->
+  <div class="section-header">
+    <div class="section-icon icon-fork">🍽</div>
+    <h2>Restaurants Worth the Drive</h2>
+  </div>
+
+  <div class="card-grid">
+
+    <div class="card">
+      <div class="card-accent accent-wine"></div>
+      <p class="card-name">Aubergine</p>
+      <p class="card-location">Carmel-by-the-Sea · L'Auberge Inn</p>
+      <p class="card-desc">The benchmark of the Peninsula. Executive chef Justin Cogley's daily-changing tasting menus showcase hyper-local and foraged ingredients — edible coastline, seasonal produce — with precision that has earned two MICHELIN stars. The 3,500-bottle cellar leans hard into Monterey County and France.</p>
+      <span class="card-tag tag-wine">2 Michelin Stars · Tasting Menu</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-olive"></div>
+      <p class="card-name">Lucia Restaurant &amp; Bar</p>
+      <p class="card-location">Carmel Valley · Bernardus Lodge &amp; Spa</p>
+      <p class="card-desc">Perched among the vineyards of Bernardus, Executive Chef Gus Trejo's seasonal farm-to-table menus draw from the estate's own gardens, herb beds, and orchards. A 25,000-bottle wine cellar — 10,000 from adjacent Bernardus Winery — makes this a mandatory stop for anyone serious about Carmel Valley terroir.</p>
+      <span class="card-tag tag-farm">Estate Gardens · Wine Cellar</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-teal"></div>
+      <p class="card-name">Sierra Mar</p>
+      <p class="card-location">Big Sur · Post Ranch Inn</p>
+      <p class="card-desc">Cantilevered over a 1,200-foot cliff, this is one of the great rooms in California dining — a kitchen famous for sourcing seaweed from the shoreline below and wild mushrooms from the adjacent forest. A formative kitchen for many of the region's best chefs.</p>
+      <span class="card-tag tag-slow">Hyperlocal · Big Sur Icon</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-wine"></div>
+      <p class="card-name">Chez Noir</p>
+      <p class="card-location">Carmel-by-the-Sea</p>
+      <p class="card-desc">The LA Times named it one of California's 101 best restaurants — a French-inspired neighborhood gem earning consistent praise from Edible Monterey Bay for honest, seasonal cooking and a smart natural wine program rooted in the Central Coast.</p>
+      <span class="card-tag tag-wine">LA Times Top 101 · Natural Wine</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-olive"></div>
+      <p class="card-name">Coastal Kitchen Monterey</p>
+      <p class="card-location">Monterey Plaza Hotel</p>
+      <p class="card-desc">The most innovative cooking in downtown Monterey, pairing local flavors with spectacular bay views. Known for creative execution and a menu that changes with what the farms and boats bring in. A reliable anchor in a city not always known for culinary adventurousness.</p>
+      <span class="card-tag tag-farm">Farm-to-Table · Bay Views</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-gold"></div>
+      <p class="card-name">Lady &amp; Larder + Marmee's</p>
+      <p class="card-location">Carmel Valley Village</p>
+      <p class="card-desc">The cheese and charcuterie anchor of Carmel Valley Village, run by a woman who is literally president of the California Artisan Cheese Guild. The weekend wine bar Marmee's adds a natural wine dimension that makes this the perfect midday stop on any valley cheese tour.</p>
+      <span class="card-tag tag-slow">Cheese · Natural Wine Bar</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-teal"></div>
+      <p class="card-name">Chocolate the Restaurant</p>
+      <p class="card-location">Santa Cruz (Monterey Bay adjacent)</p>
+      <p class="card-desc">Chef-owner David Jackman's slow food philosophy was forged on an Italian farm-restaurant near Bologna in the 1970s. Since 1996 he has run this Pacific Avenue restaurant spending $20–30K monthly on locally and organically sourced groceries. His food is a living argument for the movement.</p>
+      <span class="card-tag tag-slow">Slow Food Ethos · Organic Sourcing</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-wine"></div>
+      <p class="card-name">The Sur House</p>
+      <p class="card-location">Big Sur · Alila Ventana</p>
+      <p class="card-desc">Post its 2025 reimagining, this adults-only Big Sur retreat's restaurant serves Cali-Mediterranean dining with sweeping ocean views — a deeply sensory experience on one of the most dramatic coastlines in the Americas.</p>
+      <span class="card-tag tag-farm">Cali-Mediterranean · Big Sur</span>
+    </div>
+
+  </div>
+
+  <hr class="ornament">
+
+  <!-- ─── WINERIES ─── -->
+  <div class="section-header">
+    <div class="section-icon icon-wine">🍷</div>
+    <h2>Santa Lucia Highlands &amp; Carmel Valley Wineries</h2>
+  </div>
+
+  <div class="ava-box">
+    <h3>About the Santa Lucia Highlands AVA</h3>
+    <p>Established in 1992, the SLH occupies the eastern flank of the Santa Lucia Mountains in central Monterey County — roughly 6,000 acres of vine planted on alluvial terraces between 1,200 and 2,200 feet elevation. Morning fog pours in from Monterey Bay; afternoon winds roar down the Salinas Valley. This thermal drama is responsible for California's most Burgundy-competitive Pinot Noir and Chardonnay. Most tasting rooms are located in Carmel-by-the-Sea and Carmel Valley, with a handful of estate experiences on River Road/County Road G17.</p>
+  </div>
+
+  <div class="card-grid">
+
+    <div class="card">
+      <div class="card-accent accent-wine"></div>
+      <p class="card-name">Bernardus Winery</p>
+      <p class="card-location">Carmel Valley</p>
+      <p class="card-desc">The anchor estate of Carmel Valley wine country, with a 6-acre estate vineyard producing Chardonnay and Pinot Noir and a tasting room within the lodge property. Sommelier-guided vineyard tours pair beautifully with a lunch at Lucia. A complete wine country experience in one address.</p>
+      <span class="card-tag tag-wine">Carmel Valley Estate</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-wine"></div>
+      <p class="card-name">Talbott Vineyards</p>
+      <p class="card-location">Santa Lucia Highlands</p>
+      <p class="card-desc">One of the first vineyards planted in the SLH — back in 1972. The famed Sleepy Hollow Vineyard was designated a California Grand Cru by Wine Enthusiast in 2016. A benchmark producer of Chardonnay and Pinot Noir that helped put the appellation on the map.</p>
+      <span class="card-tag tag-wine">SLH Pioneer · Grand Cru Vineyard</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-gold"></div>
+      <p class="card-name">ROAR Wines</p>
+      <p class="card-location">Santa Lucia Highlands</p>
+      <p class="card-desc">Gary and Rosella Franscioni's family winery celebrates the roaring winds and cold Pacific energy of the Highlands in handcrafted, small-lot Pinot Noir, Chardonnay, Syrah, Grenache, and Viognier. Private experiences available by appointment — worth pursuing.</p>
+      <span class="card-tag tag-wine">Family · By Appointment</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-wine"></div>
+      <p class="card-name">Hahn Family Wines / Lucienne</p>
+      <p class="card-location">Soledad · Santa Lucia Highlands</p>
+      <p class="card-desc">The Hahn family were instrumental in establishing the SLH AVA in 1991. Their estate tasting room in Soledad — terrace overlooking the Salinas Valley — is one of the most dramatic in the state. Lucienne represents their single-vineyard pinnacle bottlings.</p>
+      <span class="card-tag tag-wine">AVA Founders · Estate Terrace</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-teal"></div>
+      <p class="card-name">Morgan Winery</p>
+      <p class="card-location">Salinas / Carmel</p>
+      <p class="card-desc">Sustainably produced wines sourced from the Santa Lucia Highlands and Arroyo Seco AVAs. A consistent standard-bearer for honest, food-friendly Pinot and Chardonnay at accessible price points. Strong at the farmers market and restaurant table alike.</p>
+      <span class="card-tag tag-farm">Sustainable · Food-Friendly</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-wine"></div>
+      <p class="card-name">Caraccioli Cellars</p>
+      <p class="card-location">Carmel-by-the-Sea</p>
+      <p class="card-desc">The SLH's most elegant sparkling wine producer, with a tasting room in downtown Carmel. Their méthode traditionelle bubbles and rich Pinot Noirs are a revelatory pairing — a reminder that the Highlands' cool terroir is Champagne-adjacent in its mineral tension.</p>
+      <span class="card-tag tag-wine">Sparkling · Méthode Traditionnelle</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-olive"></div>
+      <p class="card-name">McIntyre Vineyards</p>
+      <p class="card-location">Santa Lucia Highlands</p>
+      <p class="card-desc">Proprietor Steve McIntyre is one of the most knowledgeable viticulturists in California, farming nearly a third of the entire SLH. His 80-acre estate vineyard — planted in 1973 — is home to some of the Highlands' oldest Pinot Noir vines. Tasting room in Carmel-by-the-Sea.</p>
+      <span class="card-tag tag-wine">Old Vine · SLH Pioneer</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-wine"></div>
+      <p class="card-name">Wrath Wines</p>
+      <p class="card-location">Soledad · Santa Lucia Highlands</p>
+      <p class="card-desc">The most welcoming on-site experience remaining in the SLH after other tasting rooms closed. A lily pond, gracious hospitality, and Pinot Noir that punches well above its recognition level. Winemaker Sabrine Rodems brings a fine arts sensibility to the wines.</p>
+      <span class="card-tag tag-slow">On-Site Estate · Worth Seeking Out</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-teal"></div>
+      <p class="card-name">Folktale Winery</p>
+      <p class="card-location">Carmel</p>
+      <p class="card-desc">Born in 2015 from a collective of artists and craftspeople on a piece of land in Carmel. Their philosophy — that every great bottle contains a story — produces wines with genuine narrative and a tasting room experience that matches the poetry in the glass.</p>
+      <span class="card-tag tag-wine">Artisanal · Story-Driven</span>
+    </div>
+
+  </div>
+
+  <hr class="ornament">
+
+  <!-- ─── FARMSTANDS & FARMS ─── -->
+  <div class="section-header">
+    <div class="section-icon icon-farm">🌿</div>
+    <h2>Farmstands, Farms &amp; Direct-to-Table</h2>
+  </div>
+
+  <div class="card-grid">
+
+    <div class="card">
+      <div class="card-accent accent-olive"></div>
+      <p class="card-name">The Farm at Carmel Valley Ranch</p>
+      <p class="card-location">Carmel Valley</p>
+      <p class="card-desc">An agricultural education center, demonstration farm, and produce stand on the 500-acre ranch property. Certified organic produce, hands-on tours, farm animals, and seasonal events like Apple Day and a Fall Festival make this an essential family stop in the valley.</p>
+      <span class="card-tag tag-farm">Certified Organic · Farm Tours</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-teal"></div>
+      <p class="card-name">Suncoast Organic Farm</p>
+      <p class="card-location">Monterey County</p>
+      <p class="card-desc">Featured in Edible Monterey Bay's Fall 2025 issue as a "Rural Revelation" — this organic farm pulls hundreds of visitors for its weekend lunch, demonstrating that the bridge between field and table needn't be complicated or distant. One of the region's quiet standouts.</p>
+      <span class="card-tag tag-slow">Weekend Farm Lunch · Organic</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-olive"></div>
+      <p class="card-name">Garden Variety Cheeses</p>
+      <p class="card-location">Royal Oaks, Monterey County</p>
+      <p class="card-desc">One of only a handful of artisan cheesemakers in the Monterey Bay area, operating as a California Artisan Cheese Guild member. Worth seeking out at local farmers markets for small-batch, regionally distinctive cheeses.</p>
+      <span class="card-tag tag-craft">Artisan Cheese · Guild Member</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-gold"></div>
+      <p class="card-name">Carmel Valley Creamery</p>
+      <p class="card-location">1 Esquiline Road, Carmel Valley Village</p>
+      <p class="card-desc">French-born Sophie Hauville opened her small-batch goat and cow's milk creamery on Bastille Day 2024, apprenticed under legendary Big Sur cheesemaker Charlie Cascio. She makes chèvre, gruyère, herbed cheeses, and local honey boards at what used to be Rosie's Cracker Barrel — a very Slow Food origin story.</p>
+      <span class="card-tag tag-slow">French Craft · New in 2024</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-olive"></div>
+      <p class="card-name">Wise Goat Organics</p>
+      <p class="card-location">Monterey County Farmers Markets</p>
+      <p class="card-desc">A beloved fixture at the Monterey Bay Certified Farmers Markets, Wise Goat brings certified organic produce and farmstead goods to the community market circuit. Look for them at the Friday Monterey and Saturday Aptos markets.</p>
+      <span class="card-tag tag-farm">Certified Organic · Market Regular</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-teal"></div>
+      <p class="card-name">Prevedelli Farms</p>
+      <p class="card-location">Monterey Bay Certified Farmers Markets</p>
+      <p class="card-desc">One of the family farm stalwarts of the regional market circuit, with deep roots in the Monterey Bay agricultural community and a commitment to fresh, seasonal growing that aligns with the market's 50-year heritage of connecting farmers to eaters.</p>
+      <span class="card-tag tag-farm">Family Farm · Market Anchor</span>
+    </div>
+
+  </div>
+
+  <!-- MARKETS BAR -->
+  <div class="markets-bar">
+    <h3>📍 Farmers Markets — A Market Every Day of the Week</h3>
+    <ul>
+      <li>Friday — Del Monte Center, Monterey (year-round)</li>
+      <li>Friday — MPC Campus, Monterey (year-round)</li>
+      <li>Friday — Carmel Valley Village (seasonal)</li>
+      <li>Saturday — Aptos at Cabrillo College (year-round)</li>
+      <li>Saturday — Downtown Salinas on Gabilan St.</li>
+      <li>Sunday — Carmel (summer only)</li>
+      <li>Sunday — Marina, Everyone's Harvest (10am–2pm)</li>
+      <li>Monday — Pacific Grove at Central &amp; Grand</li>
+      <li>Tuesday — Alisal/East Salinas (Everyone's Harvest)</li>
+      <li>Wednesday — Natividad Medical Center, Salinas</li>
+    </ul>
+  </div>
+
+  <hr class="ornament">
+
+  <!-- ─── ARTISAN PRODUCERS ─── -->
+  <div class="section-header">
+    <div class="section-icon icon-craft">🧀</div>
+    <h2>Artisan Producers</h2>
+  </div>
+
+  <div class="card-grid">
+
+    <div class="card">
+      <div class="card-accent accent-gold"></div>
+      <p class="card-name">Schoch Family Farmstead</p>
+      <p class="card-location">662 El Camino Real N, Salinas</p>
+      <p class="card-desc">One of California's last small raw-milk dairies — Swiss immigrant heritage, founded 1944, fewer than 80 Holstein cows. The third generation now makes a remarkable portfolio of raw-milk farmstead cheeses: Santa Rita (washed rind), Mt. Toro Tomme, Monterey Jack (the California original), Feta, and a local blue. At markets Fridays and Saturdays.</p>
+      <span class="card-tag tag-slow">Raw Milk · Swiss Heritage · Since 1944</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-teal"></div>
+      <p class="card-name">Monterey Abalone Company</p>
+      <p class="card-location">Commercial Wharf, Monterey Bay</p>
+      <p class="card-desc">Co-owners Art Seavey and Trevor Fay cultivate California red abalone in cages suspended beneath the Commercial Wharf in Monterey Bay — farming in a natural ocean habitat rather than tanks. The result is abalone of exceptional quality and the cleanest provenance story in coastal California.</p>
+      <span class="card-tag tag-craft">Aquaculture · Hyperlocal Seafood</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-gold"></div>
+      <p class="card-name">Kitchen Table Cultures</p>
+      <p class="card-location">Monterey Bay Area</p>
+      <p class="card-desc">Fermented foods and bone broths celebrated by Edible Monterey Bay — a small-batch producer working in the tradition of ancestral preservation and gut-health-forward food culture. Their bone broth is a local cult item worth tracking down at area markets and specialty shops.</p>
+      <span class="card-tag tag-slow">Fermented · Bone Broth</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-olive"></div>
+      <p class="card-name">Otter Bay Canning Company</p>
+      <p class="card-location">Monterey Bay Region</p>
+      <p class="card-desc">Riding the tinned fish renaissance with a genuine Central Coast identity. Otter Bay aims to galvanize the sustainable seafood movement in a region with deep fishing heritage — bridging the Cannery Row past to a more thoughtful, zero-waste seafood future.</p>
+      <span class="card-tag tag-craft">Tinned Fish · Sustainable Seafood</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-teal"></div>
+      <p class="card-name">Parker-Lusseau Pastries</p>
+      <p class="card-location">Monterey</p>
+      <p class="card-desc">The most committed artisan bakery in the county, recently under new ownership-operation by Jeanne Brooks who brings a French devotion to croissants and laminated doughs. A quiet anchor of Monterey's morning ritual and a key supplier to area restaurants and markets.</p>
+      <span class="card-tag tag-craft">French Pastry · Local Institution</span>
+    </div>
+
+    <div class="card">
+      <div class="card-accent accent-gold"></div>
+      <p class="card-name">Carmel Berry Company / MEarth</p>
+      <p class="card-location">Carmel</p>
+      <p class="card-desc">The creator of Carmel Berry Co. now directs MEarth, an environmental education nonprofit that runs farm and garden programming at Carmel's Hilton Bialek Habitat. The overlap of food production and education is very much the slow food way.</p>
+      <span class="card-tag tag-slow">Farm Education · Community</span>
+    </div>
+
+  </div>
+
+  <hr class="ornament">
+
+  <!-- ─── PUBLICATIONS ─── -->
+  <div class="section-header">
+    <div class="section-icon icon-pub">📖</div>
+    <h2>Regional Publications &amp; Resources</h2>
+  </div>
+
+  <div class="pub-row">
+    <div class="pub-card">
+      <strong>Edible Monterey Bay</strong>
+      The essential quarterly magazine for the Monterey, Santa Cruz, and San Benito food communities — covering farmers, chefs, vintners, fishers, and foragers. Editor Mark C. Anderson's "Found Treasure" column is required reading for anyone eating their way through the region. ediblemontereybay.com
+    </div>
+    <div class="pub-card">
+      <strong>Monterey County NOW</strong>
+      A local news and culture weekly serving the entire peninsula from Big Sur to Salinas — covering restaurant openings, farm news, market events, and the county's extraordinary agricultural policy landscape. montereycountynow.com
+    </div>
+    <div class="pub-card">
+      <strong>Monterey Bay Certified Farmers Markets</strong>
+      50 years old in 2026 — the oldest and largest farmers market network on the Central Coast. Four market locations with 90+ vendors; EBT accepted. The weekly newsletter is a reliable seasonal guide. montereybayfarmers.org
+    </div>
+    <div class="pub-card">
+      <strong>Santa Lucia Highlands Winegrowers</strong>
+      The AVA's official grower association with a tasting room map, winery directory, and seasonal events calendar. The Monterey Wines Tasting Map is an excellent road trip companion. santaluciahighlands.com
+    </div>
+  </div>
+
+  <div class="sc-note">
+    <p>Compiled by <strong>Sonoma Chef</strong> — a field guide to the farms, tables, and cellars worth knowing across California's great food and wine regions.<br>
+    Published at <strong>sonomachef.pages.dev</strong> · Distributed via Patreon<br><br>
+    <em>All listings reflect publicly available information. Hours and availability subject to change — call ahead, especially for estate winery visits and farmstand stops.</em></p>
+  </div>
+
+</div>
+</body>
+</html>
