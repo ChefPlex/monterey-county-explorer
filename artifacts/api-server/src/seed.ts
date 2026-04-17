@@ -93,6 +93,24 @@ const SEED_DATA = [
 
   // ── WINERIES: CARMEL (TASTING ROOMS) ───────────────────────────────────────
   {
+    name: "Talbott Vineyards",
+    city: "Carmel",
+    note: "One of the founding estates of the Santa Lucia Highlands — Talbott planted their Sleepy Hollow Vineyard in 1972, before the AVA existed. Wine Enthusiast named it a California Grand Cru in 2016. The Chardonnay and Pinot Noir remain benchmarks for what the Highlands can do. Tasting room on Lincoln between 5th and 6th in Carmel village.",
+    category: "winery",
+    lat: 36.5543,
+    lng: -121.9264,
+    website: "https://talbottvineyards.com",
+  },
+  {
+    name: "McIntyre Vineyards",
+    city: "Carmel",
+    note: "Steve McIntyre farms nearly a third of the entire Santa Lucia Highlands AVA — more than any other individual in the appellation. His 80-acre estate, planted in 1973, holds some of the oldest Pinot Noir vines in Monterey County. The tasting room at Carmel Crossroads makes the wines accessible without a mountain drive. Old-vine SLH at its most authoritative.",
+    category: "winery",
+    lat: 36.5395,
+    lng: -121.9066,
+    website: "https://mcintyrevineyards.com",
+  },
+  {
     name: "Caraccioli Cellars",
     city: "Carmel",
     note: "The best sparkling wine argument for Monterey County you'll find in a single tasting room. Gary Caraccioli grew up farming in the Salinas Valley; he brought in Michel Salgues — the Frenchman who built Roederer Estate — to translate Santa Lucia Highlands fruit into méthode champenoise wines with real Champagne structure. The Brut and Brut Rosé from the SLH are benchmarks. Quiet, unhurried tasting room on Dolores Street in the village.",
@@ -265,6 +283,15 @@ const SEED_DATA = [
     lng: -121.8091,
     website: "https://postranchinn.com/dining",
   },
+  {
+    name: "Chez Noir",
+    city: "Carmel",
+    note: "One Michelin Star earned with a minimum of fuss — James Beard finalist for Best New Restaurant, LA Times Top 101, and arguably the most honest French-inspired kitchen on the Peninsula. The natural wine program is rooted in the Central Coast. On 5th between San Carlos and Dolores in Carmel-by-the-Sea. Book well ahead.",
+    category: "restaurant",
+    lat: 36.5535,
+    lng: -121.9244,
+    website: "https://cheznoircarmel.com",
+  },
 
   // ── FARM STANDS & MARKETS ─────────────────────────────────────────────────
   {
@@ -303,6 +330,24 @@ const SEED_DATA = [
     lng: -121.7202,
     website: "https://montereybayfarmers.org",
   },
+  {
+    name: "Carmel Valley Creamery",
+    city: "Carmel Valley",
+    note: "Sophie Hauville — French-born, trained under Big Sur cheesemaker Charlie Cascio — opened her small-batch creamery on Bastille Day 2024 in the old Rosie's Cracker Barrel on Esquiline Road in the Village. She makes chèvre, gruyère, herbed cheeses, and honey boards from a combination of local goat and cow's milk. A genuine 2024 arrival worth watching. 1 Esquiline Rd.",
+    category: "farmstand",
+    lat: 36.4802,
+    lng: -121.7316,
+    website: "https://carmelvalleycreamery.com",
+  },
+  {
+    name: "Lady & Larder + Marmee's",
+    city: "Carmel Valley",
+    note: "The cheese and charcuterie anchor of Carmel Valley Village — run by a cheesemaker who serves as president of the California Artisan Cheese Guild. Marmee's, the attached natural wine bar, gives the stop a proper afternoon dimension. At 9 Del Fino Place in the Village. Hours have been subject to pause — call ahead or check the website before visiting.",
+    category: "farmstand",
+    lat: 36.4810,
+    lng: -121.7320,
+    website: "https://ladyandlarder.com",
+  },
 
   // ── ARTISAN PRODUCERS ─────────────────────────────────────────────────────
   {
@@ -331,6 +376,33 @@ const SEED_DATA = [
     lat: 36.5990,
     lng: -121.8880,
     website: "https://acmecheese.com",
+  },
+  {
+    name: "Schoch Family Farmstead",
+    city: "Salinas",
+    note: "One of California's last operating raw-milk dairies — Swiss immigrant heritage, founded 1944, fewer than 80 Holstein cows, now in its third generation. The cheese portfolio is remarkable: Santa Rita (washed rind), Mt. Toro Tomme, authentic Monterey Jack (a California original the county named but largely abandoned), Feta, and a local blue. At farmers markets Fridays and Saturdays; the farm at 662 El Camino Real N is the source.",
+    category: "producer",
+    lat: 36.7130,
+    lng: -121.6440,
+    website: "https://schochfamilyfarm.com",
+  },
+  {
+    name: "Monterey Abalone Company",
+    city: "Monterey",
+    note: "Art Seavey and Trevor Fay cultivate California red abalone in cages suspended beneath Municipal Wharf 2 — farming in the actual bay rather than tanks. The result is some of the cleanest aquaculture provenance on the Central Coast: abalone fed by wild kelp and plankton of Monterey Bay, harvested and sold from the wharf. Call ahead to visit or purchase direct.",
+    category: "producer",
+    lat: 36.6056,
+    lng: -121.8940,
+    website: "https://montereyabalone.com",
+  },
+  {
+    name: "Parker-Lusseau Pastries",
+    city: "Monterey",
+    note: "The most committed artisan bakery in Monterey County. French laminated doughs — proper croissants, kouign-amann, seasonal pastries — produced with a rigor that makes this a key supplier to the area's better restaurants and a morning anchor for anyone who knows. The Hartnell Street flagship at 539 Hartnell St is the original; a second cafe on Munras has since opened. Open early weekdays.",
+    category: "producer",
+    lat: 36.6003,
+    lng: -121.8916,
+    website: "https://parkerlusseau.com",
   },
 ];
 
