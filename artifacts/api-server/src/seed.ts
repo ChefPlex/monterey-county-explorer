@@ -3,14 +3,21 @@ import { count, eq, inArray, sql } from "drizzle-orm";
 import { logger } from "./lib/logger";
 
 // Entries removed from the curated list — deleted from DB on every boot
-const REMOVED_FROM_SEED: string[] = [];
+const REMOVED_FROM_SEED: string[] = [
+  "Gizdich Ranch",               // Santa Cruz County, not Monterey
+  "Acme Artisan Cheese",         // Unverifiable — business does not appear to exist
+  "The Fish Hopper",             // Tourist trap; note itself hedged
+  "The Sardine Factory",         // Historical interest only; not a chef recommendation
+  "Earthbound Farm Farm Stand",  // Corporate acquisition changed the experience significantly
+  "Lucia Restaurant at Bernardus Lodge", // Redundant — already covered under Bernardus Winery
+];
 
 const SEED_DATA = [
   // ── WINERIES: CARMEL VALLEY ────────────────────────────────────────────────
   {
     name: "Bernardus Winery",
     city: "Carmel Valley",
-    note: "The flagship Carmel Valley estate. Winemaker Dean DeKorth's Marinus Bordeaux blend is the benchmark for the appellation — structured, age-worthy, and genuinely Carmel Valley in character. On-property restaurant with Cal Stamenov in the kitchen makes this a full culinary destination. Appointment tastings available in the vineyard cave.",
+    note: "The flagship Carmel Valley estate. Winemaker Dean DeKorth's Marinus Bordeaux blend is the benchmark for the appellation — structured, age-worthy, and genuinely Carmel Valley in character. The on-property Lucia restaurant with Cal Stamenov in the kitchen makes this a full culinary destination — dinner is among the most accomplished in the valley; lunch is equally worth it. Appointment tastings available in the vineyard cave.",
     category: "winery",
     lat: 36.4734,
     lng: -121.7296,
@@ -28,7 +35,7 @@ const SEED_DATA = [
   {
     name: "Wrath Winery",
     city: "Carmel Valley",
-    note: "Focused, serious wines from Santa Lucia Highlands fruit. Michael Michaud built his career in the SLH — the Chardonnay and Pinot Noir here show what the appellation does better than anywhere in California. Quiet tasting room, knowledgeable pours. If you're serious about SLH, this is a required stop.",
+    note: "Focused, serious wines from Santa Lucia Highlands fruit. The Chardonnay and Pinot Noir here show what the SLH appellation does better than anywhere in California — bright acidity, savory structure, unmistakably coastal. Quiet tasting room, knowledgeable pours. If you're serious about SLH, this is a required stop.",
     category: "winery",
     lat: 36.4810,
     lng: -121.7205,
@@ -142,11 +149,11 @@ const SEED_DATA = [
   {
     name: "Nepenthe",
     city: "Big Sur",
-    note: "The cathedral of Big Sur dining — terraced into the cliff at 808 feet with one of the great restaurant views in California. The Ambrosia burger has been feeding travelers since 1949 and hasn't been embarrassed by time. Arrive for lunch before the afternoon coast fog closes in. The phonix is the original structure. An institution, earned.",
+    note: "The cathedral of Big Sur dining — terraced into the cliff at 808 feet with one of the great restaurant views in California. The Ambrosia burger has been feeding travelers since 1949 and hasn't been embarrassed by time. Arrive for lunch before the afternoon coast fog closes in. The Phoenix is the original structure. An institution, earned.",
     category: "restaurant",
     lat: 36.2541,
     lng: -121.8124,
-    website: "https://nepenthebigsusr.com",
+    website: "https://nepenthe.com",
   },
   {
     name: "Aubergine at L'Auberge Carmel",
@@ -176,15 +183,6 @@ const SEED_DATA = [
     website: "https://passionfish.net",
   },
   {
-    name: "The Sardine Factory",
-    city: "Monterey",
-    note: "A Cannery Row institution since 1968. The Captain's Room is old-school California fine dining at its most theatrical — vaulted ceilings, full service, the works. The abalone bisque has been on the menu for decades for good reason. An important historical stop for understanding Monterey's dining history.",
-    category: "restaurant",
-    lat: 36.6197,
-    lng: -121.8964,
-    website: "https://sardinefactory.com",
-  },
-  {
     name: "Cultura Comida y Bebida",
     city: "Carmel",
     note: "The best argument that Carmel's restaurant scene is getting more interesting. Local sourcing, a Mexican-inflected menu built around what's in season in the Salinas Valley, and a natural wine list that would hold its own in San Francisco. Genuinely exciting cooking in a town not always known for it.",
@@ -212,15 +210,6 @@ const SEED_DATA = [
     website: "https://caferusticacarmelvalley.com",
   },
   {
-    name: "The Fish Hopper",
-    city: "Monterey",
-    note: "Cannery Row seafood with bay views. Not a destination in the Aubergine sense, but an honest, well-run seafood restaurant that does justice to the local catch. Good for Dungeness crab in season. The clam chowder is better than most on the Row.",
-    category: "restaurant",
-    lat: 36.6181,
-    lng: -121.8971,
-    website: "https://fishhopper.com",
-  },
-  {
     name: "Wild Fish",
     city: "Pacific Grove",
     note: "Small, focused, and genuinely committed to sustainable local seafood. Pacific Grove's quiet gem. The menu changes with what came off the boats. No swordfish, no farmed salmon — Wild Fish means it. Book ahead; it seats very few.",
@@ -246,15 +235,6 @@ const SEED_DATA = [
     lat: 36.5548,
     lng: -121.9229,
     website: "https://iltegaminocarmel.com",
-  },
-  {
-    name: "Lucia Restaurant at Bernardus Lodge",
-    city: "Carmel Valley",
-    note: "Cal Stamenov's dining room inside Bernardus Lodge is the most accomplished wine-country restaurant in the valley. The kitchen sources from the lodge's own garden, from Salinas Valley farms, and from coastal fisheries. The result is California-regional cooking — technically refined, genuinely ingredient-forward, and paired with a wine list that runs deep on Carmel Valley and Santa Lucia Highlands estates. A full destination dinner. Lunch is more accessible and equally worth it.",
-    category: "restaurant",
-    lat: 36.4737,
-    lng: -121.7299,
-    website: "https://bernarduslodge.com/carmel-valley-restaurants",
   },
   {
     name: "Solstice at The Village Big Sur",
@@ -294,24 +274,6 @@ const SEED_DATA = [
   },
 
   // ── FARM STANDS & MARKETS ─────────────────────────────────────────────────
-  {
-    name: "Earthbound Farm Farm Stand",
-    city: "Carmel Valley",
-    note: "The farm that launched organic on a national scale — Earthbound Farm started as a 2.5-acre raspberry plot in Carmel Valley in 1984. The farm stand on Carmel Valley Road sells their full produce range alongside prepared foods, seasonal smoothies, and ready-to-eat bowls. Walk the certified organic demonstration garden while you're there. A piece of California food history.",
-    category: "farmstand",
-    lat: 36.5225,
-    lng: -121.8680,
-    website: "https://earthboundfarm.com",
-  },
-  {
-    name: "Gizdich Ranch",
-    city: "Watsonville",
-    note: "Pick-your-own apples and olallieberries in the coastal foothills above Watsonville, operating since 1937. The ranch makes their own pies, juices, and preserves on-site using estate fruit. A genuine working farm in a county whose agricultural output most people never see. Seasonal operation — call ahead for pick-your-own availability.",
-    category: "farmstand",
-    lat: 36.9128,
-    lng: -121.7706,
-    website: "https://gizdich-ranch.com",
-  },
   {
     name: "Monterey Bay Certified Farmers Market — Monterey",
     city: "Monterey",
