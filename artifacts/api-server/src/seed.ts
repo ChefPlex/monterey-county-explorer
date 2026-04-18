@@ -10,6 +10,9 @@ const REMOVED_FROM_SEED: string[] = [
   "The Sardine Factory",         // Historical interest only; not a chef recommendation
   "Earthbound Farm Farm Stand",  // Corporate acquisition changed the experience significantly
   "Lucia Restaurant at Bernardus Lodge", // Redundant — already covered under Bernardus Winery
+  "Cantinetta Luca",             // Website dead on all domains; likely permanently closed
+  "Café Rustica",                // Website dead on all domains; likely permanently closed
+  "Carmel Valley Creamery",      // No web presence; too new/unverifiable
 ];
 
 const SEED_DATA = [
@@ -165,15 +168,6 @@ const SEED_DATA = [
     website: "https://auberginecarmel.com",
   },
   {
-    name: "Cantinetta Luca",
-    city: "Carmel",
-    note: "Reliable Italian in the village with genuinely good house-made pasta and a wine list weighted toward Monterey County producers. The charcuterie board is serious. If you're staying in Carmel and need a good dinner without a tasting menu investment, this is the answer.",
-    category: "restaurant",
-    lat: 36.5557,
-    lng: -121.9241,
-    website: "https://cantinettaluca.com",
-  },
-  {
     name: "Passionfish",
     city: "Pacific Grove",
     note: "The neighborhood restaurant Pacific Grove deserves and almost doesn't know it has. Ted Walter's wine list is famously well-priced — zero markup on most bottles is the stated goal — and the sustainable seafood is sourced with real intention. Book ahead. The regulars fill it.",
@@ -199,15 +193,6 @@ const SEED_DATA = [
     lat: 36.6049,
     lng: -121.8615,
     website: "https://tarpys.com",
-  },
-  {
-    name: "Café Rustica",
-    city: "Carmel Valley",
-    note: "The Carmel Valley Village gathering spot. Wood-fired pizzas, solid pasta, and a patio that captures everything right about warm Carmel Valley evenings. Unpretentious, consistent, and fills up with locals during the week — which tells you everything you need to know.",
-    category: "restaurant",
-    lat: 36.4804,
-    lng: -121.7197,
-    website: "https://caferusticacarmelvalley.com",
   },
   {
     name: "Wild Fish",
@@ -291,15 +276,6 @@ const SEED_DATA = [
     lat: 36.4800,
     lng: -121.7202,
     website: "https://montereybayfarmers.org",
-  },
-  {
-    name: "Carmel Valley Creamery",
-    city: "Carmel Valley",
-    note: "Sophie Hauville — French-born, trained under Big Sur cheesemaker Charlie Cascio — opened her small-batch creamery on Bastille Day 2024 in the old Rosie's Cracker Barrel on Esquiline Road in the Village. She makes chèvre, gruyère, herbed cheeses, and honey boards from a combination of local goat and cow's milk. A genuine 2024 arrival worth watching. 1 Esquiline Rd.",
-    category: "farmstand",
-    lat: 36.4802,
-    lng: -121.7316,
-    website: "https://carmelvalleycreamery.com",
   },
   {
     name: "Lady & Larder + Marmee's",
