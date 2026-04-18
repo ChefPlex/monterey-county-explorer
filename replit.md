@@ -156,9 +156,9 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 | `winery` | Wine red | Tailwind `primary` | Wine glass |
 | `restaurant` | Amber | Tailwind `secondary` | Utensils |
 | `farmstand` | Sage green | `#6f7d3c` | Leaf |
-| `producer` | Terracotta | `#c06a2d` | Store |
+| `artisan` | Terracotta | `#c06a2d` | Store |
 
-Producers = artisan makers (creameries, cideries, spirits, etc.) that don't fit winery/restaurant/farmstand.
+Artisans = artisan makers (creameries, cideries, spirits, etc.) that don't fit winery/restaurant/farmstand.
 
 ---
 
