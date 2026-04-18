@@ -66,7 +66,7 @@ const SEED_DATA = [
     category: "winery",
     lat: 36.4805,
     lng: -121.7197,
-    website: "https://cheesebrewines.com",
+    website: "https://chesebrowines.com",
   },
   {
     name: "Joullian Vineyards",
@@ -86,7 +86,7 @@ const SEED_DATA = [
     category: "winery",
     lat: 36.3961,
     lng: -121.3390,
-    website: "https://hahnwinery.com",
+    website: "https://hahnwines.com",
   },
   {
     name: "Scheid Family Wines",
