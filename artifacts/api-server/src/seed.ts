@@ -331,15 +331,6 @@ const SEED_DATA = [
     website: "https://bigsurbakery.com",
   },
   {
-    name: "Acme Artisan Cheese",
-    city: "Monterey",
-    note: "Local cheese board stop on the Peninsula — Monterey County Jack, aged varieties, and a rotating selection of California farmstead cheeses. Worth picking up before a picnic in Carmel Valley or a wine-with-cheese afternoon at a tasting room that allows outside food.",
-    category: "producer",
-    lat: 36.5990,
-    lng: -121.8880,
-    website: "https://acmecheese.com",
-  },
-  {
     name: "Schoch Family Farmstead",
     city: "Salinas",
     note: "One of California's last operating raw-milk dairies — Swiss immigrant heritage, founded 1944, fewer than 80 Holstein cows, now in its third generation. The cheese portfolio is remarkable: Santa Rita (washed rind), Mt. Toro Tomme, authentic Monterey Jack (a California original the county named but largely abandoned), Feta, and a local blue. At farmers markets Fridays and Saturdays; the farm at 662 El Camino Real N is the source.",
@@ -381,21 +372,24 @@ export async function seedIfEmpty() {
       }
     }
 
-    // Count existing markers — if any exist, skip seeding
-    const [{ value: existingCount }] = await db
-      .select({ value: count() })
+    // Find which seed entries are not yet in the DB and insert only those
+    const existing = await db
+      .select({ name: markersTable.name })
       .from(markersTable);
+    const existingNames = new Set(existing.map((r) => r.name));
 
-    if (existingCount > 0) {
-      logger.info({ count: existingCount }, "Markers table already populated — skipping seed");
+    const toInsert = SEED_DATA.filter((entry) => !existingNames.has(entry.name));
+
+    if (toInsert.length === 0) {
+      logger.info("All seed markers already present — nothing to insert");
       return;
     }
 
-    // Insert Monterey seed data
+    // Insert only the new entries
     const inserted = await db
       .insert(markersTable)
       .values(
-        SEED_DATA.map((entry) => ({
+        toInsert.map((entry) => ({
           name: entry.name,
           city: entry.city,
           note: entry.note ?? null,
@@ -407,7 +401,7 @@ export async function seedIfEmpty() {
       )
       .returning({ id: markersTable.id, name: markersTable.name });
 
-    logger.info({ count: inserted.length }, "Monterey seed data inserted");
+    logger.info({ count: inserted.length, names: inserted.map((r) => r.name) }, "New seed markers inserted");
   } catch (err) {
     logger.error({ err }, "Seed failed");
     throw err;
