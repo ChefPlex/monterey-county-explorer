@@ -28,8 +28,8 @@ const PIN_TYPES = [
   },
   {
     icon: Store,
-    label: "Artisan Producers",
-    description: "Makers of cider, spirits, cheese, and more",
+    label: "Artisan",
+    description: "Abalone farmers, cheesemakers, bakers, and roasters",
     color: "bg-[#c06a2d]",
   },
 ];
@@ -63,7 +63,7 @@ export function WelcomeOverlay({ open, onClose }: WelcomeOverlayProps) {
             Monterey County
           </h1>
           <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-            {total} personally curated spots — {wineries} wineries, {restaurants} restaurants, {farmstands} farm stands, and {producers} artisan producers (creameries, cideries, spirits, and more) — verified by a professional chef who actually goes to all of them.
+            {total} personally curated spots — {wineries} wineries, {restaurants} restaurants, {farmstands} farm stands, and {producers} artisan producers (abalone farmers, cheesemakers, bakers, roasters, and more) — verified by a professional chef who actually goes to all of them.
           </p>
         </div>
 

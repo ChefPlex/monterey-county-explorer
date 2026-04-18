@@ -42,7 +42,7 @@ const CATEGORY_LABELS: Record<Category, string> = {
   winery: "Wineries",
   restaurant: "Dining",
   farmstand: "Farms",
-  producer: "Makers",
+  producer: "Artisan",
 };
 
 const CATEGORY_ICON_MAP: Record<Category, IoniconsName> = {
@@ -57,7 +57,7 @@ const MAP_FILTERS: { key: MapFilter; label: string; icon: IoniconsName }[] = [
   { key: "winery", label: "Wineries", icon: "wine-outline" },
   { key: "restaurant", label: "Dining", icon: "restaurant-outline" },
   { key: "farmstand", label: "Farms", icon: "leaf-outline" },
-  { key: "producer", label: "Makers", icon: "storefront-outline" },
+  { key: "producer", label: "Artisan", icon: "storefront-outline" },
 ];
 
 function getCategoryColor(category: Category, colors: ReturnType<typeof useColors>) {
@@ -137,7 +137,7 @@ interface SpotSheetProps {
 }
 
 function buildShareMessage(spot: MarkerType) {
-  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : spot.category === "producer" ? "Producer" : "Farm Stand";
+  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : spot.category === "producer" ? "Artisan" : "Farm Stand";
   const parts: string[] = [
     `${spot.name} — ${catLabel} in Monterey County`,
     "",
@@ -154,7 +154,7 @@ function SpotDetailModal({ spot, onClose, onToggleSave, isSaved, onDelete, isDel
 
   const catColor = getCategoryColor(spot.category as Category, colors);
   const catIcon = getCategoryIcon(spot.category as Category);
-  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : spot.category === "producer" ? "Producer" : "Farm";
+  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : spot.category === "producer" ? "Artisan" : "Farm";
   const saved = isSaved(spot.id);
 
   const handleShare = async () => {
@@ -252,7 +252,7 @@ function SpotDetailPanel({ spot, onClose, onToggleSave, isSaved, onDelete, isDel
 
   const catColor = getCategoryColor(spot.category as Category, colors);
   const catIcon = getCategoryIcon(spot.category as Category);
-  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : spot.category === "producer" ? "Producer" : "Farm";
+  const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : spot.category === "producer" ? "Artisan" : "Farm";
   const saved = isSaved(spot.id);
 
   const handleShare = async () => {
@@ -358,8 +358,8 @@ const PIN_LEGEND = [
   },
   {
     category: "producer" as Category,
-    label: "Artisan Producers",
-    description: "Makers of cider, spirits, cheese, and more",
+    label: "Artisan",
+    description: "Abalone farmers, cheesemakers, bakers, and roasters",
   },
 ];
 
@@ -395,7 +395,7 @@ function WelcomeSplashModal({ visible, onClose }: { visible: boolean; onClose: (
               Monterey County
             </Text>
             <Text style={[styles.welcomeSubtitle, { color: colors.mutedForeground }]}>
-              {total} personally curated spots — {wineries} wineries, {restaurants} restaurants, {farmstands} farm stands, and {producers} artisan producers (creameries, cideries, spirits, and more) — verified by a professional chef who actually goes to all of them.
+              {total} personally curated spots — {wineries} wineries, {restaurants} restaurants, {farmstands} farm stands, and {producers} artisan producers (abalone farmers, cheesemakers, bakers, roasters, and more) — verified by a professional chef who actually goes to all of them.
             </Text>
           </View>
 
