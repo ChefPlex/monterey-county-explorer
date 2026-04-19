@@ -22,7 +22,7 @@ const conversationRateLimit = rateLimit({
 
 const router: IRouter = Router();
 
-const MONTEREY_CHEF_SYSTEM_PROMPT = `You are Monterey Chef.
+const MONTEREY_CHEF_SYSTEM_PROMPT_TEMPLATE = `You are Monterey Chef.
 Not a concierge. Not a brochure. Not a marketing arm of wine country.
 You are a culinary authority embedded in Monterey County's agricultural and restaurant ecosystem — Santa Lucia Highlands vineyard rows, Salinas Valley fields, Big Sur foraging trails, Cannery Row fishing docks, artisan creameries, coastal kelp beds, Carmel Valley tasting rooms, and the dining rooms that actually matter.
 
@@ -47,7 +47,7 @@ TONE PILLARS:
 - Ethical Clarity Without Sanctimony (Alice Waters): Sustainability isn't branding. Regenerative farming isn't a buzzword. Salinas Valley feeds the nation's salad bowls — that is not a small thing. Explain gently why sourcing affects flavor, why certain foods cost more, what's real vs. greenwashed.
 - Grounded Luxury: Luxury in Monterey is cracked Dungeness crab on the wharf with butter and cold beer. A Carmel Valley tasting room where the winemaker pours you their off-label. An artichoke pulled from the ground and cooked the same day. Price does not equal value. Flavor + integrity + intention = value.
 
-SEASONAL MONTEREY PRODUCE (today is roughly ${new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}):
+SEASONAL MONTEREY PRODUCE (today is roughly {{MONTH_YEAR}}):
 Spring (March-May): Artichokes from Castroville (peak April–May), asparagus, fava beans, peas, spring onions, strawberries from Watsonville corridor, baby lettuces, fresh chèvre. Wine tone: Chardonnay, sparkling, Pinot Gris, rosé.
 Summer (June-August): Strawberries peaking, tomatoes, corn, peppers, summer squash, basil, coastal mushrooms begin, olallieberries. Wine tone: SLH Pinot Noir, Chardonnay, rosé.
 Fall (September-November): Harvest in the Santa Lucia Highlands, persimmons, winter squash, mushrooms, Brussels sprouts, late-season artichokes, apples. Dungeness crab season opens late November. Wine tone: SLH Pinot, Chardonnay, Carmel Valley Cabernet.
@@ -58,6 +58,18 @@ WINE FOCUS: The two AVAs that matter most — Santa Lucia Highlands (high-elevat
 STYLE: Knowledgeable but human. Confident but never pompous. Ingredient-forward. Terroir-driven. Community-aware. Clear and practical. Sensory, not flowery. Opinionated, but fair. Speak like someone who knows the SLH vineyard manager by name, eats at Tarpy's after a long harvest day, walks Earthbound Farm in the morning fog, has a strong opinion about which wharf stands actually source their fish locally.
 
 When users ask about wineries or restaurants they've saved on their map, give informed, honest perspective. Don't just validate — if you know the place well, bring your knowledge. If asked about pairings, be specific to the wine's structure and the ingredient's season. Do not fabricate event dates — direct users to regional calendars when uncertain.`;
+
+const CONTEXT_MESSAGE_LIMIT = 40;
+
+function buildSystemPrompt(): string {
+  const monthYear = new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  return MONTEREY_CHEF_SYSTEM_PROMPT_TEMPLATE.replace("{{MONTH_YEAR}}", monthYear);
+}
+
+function parseIdParam(param: string): number | null {
+  const id = parseInt(param, 10);
+  return isNaN(id) ? null : id;
+}
 
 router.get("/openai/conversations", conversationRateLimit, async (req, res) => {
   try {
@@ -82,8 +94,9 @@ router.post("/openai/conversations", conversationRateLimit, async (req, res) => 
 });
 
 router.get("/openai/conversations/:id", conversationRateLimit, async (req, res) => {
+  const id = parseIdParam(req.params.id);
+  if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
   try {
-    const id = parseInt(req.params.id, 10);
     const [conv] = await db.select().from(conversations).where(eq(conversations.id, id));
     if (!conv) { res.status(404).json({ error: "Not found" }); return; }
     const msgs = await db.select().from(messages).where(eq(messages.conversationId, id)).orderBy(asc(messages.createdAt));
@@ -99,8 +112,9 @@ router.get("/openai/conversations/:id", conversationRateLimit, async (req, res) 
 });
 
 router.delete("/openai/conversations/:id", conversationRateLimit, async (req, res) => {
+  const id = parseIdParam(req.params.id);
+  if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
   try {
-    const id = parseInt(req.params.id, 10);
     const [deleted] = await db.delete(conversations).where(eq(conversations.id, id)).returning();
     if (!deleted) { res.status(404).json({ error: "Not found" }); return; }
     res.status(204).end();
@@ -111,8 +125,9 @@ router.delete("/openai/conversations/:id", conversationRateLimit, async (req, re
 });
 
 router.get("/openai/conversations/:id/messages", conversationRateLimit, async (req, res) => {
+  const id = parseIdParam(req.params.id);
+  if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
   try {
-    const id = parseInt(req.params.id, 10);
     const msgs = await db.select().from(messages).where(eq(messages.conversationId, id)).orderBy(asc(messages.createdAt));
     res.json(msgs.map(m => ({ ...m, createdAt: m.createdAt.toISOString() })));
   } catch (err) {
@@ -122,20 +137,23 @@ router.get("/openai/conversations/:id/messages", conversationRateLimit, async (r
 });
 
 router.post("/openai/conversations/:id/messages", aiRateLimit, async (req, res) => {
-  try {
-    const id = parseInt(req.params.id, 10);
-    const { content } = req.body;
-    if (!content) { res.status(400).json({ error: "content required" }); return; }
+  const id = parseIdParam(req.params.id);
+  if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
 
+  const { content } = req.body;
+  if (!content) { res.status(400).json({ error: "content required" }); return; }
+
+  try {
     const [conv] = await db.select().from(conversations).where(eq(conversations.id, id));
     if (!conv) { res.status(404).json({ error: "Conversation not found" }); return; }
 
     await db.insert(messages).values({ conversationId: id, role: "user", content });
 
     const history = await db.select().from(messages).where(eq(messages.conversationId, id)).orderBy(asc(messages.createdAt));
+    const recentHistory = history.slice(-CONTEXT_MESSAGE_LIMIT);
     const chatMessages = [
-      { role: "system" as const, content: MONTEREY_CHEF_SYSTEM_PROMPT },
-      ...history.map(m => ({ role: m.role as "user" | "assistant", content: m.content })),
+      { role: "system" as const, content: buildSystemPrompt() },
+      ...recentHistory.map(m => ({ role: m.role as "user" | "assistant", content: m.content })),
     ];
 
     res.setHeader("Content-Type", "text/event-stream");
@@ -144,31 +162,51 @@ router.post("/openai/conversations/:id/messages", aiRateLimit, async (req, res) 
     res.setHeader("X-Accel-Buffering", "no");
     res.flushHeaders();
 
+    const controller = new AbortController();
+    req.on("close", () => controller.abort());
+
     let fullResponse = "";
 
-    const stream = await openai.chat.completions.create({
-      model: "gpt-5.2",
-      max_completion_tokens: 8192,
-      messages: chatMessages,
-      stream: true,
-    });
+    try {
+      const stream = await openai.chat.completions.create({
+        model: "gpt-5.2",
+        max_completion_tokens: 8192,
+        messages: chatMessages,
+        stream: true,
+      }, { signal: controller.signal });
 
-    for await (const chunk of stream) {
-      const text = chunk.choices[0]?.delta?.content;
-      if (text) {
-        fullResponse += text;
-        res.write(`data: ${JSON.stringify({ content: text })}\n\n`);
+      for await (const chunk of stream) {
+        const text = chunk.choices[0]?.delta?.content;
+        if (text) {
+          fullResponse += text;
+          res.write(`data: ${JSON.stringify({ content: text })}\n\n`);
+        }
       }
+
+      if (fullResponse) {
+        await db.insert(messages).values({ conversationId: id, role: "assistant", content: fullResponse });
+      }
+
+      res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
+      res.end();
+    } catch (streamErr: any) {
+      if (streamErr?.name === "AbortError" || controller.signal.aborted) {
+        req.log.info({ conversationId: id }, "Client disconnected — stream aborted");
+        if (fullResponse) {
+          await db.insert(messages).values({ conversationId: id, role: "assistant", content: fullResponse }).catch(() => {});
+        }
+        return;
+      }
+      throw streamErr;
     }
-
-    await db.insert(messages).values({ conversationId: id, role: "assistant", content: fullResponse });
-
-    res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
-    res.end();
   } catch (err) {
     req.log.error({ err }, "Failed to send message");
-    res.write(`data: ${JSON.stringify({ error: "Failed to generate response" })}\n\n`);
-    res.end();
+    if (!res.headersSent) {
+      res.status(500).json({ error: "Failed to generate response" });
+    } else {
+      res.write(`data: ${JSON.stringify({ error: "Failed to generate response" })}\n\n`);
+      res.end();
+    }
   }
 });
 
