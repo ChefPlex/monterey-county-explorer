@@ -180,9 +180,22 @@ Artisans = artisan makers (creameries, cideries, spirits, etc.) that don't fit w
 
 ---
 
+### Curated Spot Count
+
+As of the April 2026 expansion: **48 spots** (34 original + 14 added).
+
+- **Wineries**: 21 (Carmel Valley: 9, SLH: 3, Chalone AVA: 1, Carmel tasting rooms: 6, Monterey: 1)
+- **Restaurants**: 16 (Big Sur: 4, Carmel: 6, Pacific Grove: 4, Monterey: 2)
+- **Farm Stands**: 5 (Monterey: 1, Pacific Grove: 1, Carmel Valley: 1, Castroville: 1, Lady & Larder: 1)
+- **Artisans**: 8 (Carmel Valley: 1, Big Sur: 1, Salinas: 1, Monterey: 4, Pacific Grove: 1)
+
+---
+
 ### Known Coordinate Flags
 
-None outstanding.
+- **Deetjen's Big Sur Inn** — pin placed at 36.2640, -121.8210 (north of Nepenthe based on Hwy 1 numbering logic; Census geocoder gave an inconsistent result for this rural address). Verify against satellite map.
+- **Paraiso Vineyards** — pin at 36.4095, -121.3720 (estimate based on Paraiso Springs Rd elevation in SLH; Nominatim/Census returned no match). Verify against the winery's own directions page.
+- **Pezzini Farms** — pin at 36.7655, -121.7545 (Castroville, offset from Phil's Fish Market at 36.7660, -121.7552 to avoid pin stacking on Merritt St).
 
 ---
 

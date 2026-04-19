@@ -81,6 +81,17 @@ const SEED_DATA = [
     website: "https://joullian.com",
   },
 
+  // ── WINERIES: CHALONE AVA ────────────────────────────────────────────────────
+  {
+    name: "Chalone Vineyard",
+    city: "Soledad",
+    note: "California's most isolated wine estate — 1,300 feet up in the Gavilan Range on alkaline limestone, surrounded by Pinnacles National Monument. Planted 1919. The Chalone AVA has no other members. Chenin Blanc, Pinot Blanc, and Pinot Noir from these soils produce a genuinely unusual mineral profile — austere, slow to open, unlike anything in the Salinas Valley below. The geology here is the story.",
+    category: "winery",
+    lat: 36.4701,
+    lng: -121.2299,
+    website: "https://chalonevineyard.com",
+  },
+
   // ── WINERIES: SANTA LUCIA HIGHLANDS ────────────────────────────────────────
   {
     name: "Hahn Family Wines",
@@ -99,6 +110,36 @@ const SEED_DATA = [
     lat: 36.3244,
     lng: -121.2455,
     website: "https://scheidvineyards.com",
+  },
+
+  {
+    name: "Paraiso Vineyards",
+    city: "Soledad",
+    note: "Smith family planted in 1973, one of the Santa Lucia Highlands originals before the AVA existed. The SLH rosé from Pinot Noir is a benchmark for the appellation. The tasting room sits at 1,200 feet on Paraiso Springs Road with the full sweep of the Salinas Valley below. Less visited than Hahn; the conversation here tends to be with someone who actually grew the fruit.",
+    category: "winery",
+    lat: 36.4095,
+    lng: -121.3720,
+    website: "https://paraisovineyards.com",
+  },
+
+  // ── WINERIES: CARMEL VALLEY (ADDITIONAL) ─────────────────────────────────
+  {
+    name: "Boekenoogen Vineyard & Winery",
+    city: "Carmel Valley",
+    note: "Small-production, estate-focused, and poured by the family. Their Pinot Noir from Carmel Valley and SLH fruit is genuinely good — structured, honest, without the preciousness that follows big press coverage. The tasting room sits just west of the Village on Carmel Valley Road. The kind of stop that rewards people actually paying attention.",
+    category: "winery",
+    lat: 36.4798,
+    lng: -121.7325,
+    website: "https://boekenoogenwines.com",
+  },
+  {
+    name: "Silvestri Vineyards",
+    city: "Carmel Valley",
+    note: "Estate Sangiovese in the Carmel Valley — unusual and worth seeking out. The family planted Italian varieties in the warm mid-valley, which turns out to be a reasonable analog for Tuscan growing conditions. The Sangiovese is the reason to visit; the Cabernet Sauvignon is solid backup. Tasting room in the Village.",
+    category: "winery",
+    lat: 36.4772,
+    lng: -121.7269,
+    website: "https://silvestrivineyards.com",
   },
 
   // ── WINERIES: CARMEL (TASTING ROOMS) ───────────────────────────────────────
@@ -137,6 +178,15 @@ const SEED_DATA = [
     lat: 36.5558,
     lng: -121.9234,
     website: "https://albatrossridge.com",
+  },
+  {
+    name: "De Tierra Vineyards",
+    city: "Carmel",
+    note: "Small-production Monterey County winery with a tasting room at the Carmel Crossroads. The sourcing spans cool blocks across the county — SLH, Arroyo Seco, Carmel Valley. An easy stop that doesn't require driving the valley and pours more seriously than the strip-mall location would suggest.",
+    category: "winery",
+    lat: 36.5380,
+    lng: -121.9092,
+    website: "https://detierra.com",
   },
   {
     name: "A Taste of Monterey",
@@ -258,6 +308,43 @@ const SEED_DATA = [
     website: "https://cheznoircarmel.com",
   },
 
+  {
+    name: "Jeninni Kitchen + Wine Bar",
+    city: "Pacific Grove",
+    note: "The best natural wine list on the Peninsula after Chez Noir, in a small Pacific Grove dining room that punches well above its address. Mediterranean-inflected small plates built around what's in season locally. The cheese program is strong and the staff knows the list. Come for dinner; the regulars fill it quickly.",
+    category: "restaurant",
+    lat: 36.6208,
+    lng: -121.9170,
+    website: "https://jeninni.com",
+  },
+  {
+    name: "The Stationaery",
+    city: "Carmel Valley",
+    note: "The Village's casual lunch and early dinner stop — California-seasonal cooking, a solid wine-by-the-glass list, and a patio that handles the valley heat well. Fills the practical gap between a morning of tasting rooms and a dinner at Bernardus without requiring a reservation or a jacket.",
+    category: "restaurant",
+    lat: 36.4791,
+    lng: -121.7318,
+    website: "https://thestationaery.com",
+  },
+  {
+    name: "Deetjen's Big Sur Inn",
+    city: "Big Sur",
+    note: "The anti-Sierra Mar Big Sur restaurant. Norwegian homestead built by Grandpa Deetjen in the 1930s — wood fires, creaky floors, Castro Canyon outside the window. The menu doesn't try to justify the setting with price. Dinner by reservation; weekend breakfast draws locals who've been coming for years. Earned in a way that newer Big Sur destinations have to work toward.",
+    category: "restaurant",
+    lat: 36.2640,
+    lng: -121.8210,
+    website: "https://deetjens.com",
+  },
+  {
+    name: "Mundaka",
+    city: "Carmel",
+    note: "Spanish tapas in Carmel that actually hold up. Pintxos, fideos, patatas bravas done correctly in a low-lit space that functions as the closest thing to a late-night option the village offers. A different register from everything else on the tasting row — more communal, less precious. The right stop when the day has been beautiful and you want food without a three-course event.",
+    category: "restaurant",
+    lat: 36.5556,
+    lng: -121.9222,
+    website: "https://mundaka.net",
+  },
+
   // ── FARM STANDS & MARKETS ─────────────────────────────────────────────────
   {
     name: "Monterey Bay Certified Farmers Market — Monterey",
@@ -285,6 +372,25 @@ const SEED_DATA = [
     lat: 36.4810,
     lng: -121.7320,
     website: "https://ladyandlarder.com",
+  },
+
+  {
+    name: "Pacific Grove Certified Farmers Market",
+    city: "Pacific Grove",
+    note: "Monday and Saturday market at Lighthouse and Congress covers coastal and inland growers that don't overlap heavily with the Monterey market. Seaweed, coastal microgreens, and backyard honey operations that don't travel to larger venues. A short walk from Passionfish and Wild Fish — pair the two naturally.",
+    category: "farmstand",
+    lat: 36.6175,
+    lng: -121.9051,
+    website: "https://montereybayfarmers.org",
+  },
+  {
+    name: "Pezzini Farms",
+    city: "Castroville",
+    note: "Four generations of artichoke farming in the county that named itself the artichoke capital of the world. Direct retail at their Merritt Street stand gives you the freshest possible Castroville artichokes, year-round, from the family that grows them. Peak is February through May. They know how to cook them; ask.",
+    category: "farmstand",
+    lat: 36.7655,
+    lng: -121.7545,
+    website: "https://pezzinifarms.com",
   },
 
   // ── ARTISAN PRODUCERS ─────────────────────────────────────────────────────
@@ -332,6 +438,33 @@ const SEED_DATA = [
     lat: 36.6003,
     lng: -121.8916,
     website: "https://parkerlusseau.com",
+  },
+  {
+    name: "Happy Girl Kitchen",
+    city: "Pacific Grove",
+    note: "Fermentation studio, canning operation, and cafe on Central Avenue. Small-batch pickles, jams, kimchi, and fermented vegetables made from Salinas Valley and coastal produce. They run hands-on canning workshops if you want to understand how the pantry gets built. The cafe side runs a quiet breakfast and lunch. Doing the slow-food work without the label.",
+    category: "artisan",
+    lat: 36.6187,
+    lng: -121.9064,
+    website: "https://happygirlkitchen.com",
+  },
+  {
+    name: "Alvarado Street Brewery",
+    city: "Monterey",
+    note: "The serious craft brewery in Monterey County. Local grain sourcing, a farm-to-table beer approach, and a tap room on Alvarado Street that has built a real identity. The IPA program is the headline, but the farmhouse ales and barrel-aged program show real depth. A credible stop for anyone who finds the Peninsula's wine-only focus occasionally exhausting.",
+    category: "artisan",
+    lat: 36.5997,
+    lng: -121.8945,
+    website: "https://alvaradostreetbrewery.com",
+  },
+  {
+    name: "Wild Plum Cafe & Bakery",
+    city: "Monterey",
+    note: "All-vegetarian cafe and bakery that has supplied Peninsula restaurants with whole-grain breads and pastries for years. The approach complements Parker-Lusseau's French lamination — whole grain, seasonal, rooted in ingredient integrity rather than technique display. Breakfast and lunch; closes midafternoon. On Munras Ave.",
+    category: "artisan",
+    lat: 36.5949,
+    lng: -121.8931,
+    website: "https://wildplum.com",
   },
 ];
 
