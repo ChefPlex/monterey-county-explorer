@@ -318,6 +318,15 @@ const SEED_DATA = [
   },
 
   {
+    name: "Holman Ranch Tavern",
+    city: "Carmel Valley",
+    note: "The on-property restaurant at Holman Ranch — the valley's answer to what Will's Fargo used to be. Casual but serious: a proper bar program, estate wines poured by the glass, and a menu built around the ranch and surrounding Carmel Valley. The 400-acre property setting is the same as the cave tasting room next door, which makes it the most complete stop in the valley.",
+    category: "restaurant",
+    lat: 36.4898,
+    lng: -121.7315,
+    website: "https://holmanranch.com",
+  },
+  {
     name: "Jeninni Kitchen + Wine Bar",
     city: "Pacific Grove",
     note: "The best natural wine list on the Peninsula after Chez Noir, in a small Pacific Grove dining room that punches well above its address. Mediterranean-inflected small plates built around what's in season locally. The cheese program is strong and the staff knows the list. Come for dinner; the regulars fill it quickly.",
