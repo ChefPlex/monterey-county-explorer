@@ -2,6 +2,23 @@ import { Router, type IRouter } from "express";
 import { db, conversations, messages } from "@workspace/db";
 import { eq, asc } from "drizzle-orm";
 import { openai } from "@workspace/integrations-openai-ai-server";
+import { rateLimit } from "express-rate-limit";
+
+const aiRateLimit = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 10,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Too many AI requests — please wait a minute and try again." },
+});
+
+const conversationRateLimit = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 60,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Too many requests — please slow down." },
+});
 
 const router: IRouter = Router();
 
@@ -42,7 +59,7 @@ STYLE: Knowledgeable but human. Confident but never pompous. Ingredient-forward.
 
 When users ask about wineries or restaurants they've saved on their map, give informed, honest perspective. Don't just validate — if you know the place well, bring your knowledge. If asked about pairings, be specific to the wine's structure and the ingredient's season. Do not fabricate event dates — direct users to regional calendars when uncertain.`;
 
-router.get("/openai/conversations", async (req, res) => {
+router.get("/openai/conversations", conversationRateLimit, async (req, res) => {
   try {
     const all = await db.select().from(conversations).orderBy(asc(conversations.createdAt));
     res.json(all.map(c => ({ ...c, createdAt: c.createdAt.toISOString() })));
@@ -52,7 +69,7 @@ router.get("/openai/conversations", async (req, res) => {
   }
 });
 
-router.post("/openai/conversations", async (req, res) => {
+router.post("/openai/conversations", conversationRateLimit, async (req, res) => {
   try {
     const { title } = req.body;
     if (!title) { res.status(400).json({ error: "title required" }); return; }
@@ -64,7 +81,7 @@ router.post("/openai/conversations", async (req, res) => {
   }
 });
 
-router.get("/openai/conversations/:id", async (req, res) => {
+router.get("/openai/conversations/:id", conversationRateLimit, async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);
     const [conv] = await db.select().from(conversations).where(eq(conversations.id, id));
@@ -81,7 +98,7 @@ router.get("/openai/conversations/:id", async (req, res) => {
   }
 });
 
-router.delete("/openai/conversations/:id", async (req, res) => {
+router.delete("/openai/conversations/:id", conversationRateLimit, async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);
     const [deleted] = await db.delete(conversations).where(eq(conversations.id, id)).returning();
@@ -93,7 +110,7 @@ router.delete("/openai/conversations/:id", async (req, res) => {
   }
 });
 
-router.get("/openai/conversations/:id/messages", async (req, res) => {
+router.get("/openai/conversations/:id/messages", conversationRateLimit, async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);
     const msgs = await db.select().from(messages).where(eq(messages.conversationId, id)).orderBy(asc(messages.createdAt));
@@ -104,7 +121,7 @@ router.get("/openai/conversations/:id/messages", async (req, res) => {
   }
 });
 
-router.post("/openai/conversations/:id/messages", async (req, res) => {
+router.post("/openai/conversations/:id/messages", aiRateLimit, async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);
     const { content } = req.body;

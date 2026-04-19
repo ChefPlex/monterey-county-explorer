@@ -194,4 +194,8 @@ Current known drift: generated files comment "do not edit manually" but we edit 
 
 ### Security Notes
 
-- `cors()` in `artifacts/api-server/src/app.ts` uses default allow-all origins. The OpenAI endpoints at `/api/openai/*` are unauthenticated — consider adding rate limiting or origin restrictions before public launch to prevent cost abuse.
+- `cors()` in `artifacts/api-server/src/app.ts` uses default allow-all origins. Consider restricting to known origins if the API is not intended to be public.
+- Rate limiting is applied to all `/api/openai/*` endpoints via `express-rate-limit`:
+  - `POST /openai/conversations/:id/messages` (the GPT call) — **10 req/IP/min** → 429
+  - All other conversation endpoints — **60 req/IP/min** → 429
+  - 429 responses include `RateLimit` and `Retry-After` headers (RFC 9440 draft-8).
