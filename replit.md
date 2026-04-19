@@ -182,9 +182,9 @@ Artisans = artisan makers (creameries, cideries, spirits, etc.) that don't fit w
 
 ### Curated Spot Count
 
-As of the April 2026 expansion: **48 spots** (34 original + 14 added).
+As of the April 2026 expansion: **49 spots** (34 original + 15 added).
 
-- **Wineries**: 21 (Carmel Valley: 9, SLH: 3, Chalone AVA: 1, Carmel tasting rooms: 6, Monterey: 1)
+- **Wineries**: 22 (Carmel Valley: 9, SLH: 4, Chalone AVA: 1, Carmel tasting rooms: 6, Monterey: 1)
 - **Restaurants**: 16 (Big Sur: 4, Carmel: 6, Pacific Grove: 4, Monterey: 2)
 - **Farm Stands**: 5 (Monterey: 1, Pacific Grove: 1, Carmel Valley: 1, Castroville: 1, Lady & Larder: 1)
 - **Artisans**: 8 (Carmel Valley: 1, Big Sur: 1, Salinas: 1, Monterey: 4, Pacific Grove: 1)

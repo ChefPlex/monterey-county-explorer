@@ -113,6 +113,15 @@ const SEED_DATA = [
   },
 
   {
+    name: "Pessagno Winery",
+    city: "Salinas",
+    note: "High-elevation Santa Lucia Highlands estate on River Road, focused on single-vineyard bottlings from SLH and Arroyo Seco fruit. The Pinot Noir and Chardonnay here show the cooler, more maritime character of the northern SLH blocks. A smaller, more focused operation than Hahn — worth the drive if you're already in the corridor.",
+    category: "winery",
+    lat: 36.4801,
+    lng: -121.4849,
+    website: "https://pessagnowines.com",
+  },
+  {
     name: "Paraiso Vineyards",
     city: "Soledad",
     note: "Smith family planted in 1973, one of the Santa Lucia Highlands originals before the AVA existed. The SLH rosé from Pinot Noir is a benchmark for the appellation. The tasting room sits at 1,200 feet on Paraiso Springs Road with the full sweep of the Salinas Valley below. Less visited than Hahn; the conversation here tends to be with someone who actually grew the fruit.",
