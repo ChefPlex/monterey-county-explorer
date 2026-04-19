@@ -183,3 +183,15 @@ Artisans = artisan makers (creameries, cideries, spirits, etc.) that don't fit w
 ### Known Coordinate Flags
 
 None outstanding.
+
+---
+
+### API Type Contract
+
+The OpenAPI spec (`lib/api-spec/openapi.yaml`) is the single source of truth. Generated files in `lib/api-client-react/src/generated/` and `lib/api-zod/src/generated/` are **manually patched** (orval codegen is not re-run automatically — run `pnpm --filter @workspace/api-spec run codegen` to regenerate).
+
+Current known drift: generated files comment "do not edit manually" but we edit them manually to keep them in sync when the spec changes. Any time the spec is updated, also update the generated files or run codegen.
+
+### Security Notes
+
+- `cors()` in `artifacts/api-server/src/app.ts` uses default allow-all origins. The OpenAI endpoints at `/api/openai/*` are unauthenticated — consider adding rate limiting or origin restrictions before public launch to prevent cost abuse.

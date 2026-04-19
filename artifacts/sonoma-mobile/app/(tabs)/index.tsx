@@ -1024,7 +1024,7 @@ export default function MapScreen() {
               {[...myListSaved.values()].map((s) => {
                 const catColor = getCategoryColor(s.category as Category, colors);
                 const catIcon = getCategoryIcon(s.category as Category);
-                const catLabel = s.category === "winery" ? "Winery" : s.category === "restaurant" ? "Dining" : s.category === "artisan" ? "Producer" : "Farm";
+                const catLabel = s.category === "winery" ? "Winery" : s.category === "restaurant" ? "Dining" : s.category === "artisan" ? "Artisan" : "Farm";
                 return (
                   <View
                     key={s.id}

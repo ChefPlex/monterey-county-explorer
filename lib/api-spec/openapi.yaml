@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
   title: Api
-  version: 0.1.0
-  description: Sonoma County Map API
+  version: 2.0.0
+  description: Monterey County Explorer API
 servers:
   - url: /api
     description: Base API path
@@ -342,7 +342,7 @@ components:
           type: string
         category:
           type: string
-          enum: [winery, restaurant, farmstand]
+          enum: [winery, restaurant, farmstand, artisan]
         lat:
           type: number
         lng:
@@ -372,7 +372,7 @@ components:
           type: string
         category:
           type: string
-          enum: [winery, restaurant, farmstand]
+          enum: [winery, restaurant, farmstand, artisan]
         lat:
           type: number
         lng:
@@ -398,7 +398,7 @@ components:
           type: string
         category:
           type: string
-          enum: [winery, restaurant, farmstand]
+          enum: [winery, restaurant, farmstand, artisan]
         website:
           type: string
           nullable: true
@@ -416,8 +416,11 @@ components:
           type: integer
         farmstands:
           type: integer
+        artisans:
+          type: integer
       required:
         - total
         - wineries
         - restaurants
         - farmstands
+        - artisans
