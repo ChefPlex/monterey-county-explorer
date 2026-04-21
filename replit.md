@@ -173,8 +173,9 @@ Artisans = artisan makers (creameries, cideries, spirits, etc.) that don't fit w
 
 ### Mobile App
 
-- Bundle ID: `com.chefplex.montereyexplorer`
-- GitHub: `ChefPlex/monterey-explorer` (primary repo)
+- Bundle ID (iOS & Android): `com.chefplex.montereycountyexplorer`
+- Slug: `monterey-county-explorer`
+- GitHub: `ChefPlex/monterey-county-explorer` (primary repo)
 - App Store version must always be higher than the last approved build. Current version tracked in `artifacts/sonoma-mobile/app.json`.
 - Build number is auto-incremented by EAS — do not hardcode it.
 

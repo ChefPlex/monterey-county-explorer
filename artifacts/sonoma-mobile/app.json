@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Monterey Bay Explorer",
-    "slug": "monterey-bay-explorer",
+    "name": "Monterey County Explorer",
+    "slug": "monterey-county-explorer",
     "version": "2.0.0",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
-    "scheme": "monterey-bay-explorer",
+    "scheme": "monterey-county-explorer",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -15,12 +15,13 @@
     },
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "com.chefplex.montereycountyexplorer",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Used to show your location on the Monterey map and find nearby spots."
       }
     },
     "android": {
-      "package": "com.chefplex.montereyexplorer",
+      "package": "com.chefplex.montereycountyexplorer",
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION"
