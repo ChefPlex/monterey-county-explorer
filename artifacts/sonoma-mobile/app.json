@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Monterey",
-    "slug": "sonoma-mobile",
+    "name": "Monterey Bay Explorer",
+    "slug": "monterey-bay-explorer",
     "version": "2.0.0",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
-    "scheme": "sonoma-mobile",
+    "scheme": "monterey-bay-explorer",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
