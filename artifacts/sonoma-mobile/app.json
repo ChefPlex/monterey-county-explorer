@@ -17,7 +17,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.chefplex.montereycountyexplorer",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Used to show your location on the Monterey map and find nearby spots."
+        "NSLocationWhenInUseUsageDescription": "Used to show your location on the Monterey map and find nearby spots.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {

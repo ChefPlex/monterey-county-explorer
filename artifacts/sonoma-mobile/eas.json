@@ -20,6 +20,9 @@
     "production": {
       "distribution": "store",
       "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_DOMAIN": "REPLACE_WITH_PRODUCTION_API_DOMAIN"
+      },
       "ios": {
         "simulator": false
       }
