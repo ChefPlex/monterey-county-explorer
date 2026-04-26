@@ -2,7 +2,7 @@
   "expo": {
     "name": "Monterey County Explorer",
     "slug": "monterey-county-explorer",
-    "version": "2.1.0",
+    "version": "2.5.0",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "monterey-county-explorer",
