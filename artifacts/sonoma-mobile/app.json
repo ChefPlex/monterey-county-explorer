@@ -18,7 +18,7 @@
       "bundleIdentifier": "com.chefplex.montereycountyexplorer",
       "minimumOsVersion": "16.0",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Used to show your location on the Monterey map and find nearby spots.",
+        "NSLocationWhenInUseUsageDescription": "Your location appears as a blue dot on the interactive map and is used to sort nearby Monterey County spots by distance. Location data is used only on-device and is never stored or shared.",
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -44,7 +44,7 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "Used to show your location on the Monterey map and find nearby spots."
+          "locationWhenInUsePermission": "Your location appears as a blue dot on the interactive map and is used to sort nearby Monterey County spots by distance. Location data is used only on-device and is never stored or shared."
         }
       ],
       [
