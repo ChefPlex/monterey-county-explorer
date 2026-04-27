@@ -1,5 +1,5 @@
 kind = "mobile"
-previewPath = "/sonoma-mobile/"
+previewPath = "/monterey-mobile/"
 title = "Monterey Mobile"
 version = "1.0.0"
 id = "artifacts/sonoma-mobile"
@@ -12,7 +12,7 @@ version = "1.0.0"
 [[services]]
 ensurePreviewReachable = "/status"
 name = "expo"
-paths = [ "/sonoma-mobile/" ]
+paths = [ "/monterey-mobile/" ]
 localPort = 25384
 
 [services.development]
@@ -24,4 +24,4 @@ run = [ "pnpm", "--filter", "@workspace/sonoma-mobile", "run", "serve" ]
 
 [services.env]
 PORT = "25384"
-BASE_PATH = "/sonoma-mobile/"
+BASE_PATH = "/monterey-mobile/"
