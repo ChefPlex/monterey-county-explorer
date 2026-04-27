@@ -27,7 +27,23 @@ app.use(
     },
   }),
 );
-app.use(cors());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (native mobile apps, curl, server-to-server)
+      if (!origin) return callback(null, true);
+      if (
+        origin.endsWith(".replit.dev") ||
+        origin.endsWith(".replit.app") ||
+        origin.startsWith("http://localhost") ||
+        origin.startsWith("https://localhost")
+      ) {
+        return callback(null, true);
+      }
+      callback(new Error(`CORS: origin not allowed — ${origin}`));
+    },
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
