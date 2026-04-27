@@ -120,8 +120,8 @@ const SEED_DATA = [
     city: "Salinas",
     note: "High-elevation Santa Lucia Highlands estate on River Road, focused on single-vineyard bottlings from SLH and Arroyo Seco fruit. The Pinot Noir and Chardonnay here show the cooler, more maritime character of the northern SLH blocks. A smaller, more focused operation than Hahn — worth the drive if you're already in the corridor.",
     category: "winery",
-    lat: 36.4801,
-    lng: -121.4849,
+    lat: 36.4809014,
+    lng: -121.4842994,
     website: "https://pessagnowines.com",
   },
   {
