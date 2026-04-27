@@ -446,8 +446,8 @@ const SEED_DATA = [
     city: "Monterey",
     note: "The most committed artisan bakery in Monterey County. French laminated doughs — proper croissants, kouign-amann, seasonal pastries — produced with a rigor that makes this a key supplier to the area's better restaurants and a morning anchor for anyone who knows. The Hartnell Street flagship at 539 Hartnell St is the original; a second cafe on Munras has since opened. Open early weekdays.",
     category: "artisan",
-    lat: 36.6003,
-    lng: -121.8916,
+    lat: 36.5961403,
+    lng: -121.8955473,
     website: "https://parkerlusseau.com",
   },
   {
