@@ -13,7 +13,7 @@ const REMOVED_FROM_SEED: string[] = [
   "Cantinetta Luca",             // Website dead on all domains; likely permanently closed
   "Café Rustica",                // Website dead on all domains; likely permanently closed
   "Carmel Valley Creamery",      // No web presence; too new/unverifiable
-  "Aubergine at L'Auberge Carmel", // Renamed to "Aubergine"
+  "Aubergine",                   // Reverted — name restored to "Aubergine at L'Auberge Carmel"
 ];
 
 const SEED_DATA = [
@@ -219,7 +219,7 @@ const SEED_DATA = [
     website: "https://nepenthe.com",
   },
   {
-    name: "Aubergine",
+    name: "Aubergine at L'Auberge Carmel",
     city: "Carmel",
     note: "The best table on the Monterey Peninsula. Justin Cogley's seasonal tasting menu is among the most technically accomplished in Northern California — hyper-local, precise, and entirely worth the price. The bread service alone sets a standard. Book weeks ahead and come hungry.",
     category: "restaurant",
