@@ -223,8 +223,8 @@ const SEED_DATA = [
     city: "Carmel",
     note: "The best table on the Monterey Peninsula. Justin Cogley's seasonal tasting menu is among the most technically accomplished in Northern California — hyper-local, precise, and entirely worth the price. The bread service alone sets a standard. Book weeks ahead and come hungry.",
     category: "restaurant",
-    lat: 36.5551,
-    lng: -121.9231,
+    lat: 36.5541304,
+    lng: -121.9242179,
     website: "https://auberginecarmel.com",
   },
   {
