@@ -15,6 +15,7 @@ const REMOVED_FROM_SEED: string[] = [
   "Carmel Valley Creamery",      // No web presence; too new/unverifiable
   "Aubergine",                   // Reverted — name restored to "Aubergine at L'Auberge Carmel"
   "Mundaka",                     // Permanently closed
+  "Holman Ranch Tavern",         // Permanently closed
 ];
 
 const SEED_DATA = [
@@ -319,15 +320,6 @@ const SEED_DATA = [
     website: "https://cheznoircarmel.com",
   },
 
-  {
-    name: "Holman Ranch Tavern",
-    city: "Carmel Valley",
-    note: "The on-property restaurant at Holman Ranch — the valley's answer to what Will's Fargo used to be. Casual but serious: a proper bar program, estate wines poured by the glass, and a menu built around the ranch and surrounding Carmel Valley. The 400-acre property setting is the same as the cave tasting room next door, which makes it the most complete stop in the valley.",
-    category: "restaurant",
-    lat: 36.4898,
-    lng: -121.7315,
-    website: "https://holmanranch.com",
-  },
   {
     name: "Jeninni Kitchen + Wine Bar",
     city: "Pacific Grove",
