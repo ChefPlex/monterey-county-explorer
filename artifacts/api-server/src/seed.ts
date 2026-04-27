@@ -14,6 +14,7 @@ const REMOVED_FROM_SEED: string[] = [
   "Café Rustica",                // Website dead on all domains; likely permanently closed
   "Carmel Valley Creamery",      // No web presence; too new/unverifiable
   "Aubergine",                   // Reverted — name restored to "Aubergine at L'Auberge Carmel"
+  "Mundaka",                     // Permanently closed
 ];
 
 const SEED_DATA = [
@@ -353,15 +354,6 @@ const SEED_DATA = [
     lat: 36.2640,
     lng: -121.8210,
     website: "https://deetjens.com",
-  },
-  {
-    name: "Mundaka",
-    city: "Carmel",
-    note: "Spanish tapas in Carmel that actually hold up. Pintxos, fideos, patatas bravas done correctly in a low-lit space that functions as the closest thing to a late-night option the village offers. A different register from everything else on the tasting row — more communal, less precious. The right stop when the day has been beautiful and you want food without a three-course event.",
-    category: "restaurant",
-    lat: 36.5556,
-    lng: -121.9222,
-    website: "https://mundaka.net",
   },
 
   // ── FARM STANDS & MARKETS ─────────────────────────────────────────────────
