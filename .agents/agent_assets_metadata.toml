@@ -29,3 +29,9 @@ id = "uDUoRhicRLUibV4AVF1xI"
 uri = "file://SONOMA_EXPLORER_PROJECT_NOTES.txt"
 type = "text"
 title = "Sonoma Explorer — Project Notes"
+
+[[outputs]]
+id = "p1GNs2z1sAp9VJgGxwTHs"
+uri = "file://monterey-map-potential-issues.txt"
+type = "text"
+title = "Monterey Map — Potential Issues for Research"

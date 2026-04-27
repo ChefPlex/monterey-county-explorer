@@ -1,0 +1,192 @@
+MONTEREY COUNTY EXPLORER — POTENTIAL DATA ISSUES FOR RESEARCH
+Generated: April 27, 2026
+────────────────────────────────────────────────────────────────────
+Items flagged as MEDIUM or LOW confidence issues based on coordinate
+cross-checking, website checks, and known business changes.
+HIGH-confidence confirmed closures (Cantinetta Luca, Café Rustica, etc.)
+are already in the REMOVED_FROM_SEED list and excluded here.
+────────────────────────────────────────────────────────────────────
+
+
+════════════════════════════════════════════════════════════════════
+MEDIUM — Coordinate likely wrong (pin drops in wrong location)
+════════════════════════════════════════════════════════════════════
+These venues have coordinates that appear to point to the wrong block
+in Carmel-by-the-Sea based on the described street addresses. The city
+grid uses named N-S streets (San Carlos → Dolores → Lincoln → Monte
+Verde moving west) and numbered E-W avenues (5th is north of Ocean,
+7th is south of Ocean). The discrepancies below are 1–4 blocks off,
+which on a mobile map at typical zoom is a full street or more.
+
+1. AUBERGINE AT L'AUBERGE CARMEL
+   Address: Monte Verde St & 7th Ave, Carmel-by-the-Sea
+   Current coords in app: 36.5551, -121.9231
+   Issue: Monte Verde is ~5 blocks west of where -121.9231 places the
+   pin (which lands near central San Carlos/Ocean intersection).
+   Expected longitude closer to -121.9261.
+   Website: https://auberginecarmel.com
+
+2. CHEZ NOIR
+   Address: 5th Ave between San Carlos and Dolores, Carmel-by-the-Sea
+   Current coords in app: 36.5535, -121.9244
+   Issue: 5th Ave is NORTH of Ocean Ave (~36.557). The latitude 36.5535
+   places the pin south of Ocean, near 7th–8th Ave. Roughly 2.5 blocks
+   south of the actual location.
+   Website: https://cheznoircarmel.com
+
+3. IL TEGAMINO
+   Address: Court of the Golden Bough off Ocean Ave (between Lincoln and
+   Monte Verde), Carmel-by-the-Sea
+   Current coords in app: 36.5548, -121.9229
+   Issue: The Court of the Golden Bough is between Lincoln and Monte
+   Verde streets, which puts it at approx. -121.9252 to -121.9262.
+   Current longitude (-121.9229) places the pin east of San Carlos — on
+   the wrong side of central Carmel, ~3 blocks east.
+   Website: https://iltegaminocarmel.com
+
+4. CULTURA COMIDA Y BEBIDA
+   Address: Dolores St between 5th and 6th Ave, Carmel-by-the-Sea
+   Current coords in app: 36.5557, -121.9228
+   Issue: Dolores Street runs at approximately -121.9242. Current
+   longitude (-121.9228) places the pin east of San Carlos, which is
+   east of Dolores. Off by ~1–2 blocks to the east.
+   Website: https://culturacarmel.com
+
+5. ALBATROSS RIDGE (tasting room)
+   Address: Dolores St between Ocean and 6th Ave, Carmel-by-the-Sea
+   Current coords in app: 36.5558, -121.9234
+   Issue: Same pattern as Cultura — longitude is east of San Carlos,
+   but the tasting room is on Dolores (further west, ~-121.9242).
+   Off by ~1 block east.
+   Website: https://albatrossridge.com
+
+
+════════════════════════════════════════════════════════════════════
+MEDIUM — Possible closure or major operational change
+════════════════════════════════════════════════════════════════════
+
+6. MUNDAKA
+   Address: San Carlos between Ocean and 7th, Carmel-by-the-Sea
+   Issue: One research source flagged this as possibly closed. The
+   website (mundaka.net) and current Google Maps listing should be
+   checked directly. If closed, it would follow the pattern of
+   Cantinetta Luca and Café Rustica already removed from the app.
+   Website: https://mundaka.net
+
+7. SOLSTICE AT THE VILLAGE BIG SUR
+   Address: 46840 Highway 1, Big Sur, CA 93920
+   Issue: Our notes describe it as "the most exciting new restaurant in
+   Big Sur in years" and mention the adjacent bodega "is coming
+   together as a provisions stop" — language that suggests it was still
+   very new when written. Confirm it is fully operational, that Chef
+   Tim Eelman is still at the helm, and that the website
+   (thevillagebigsur.com) is current.
+   Website: https://thevillagebigsur.com
+
+
+════════════════════════════════════════════════════════════════════
+LOW — Operational uncertainty or minor data question
+════════════════════════════════════════════════════════════════════
+
+8. LADY & LARDER + MARMEE'S
+   Address: 9 Del Fino Place, Carmel Valley, CA 93924
+   Issue: Our own note flags this: "Hours have been subject to pause —
+   call ahead or check the website before visiting." If the business is
+   currently in a pause or has shifted hours significantly, the listing
+   may need an update or removal. Marmee's (the wine bar component)
+   may operate on a more limited schedule than Lady & Larder itself.
+   Website: https://ladyandlarder.com
+
+9. PARKER-LUSSEAU PASTRIES
+   Address: 539 Hartnell St, Monterey, CA 93940 (also Munras Ave)
+   Issue: The business recently changed ownership (new owner: Jeanne
+   Brooks). The app note describes it in its prior-owner voice ("the
+   most committed artisan bakery in Monterey County," key supplier to
+   area restaurants). Worth confirming the quality and character hold
+   under new ownership, and that the Hartnell St flagship remains the
+   primary location.
+   Website: https://parkerlusseau.com
+
+10. HOLMAN RANCH TAVERN
+    Address: Holman Ranch Rd, Carmel Valley (on property with winery)
+    Issue: The tavern and the winery share the same website
+    (holmanranch.com). Confirm the tavern operates on a separate
+    reservation or walk-in basis from the winery cave tastings, and
+    that current hours are listed somewhere on the site. Also confirm
+    the tavern is a year-round operation vs. seasonal.
+    Website: https://holmanranch.com
+
+11. MCINTYRE VINEYARDS (tasting room)
+    Address: Carmel Crossroads, Carmel-by-the-Sea
+    Current coords in app: 36.5395, -121.9066
+    Issue: The Carmel Crossroads shopping center (Rio Road & Hwy 1)
+    sits at roughly 36.5374, -121.9026. The pin may be a few hundred
+    meters northwest of the actual tasting room entrance. Worth
+    confirming on Google Maps satellite view.
+    Website: https://mcintyrevineyards.com
+
+12. PESSAGNO WINERY
+    Address: 1645 River Rd, Salinas, CA 93908
+    Issue: Small SLH estate with limited operating hours. Their online
+    presence and tasting hours should be confirmed — River Road wineries
+    in this corridor sometimes shift to appointment-only or reduce days
+    open. Coordinates (36.4801, -121.4849) should be checked against
+    1645 River Road specifically.
+    Website: https://pessagnowines.com
+
+13. SCHOCH FAMILY FARMSTEAD
+    Address: 662 El Camino Real N, Salinas, CA 93907
+    Issue: Farmers market presence ("Fridays and Saturdays") noted in
+    the app. Confirm which specific markets they currently attend — the
+    app doesn't name them, and if they've shifted markets the listing
+    note may be misleading. Also confirm the raw-milk dairy is still
+    in operation (raw-milk producers in California occasionally face
+    regulatory changes).
+    Website: https://schochfamilyfarm.com
+
+14. CARMEL VALLEY VILLAGE FARMERS MARKET
+    Address: Carmel Valley Village, CA
+    Current coords in app: 36.4800, -121.7202
+    Issue: The app says "Sunday mornings in the Village" but doesn't
+    give a specific location within the village. Confirm current day,
+    hours, and exact location (some small markets move or go on
+    seasonal hiatus). Also confirm the Monterey Bay Farmers website
+    listed actually references this specific market.
+    Website: https://montereybayfarmers.org
+
+15. PACIFIC GROVE CERTIFIED FARMERS MARKET
+    Address: Lighthouse Ave and Congress Ave, Pacific Grove
+    Current coords in app: 36.6175, -121.9051
+    Issue: The app says "Monday and Saturday" but the days farmers
+    markets operate in Pacific Grove should be confirmed — day/time
+    changes are common and the intersection of Lighthouse and Congress
+    should be verified as the current location.
+    Website: https://montereybayfarmers.org
+
+────────────────────────────────────────────────────────────────────
+ITEMS ALREADY CONFIRMED CLEAN (no action needed)
+────────────────────────────────────────────────────────────────────
+- Bernardus Winery / Lucia Restaurant — confirmed active
+- Folktale Winery — confirmed active
+- Hahn Family Wines — confirmed active
+- Nepenthe Big Sur — long-established, confirmed active
+- Phil's Fish Market Castroville — relocation to Merritt St confirmed,
+  coordinates verified correct
+- Pezzini Farms Castroville — coordinates verified correct (Merritt St)
+- Monterey Abalone Company — coordinates verified at Municipal Wharf 2
+- Tarpy's Roadhouse — coordinates verified at Canyon Del Rey / Hwy 68
+- Jeninni Kitchen + Wine Bar, Pacific Grove — confirmed at 542 Lighthouse Ave
+- Wild Fish, Pacific Grove — confirmed at 545 Lighthouse Ave
+- Passionfish, Pacific Grove — long-established, confirmed active
+- Boekenoogen Winery — confirmed at 24 W Carmel Valley Rd
+- Chez Noir — Michelin Star listing keeps this highly verifiable
+- Sierra Mar at Post Ranch Inn — institution, confirmed active
+- Deetjen's Big Sur Inn — institution, confirmed active
+- The Big Sur Bakery — long-established, confirmed active
+- Happy Girl Kitchen, Pacific Grove — confirmed active
+- Alvarado Street Brewery, Monterey — confirmed active
+- Wild Plum Cafe & Bakery, Monterey — confirmed active all-vegetarian
+- A Taste of Monterey, Cannery Row — confirmed active
+- Chalone Vineyard, Soledad — confirmed active (Diageo-owned estate)
+────────────────────────────────────────────────────────────────────
+END OF REPORT
