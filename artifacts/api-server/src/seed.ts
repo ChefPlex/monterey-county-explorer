@@ -287,8 +287,8 @@ const SEED_DATA = [
     city: "Big Sur",
     note: "The most exciting new restaurant in Big Sur in years. Chef Tim Eelman's live-fire program centers the menu — whole fish roasted over coals, smoke-treated shellfish, grilled local produce — while manager Matt Peterson curates a wine list of genuine intelligence. Inside The Village Big Sur at 46840 Highway 1, which gives it an infrastructure that most Big Sur restaurants lack. The bodega sidecar next door is coming together as a provisions stop. Book ahead.",
     category: "restaurant",
-    lat: 36.2611,
-    lng: -121.7972,
+    lat: 36.2697663,
+    lng: -121.8079048,
     website: "https://thevillagebigsur.com",
   },
   {
