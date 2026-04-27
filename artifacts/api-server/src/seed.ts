@@ -380,8 +380,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "The cheese and charcuterie anchor of Carmel Valley Village — run by a cheesemaker who serves as president of the California Artisan Cheese Guild. Marmee's, the attached natural wine bar, gives the stop a proper afternoon dimension. At 9 Del Fino Place in the Village. Hours have been subject to pause — call ahead or check the website before visiting.",
     category: "farmstand",
-    lat: 36.4810,
-    lng: -121.7320,
+    lat: 36.4806565,
+    lng: -121.7328896,
     website: "https://ladyandlarder.com",
   },
 
