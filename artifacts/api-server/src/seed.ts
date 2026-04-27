@@ -185,8 +185,8 @@ const SEED_DATA = [
     city: "Carmel",
     note: "Tasting room in Carmel village, estate vineyard high in the Santa Lucia Highlands at 2,200 feet — one of the highest in Monterey County. The elevation and marine influence produce Pinot Noir that is leaner and more savory than Sonoma Coast equivalents. Worth a stop if you're walking Carmel's tasting row.",
     category: "winery",
-    lat: 36.5558,
-    lng: -121.9234,
+    lat: 36.5552906,
+    lng: -121.9225955,
     website: "https://albatrossridge.com",
   },
   {
