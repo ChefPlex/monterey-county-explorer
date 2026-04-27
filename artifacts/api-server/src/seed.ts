@@ -166,11 +166,11 @@ const SEED_DATA = [
   },
   {
     name: "McIntyre Vineyards",
-    city: "Carmel",
-    note: "Steve McIntyre farms nearly a third of the entire Santa Lucia Highlands AVA — more than any other individual in the appellation. His 80-acre estate, planted in 1973, holds some of the oldest Pinot Noir vines in Monterey County. The tasting room at Carmel Crossroads makes the wines accessible without a mountain drive. Old-vine SLH at its most authoritative.",
+    city: "Carmel Valley",
+    note: "Steve McIntyre farms nearly a third of the entire Santa Lucia Highlands AVA — more than any other individual in the appellation. His 80-acre estate, planted in 1973, holds some of the oldest Pinot Noir vines in Monterey County. The tasting room at 24 W. Carmel Valley Rd in the Village makes the wines accessible without a mountain drive. Old-vine SLH at its most authoritative.",
     category: "winery",
-    lat: 36.5395,
-    lng: -121.9066,
+    lat: 36.4794384,
+    lng: -121.7322587,
     website: "https://mcintyrevineyards.com",
   },
   {
