@@ -241,8 +241,8 @@ const SEED_DATA = [
     city: "Carmel",
     note: "The best argument that Carmel's restaurant scene is getting more interesting. Local sourcing, a Mexican-inflected menu built around what's in season in the Salinas Valley, and a natural wine list that would hold its own in San Francisco. Genuinely exciting cooking in a town not always known for it.",
     category: "restaurant",
-    lat: 36.5557,
-    lng: -121.9228,
+    lat: 36.5559907,
+    lng: -121.923069,
     website: "https://culturacarmel.com",
   },
   {
