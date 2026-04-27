@@ -313,8 +313,8 @@ const SEED_DATA = [
     city: "Carmel",
     note: "One Michelin Star earned with a minimum of fuss — James Beard finalist for Best New Restaurant, LA Times Top 101, and arguably the most honest French-inspired kitchen on the Peninsula. The natural wine program is rooted in the Central Coast. On 5th between San Carlos and Dolores in Carmel-by-the-Sea. Book well ahead.",
     category: "restaurant",
-    lat: 36.5535,
-    lng: -121.9244,
+    lat: 36.5569346,
+    lng: -121.9223308,
     website: "https://cheznoircarmel.com",
   },
 
