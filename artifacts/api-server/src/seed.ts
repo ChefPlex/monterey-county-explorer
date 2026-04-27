@@ -277,8 +277,8 @@ const SEED_DATA = [
     city: "Carmel",
     note: "The most honest pizza in Carmel. Giuseppe Panzuto came from Naples and does not compromise: proper Neapolitan dough, correct oven temperature, San Marzano tomatoes, fior di latte. Hidden in the Court of the Golden Bough courtyard off Ocean Avenue — the location is not visible from the street, which means it's still a locals-first spot. The kind of place that makes Carmel more interesting.",
     category: "restaurant",
-    lat: 36.5548,
-    lng: -121.9229,
+    lat: 36.5547562,
+    lng: -121.9240766,
     website: "https://iltegaminocarmel.com",
   },
   {
