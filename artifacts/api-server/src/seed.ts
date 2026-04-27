@@ -16,6 +16,7 @@ const REMOVED_FROM_SEED: string[] = [
   "Aubergine",                   // Reverted — name restored to "Aubergine at L'Auberge Carmel"
   "Mundaka",                     // Permanently closed
   "Holman Ranch Tavern",         // Permanently closed
+  "Schoch Family Farmstead",     // Removed from curated list
 ];
 
 const SEED_DATA = [
@@ -414,15 +415,6 @@ const SEED_DATA = [
     lat: 36.2547,
     lng: -121.8025,
     website: "https://bigsurbakery.com",
-  },
-  {
-    name: "Schoch Family Farmstead",
-    city: "Salinas",
-    note: "One of California's last operating raw-milk dairies — Swiss immigrant heritage, founded 1944, fewer than 80 Holstein cows, now in its third generation. The cheese portfolio is remarkable: Santa Rita (washed rind), Mt. Toro Tomme, authentic Monterey Jack (a California original the county named but largely abandoned), Feta, and a local blue. At farmers markets Fridays and Saturdays; the farm at 662 El Camino Real N is the source.",
-    category: "artisan",
-    lat: 36.7130,
-    lng: -121.6440,
-    website: "https://schochfamilyfarm.com",
   },
   {
     name: "Monterey Abalone Company",
