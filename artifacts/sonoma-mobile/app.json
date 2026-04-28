@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.chefplex.montereycountyexplorer",
+      "bundleIdentifier": "app.replit.montereybayexplorer",
       "minimumOsVersion": "16.0",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Your location appears as a blue dot on the interactive map and is used to sort nearby Monterey County spots by distance. Location data is used only on-device and is never stored or shared.",
