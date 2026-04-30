@@ -6,7 +6,7 @@ import { rateLimit } from "express-rate-limit";
 
 const aiRateLimit = rateLimit({
   windowMs: 60 * 1000,
-  limit: 5,
+  limit: 8,
   standardHeaders: "draft-8",
   legacyHeaders: false,
   message: { error: "Too many AI requests — please wait a minute and try again." },
