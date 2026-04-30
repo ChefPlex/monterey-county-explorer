@@ -1,8 +1,19 @@
 import { Router, type IRouter } from "express";
 import { db, markersTable, insertMarkerSchema } from "@workspace/db";
 import { eq, count, sql } from "drizzle-orm";
+import { rateLimit } from "express-rate-limit";
+
+const markersRateLimit = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 120,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Too many requests — please slow down." },
+});
 
 const router: IRouter = Router();
+
+router.use(markersRateLimit);
 
 router.get("/markers/stats", async (req, res) => {
   try {
