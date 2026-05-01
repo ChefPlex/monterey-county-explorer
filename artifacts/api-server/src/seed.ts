@@ -219,7 +219,7 @@ const SEED_DATA = [
     category: "restaurant",
     lat: 36.2541,
     lng: -121.8124,
-    website: "https://nepenthe.com",
+    website: "https://nepenthebigsur.com",
   },
   {
     name: "Aubergine at L'Auberge Carmel",
