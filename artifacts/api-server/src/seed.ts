@@ -344,8 +344,8 @@ const SEED_DATA = [
     city: "Big Sur",
     note: "The anti-Sierra Mar Big Sur restaurant. Norwegian homestead built by Grandpa Deetjen in the 1930s — wood fires, creaky floors, Castro Canyon outside the window. The menu doesn't try to justify the setting with price. Dinner by reservation; weekend breakfast draws locals who've been coming for years. Earned in a way that newer Big Sur destinations have to work toward.",
     category: "restaurant",
-    lat: 36.2640,
-    lng: -121.8210,
+    lat: 36.2174402,
+    lng: -121.7508705,
     website: "https://deetjens.com",
   },
 
