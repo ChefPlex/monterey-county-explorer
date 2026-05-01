@@ -53,8 +53,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "The original Santa Lucia Highlands champion. Dan Lee planted in the SLH before anyone else believed in it. The Double L Vineyard Pinot is the reference point for the appellation — bright, savory, and unmistakably coastal. Carmel Valley Village tasting room is an easy walk from the main strip.",
     category: "winery",
-    lat: 36.4800,
-    lng: -121.7210,
+    lat: 36.5368831,
+    lng: -121.9091034,
     website: "https://morganwinery.com",
   },
   {
@@ -93,8 +93,8 @@ const SEED_DATA = [
     city: "Greenfield",
     note: "One of the most respected growers in Monterey County — over 4,000 acres under vine in the Salinas Valley — now pouring their own label. The Greenfield tasting room is a no-fuss destination for understanding what the valley floor and hillside vineyards produce at different elevations and exposures.",
     category: "winery",
-    lat: 36.3244,
-    lng: -121.2455,
+    lat: 36.4251448,
+    lng: -121.3067767,
     website: "https://scheidvineyards.com",
   },
 
@@ -103,18 +103,9 @@ const SEED_DATA = [
     city: "Salinas",
     note: "High-elevation Santa Lucia Highlands estate on River Road, focused on single-vineyard bottlings from SLH and Arroyo Seco fruit. The Pinot Noir and Chardonnay here show the cooler, more maritime character of the northern SLH blocks. A smaller, more focused operation than Hahn — worth the drive if you're already in the corridor.",
     category: "winery",
-    lat: 36.4809014,
-    lng: -121.4842994,
+    lat: 36.4808488,
+    lng: -121.4842889,
     website: "https://pessagnowines.com",
-  },
-  {
-    name: "Paraiso Vineyards",
-    city: "Soledad",
-    note: "Smith family planted in 1973, one of the Santa Lucia Highlands originals before the AVA existed. The SLH rosé from Pinot Noir is a benchmark for the appellation. The tasting room sits at 1,200 feet on Paraiso Springs Road with the full sweep of the Salinas Valley below. Less visited than Hahn; the conversation here tends to be with someone who actually grew the fruit.",
-    category: "winery",
-    lat: 36.4095,
-    lng: -121.3720,
-    website: "https://paraisovineyards.com",
   },
 
   // ── WINERIES: CARMEL VALLEY (ADDITIONAL) ─────────────────────────────────
@@ -123,8 +114,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "Estate Sangiovese in the Carmel Valley — unusual and worth seeking out. The family planted Italian varieties in the warm mid-valley, which turns out to be a reasonable analog for Tuscan growing conditions. The Sangiovese is the reason to visit; the Cabernet Sauvignon is solid backup. Tasting room in the Village.",
     category: "winery",
-    lat: 36.4772,
-    lng: -121.7269,
+    lat: 36.5538716,
+    lng: -121.9223211,
     website: "https://silvestrivineyards.com",
   },
 
