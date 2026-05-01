@@ -137,15 +137,6 @@ const SEED_DATA = [
 
   // ── WINERIES: CARMEL VALLEY (ADDITIONAL) ─────────────────────────────────
   {
-    name: "Boekenoogen Vineyard & Winery",
-    city: "Carmel Valley",
-    note: "Small-production, estate-focused, and poured by the family. Their Pinot Noir from Carmel Valley and SLH fruit is genuinely good — structured, honest, without the preciousness that follows big press coverage. The tasting room sits just west of the Village on Carmel Valley Road. The kind of stop that rewards people actually paying attention.",
-    category: "winery",
-    lat: 36.4798,
-    lng: -121.7325,
-    website: "https://boekenoogenwines.com",
-  },
-  {
     name: "Silvestri Vineyards",
     city: "Carmel Valley",
     note: "Estate Sangiovese in the Carmel Valley — unusual and worth seeking out. The family planted Italian varieties in the warm mid-valley, which turns out to be a reasonable analog for Tuscan growing conditions. The Sangiovese is the reason to visit; the Cabernet Sauvignon is solid backup. Tasting room in the Village.",
