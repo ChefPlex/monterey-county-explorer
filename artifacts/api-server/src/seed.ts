@@ -44,8 +44,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "Focused, serious wines from Santa Lucia Highlands fruit. The Chardonnay and Pinot Noir here show what the SLH appellation does better than anywhere in California — bright acidity, savory structure, unmistakably coastal. Quiet tasting room, knowledgeable pours. If you're serious about SLH, this is a required stop.",
     category: "winery",
-    lat: 36.4810,
-    lng: -121.7205,
+    lat: 36.5541839,
+    lng: -121.9203484,
     website: "https://wrathwines.com",
   },
   {
@@ -120,15 +120,6 @@ const SEED_DATA = [
   },
 
   // ── WINERIES: CARMEL (TASTING ROOMS) ───────────────────────────────────────
-  {
-    name: "Talbott Vineyards",
-    city: "Carmel",
-    note: "One of the founding estates of the Santa Lucia Highlands — Talbott planted their Sleepy Hollow Vineyard in 1972, before the AVA existed. Wine Enthusiast named it a California Grand Cru in 2016. The Chardonnay and Pinot Noir remain benchmarks for what the Highlands can do. Tasting room on Lincoln between 5th and 6th in Carmel village.",
-    category: "winery",
-    lat: 36.5543,
-    lng: -121.9264,
-    website: "https://talbottvineyards.com",
-  },
   {
     name: "McIntyre Vineyards",
     city: "Carmel Valley",
