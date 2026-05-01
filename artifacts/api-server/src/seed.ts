@@ -333,7 +333,7 @@ const SEED_DATA = [
   {
     name: "The Stationaery",
     city: "Carmel",
-    note: "The Village's casual lunch and early dinner stop — California-seasonal cooking, a solid wine-by-the-glass list, and a patio that handles the valley heat well. Fills the practical gap between a morning of tasting rooms and a dinner at Bernardus without requiring a reservation or a jacket.",
+    note: "A neighborhood restaurant in San Carlos Square that has become a quiet anchor for Carmel locals. Seasonal California cooking, handmade pastas, and a wine program built around small producers and low-intervention bottles from California and Europe. The kitchen draws from farms across Monterey and Santa Cruz Counties; the menu follows the seasons. Brunch is a weekend ritual, dinner runs Thursday through Sunday. Coffee from Carrier Roasting Co. and a take-away window for guests heading to the beach. Chef Amalia Scatena runs the kitchen under owners Anthony and Alissa Carnazzo.",
     category: "restaurant",
     lat: 36.5561884,
     lng: -121.9214131,
