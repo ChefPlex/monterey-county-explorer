@@ -1,0 +1,324 @@
+MONTEREY COUNTY EXPLORER — PLACE REVIEW
+Generated: May 1, 2026
+Total places: 47
+================================================
+
+Please review each entry and note any corrections to:
+  - Name spelling / punctuation
+  - City / location
+  - Website URL
+  - Category (winery / restaurant / farmstand / artisan)
+  - GPS coordinates (lat / lng)
+  - Whether the place should be kept or removed
+
+------------------------------------------------
+ARTISAN (7)
+------------------------------------------------
+
+1.  Alvarado Street Brewery
+    City:     Monterey
+    Website:  https://alvaradostreetbrewery.com
+    Coords:   36.5997, -121.8945
+    Notes:
+
+2.  Carmel Valley Coffee Roasting Co.
+    City:     Carmel Valley
+    Website:  https://carmelvalleycoffee.com
+    Coords:   36.4797, -121.7199
+    Notes:
+
+3.  Happy Girl Kitchen
+    City:     Pacific Grove
+    Website:  https://happygirlkitchen.com
+    Coords:   36.6187, -121.9064
+    Notes:
+
+4.  Monterey Abalone Company
+    City:     Monterey
+    Website:  https://montereyabalone.com
+    Coords:   36.6056, -121.8940
+    Notes:
+
+5.  Parker-Lusseau Pastries
+    City:     Monterey
+    Website:  https://parkerlusseau.com
+    Coords:   36.5961, -121.8955
+    Notes:
+
+6.  The Big Sur Bakery
+    City:     Big Sur
+    Website:  https://bigsurbakery.com
+    Coords:   36.2547, -121.8025
+    Notes:
+
+7.  Wild Plum Cafe & Bakery
+    City:     Monterey
+    Website:  https://wildplum.com
+    Coords:   36.5949, -121.8931
+    Notes:
+
+------------------------------------------------
+FARMSTAND (5)
+------------------------------------------------
+
+8.  Carmel Valley Village Farmers Market
+    City:     Carmel Valley
+    Website:  https://montereybayfarmers.org
+    Coords:   36.4800, -121.7202
+    Notes:
+
+9.  Lady & Larder + Marmee's
+    City:     Carmel Valley
+    Website:  https://ladyandlarder.com
+    Coords:   36.4807, -121.7329
+    Notes:
+
+10. Monterey Bay Certified Farmers Market — Monterey
+    City:     Monterey
+    Website:  https://montereybayfarmers.org
+    Coords:   36.6001, -121.8932
+    Notes:
+
+11. Pacific Grove Certified Farmers Market
+    City:     Pacific Grove
+    Website:  https://montereybayfarmers.org
+    Coords:   36.6175, -121.9051
+    Notes:
+
+12. Pezzini Farms
+    City:     Castroville
+    Website:  https://pezzinifarms.com
+    Coords:   36.7655, -121.7545
+    Notes:
+
+------------------------------------------------
+RESTAURANT (15)
+------------------------------------------------
+
+13. Aubergine at L'Auberge Carmel
+    City:     Carmel
+    Website:  https://auberginecarmel.com
+    Coords:   36.5541, -121.9242
+    Notes:
+
+14. Chez Noir
+    City:     Carmel
+    Website:  https://cheznoircarmel.com
+    Coords:   36.5569, -121.9223
+    Notes:
+
+15. Cultura Comida y Bebida
+    City:     Carmel
+    Website:  https://culturacarmel.com
+    Coords:   36.5560, -121.9231
+    Notes:
+
+16. Deetjen's Big Sur Inn
+    City:     Big Sur
+    Website:  https://deetjens.com
+    Coords:   36.2640, -121.8210
+    Notes:
+
+17. Il Tegamino
+    City:     Carmel
+    Website:  https://iltegaminocarmel.com
+    Coords:   36.5548, -121.9241
+    Notes:
+
+18. Jeninni Kitchen + Wine Bar
+    City:     Pacific Grove
+    Website:  https://jeninni.com
+    Coords:   36.6208, -121.9170
+    Notes:
+
+19. Montrio Bistro
+    City:     Monterey
+    Website:  https://montrio.com
+    Coords:   36.5997, -121.8929
+    Notes:
+
+20. Nepenthe
+    City:     Big Sur
+    Website:  https://nepenthebigsur.com
+    Coords:   36.2541, -121.8124
+    Notes:
+
+21. Passionfish
+    City:     Pacific Grove
+    Website:  https://passionfish.net
+    Coords:   36.6275, -121.9170
+    Notes:
+
+22. Phil's Fish Market
+    City:     Castroville
+    Website:  https://philsfishmarket.com
+    Coords:   36.7660, -121.7552
+    Notes:
+
+23. Sierra Mar at Post Ranch Inn
+    City:     Big Sur
+    Website:  https://postranchinn.com/dining
+    Coords:   36.2366, -121.8091
+    Notes:
+
+24. Solstice at The Village Big Sur
+    City:     Big Sur
+    Website:  https://thevillagebigsur.com
+    Coords:   36.2698, -121.8079
+    Notes:
+
+25. Tarpy's Roadhouse
+    City:     Monterey
+    Website:  https://tarpys.com
+    Coords:   36.6049, -121.8615
+    Notes:
+
+26. The Stationaery
+    City:     Carmel Valley
+    Website:  https://thestationaery.com
+    Coords:   36.4791, -121.7318
+    Notes:
+
+27. Wild Fish
+    City:     Pacific Grove
+    Website:  https://wild-fish.com
+    Coords:   36.6261, -121.9205
+    Notes:
+
+------------------------------------------------
+WINERY (20)
+------------------------------------------------
+
+28. A Taste of Monterey
+    City:     Monterey
+    Website:  https://atasteofmonterey.com
+    Coords:   36.6188, -121.8948
+    Notes:
+
+29. Albatross Ridge
+    City:     Carmel
+    Website:  https://albatrossridge.com
+    Coords:   36.5553, -121.9226
+    Notes:
+
+30. Bernardus Winery
+    City:     Carmel Valley
+    Website:  https://bernardus.com
+    Coords:   36.4734, -121.7296
+    Notes:
+
+31. Boekenoogen Vineyard & Winery
+    City:     Carmel Valley
+    Website:  https://boekenoogenwines.com
+    Coords:   36.4798, -121.7325
+    Notes:
+
+32. Caraccioli Cellars
+    City:     Carmel
+    Website:  https://caracciolicellars.com
+    Coords:   36.5557, -121.9240
+    Notes:
+
+33. Chalone Vineyard
+    City:     Soledad
+    Website:  https://chalonevineyard.com
+    Coords:   36.4701, -121.2299
+    Notes:
+
+34. Chesebro Wines
+    City:     Carmel Valley
+    Website:  https://chesebrowines.com
+    Coords:   36.4805, -121.7197
+    Notes:
+
+35. De Tierra Vineyards
+    City:     Carmel
+    Website:  https://detierra.com
+    Coords:   36.5380, -121.9092
+    Notes:
+
+36. Folktale Winery
+    City:     Carmel Valley
+    Website:  https://folktalewinery.com
+    Coords:   36.5097, -121.8160
+    Notes:
+
+37. Hahn Family Wines
+    City:     Soledad
+    Website:  https://hahnwines.com
+    Coords:   36.3961, -121.3390
+    Notes:
+
+38. Holman Ranch
+    City:     Carmel Valley
+    Website:  https://holmanranch.com
+    Coords:   36.4895, -121.7312
+    Notes:
+
+39. Joullian Vineyards
+    City:     Carmel Valley
+    Website:  https://joullian.com
+    Coords:   36.5080, -121.8148
+    Notes:
+
+40. McIntyre Vineyards
+    City:     Carmel Valley
+    Website:  https://mcintyrevineyards.com
+    Coords:   36.4794, -121.7323
+    Notes:
+
+41. Morgan Winery
+    City:     Carmel Valley
+    Website:  https://morganwinery.com
+    Coords:   36.4800, -121.7210
+    Notes:
+
+42. Paraiso Vineyards
+    City:     Soledad
+    Website:  https://paraisovineyards.com
+    Coords:   36.4095, -121.3720
+    Notes:
+
+43. Pessagno Winery
+    City:     Salinas
+    Website:  https://pessagnowines.com
+    Coords:   36.4809, -121.4843
+    Notes:
+
+44. Scheid Family Wines
+    City:     Greenfield
+    Website:  https://scheidvineyards.com
+    Coords:   36.3244, -121.2455
+    Notes:
+
+45. Silvestri Vineyards
+    City:     Carmel Valley
+    Website:  https://silvestrivineyards.com
+    Coords:   36.4772, -121.7269
+    Notes:
+
+46. Talbott Vineyards
+    City:     Carmel
+    Website:  https://talbottvineyards.com
+    Coords:   36.5543, -121.9264
+    Notes:
+
+47. Wrath Winery
+    City:     Carmel Valley
+    Website:  https://wrathwines.com
+    Coords:   36.4810, -121.7205
+    Notes:
+
+================================================
+WEBSITE STATUS SUMMARY
+================================================
+
+All 47 websites verified:
+  - 36 return 200 OK directly
+  - 10 are Cloudflare-protected (return 200 in a real browser):
+      folktalewinery.com, bernardus.com, albatrossridge.com,
+      talbottvineyards.com, silvestrivineyards.com, deetjens.com,
+      pessagnowines.com, montereybayfarmers.org
+  - 1 had a typo — fixed (Nepenthe: nepenthebigsusr.com → nepenthebigsur.com)
+
+================================================

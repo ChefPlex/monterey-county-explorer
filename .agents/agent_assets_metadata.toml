@@ -35,3 +35,9 @@ id = "p1GNs2z1sAp9VJgGxwTHs"
 uri = "file://monterey-map-potential-issues.txt"
 type = "text"
 title = "Monterey Map — Potential Issues for Research"
+
+[[outputs]]
+id = "FmQ4vVF4Z6YKYhHTcaDwJ"
+uri = "file://place-review.txt"
+type = "text"
+title = "Monterey County Explorer — Place Review"
