@@ -75,15 +75,6 @@ const SEED_DATA = [
     lng: -121.7291107,
     website: "https://chesebrowines.com",
   },
-  {
-    name: "Joullian Vineyards",
-    city: "Carmel Valley",
-    note: "Classic Carmel Valley stop, family-owned since the 1980s. Cabernet Sauvignon from the warm inland microclimate is genuinely good; the Riesling and Chardonnay from cooler blocks are underrated. Tasting room in the Village is low-key and friendly.",
-    category: "winery",
-    lat: 36.5080,
-    lng: -121.8148,
-    website: "https://joullian.com",
-  },
 
   // ── WINERIES: CHALONE AVA ────────────────────────────────────────────────────
   {
@@ -152,8 +143,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "Steve McIntyre farms nearly a third of the entire Santa Lucia Highlands AVA — more than any other individual in the appellation. His 80-acre estate, planted in 1973, holds some of the oldest Pinot Noir vines in Monterey County. The tasting room at 24 W. Carmel Valley Rd in the Village makes the wines accessible without a mountain drive. Old-vine SLH at its most authoritative.",
     category: "winery",
-    lat: 36.4794384,
-    lng: -121.7322587,
+    lat: 36.4794409,
+    lng: -121.7322583,
     website: "https://mcintyrevineyards.com",
   },
   {
