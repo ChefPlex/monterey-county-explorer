@@ -26,8 +26,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "The flagship Carmel Valley estate. Winemaker Dean DeKorth's Marinus Bordeaux blend is the benchmark for the appellation — structured, age-worthy, and genuinely Carmel Valley in character. The on-property Lucia restaurant with Cal Stamenov in the kitchen makes this a full culinary destination — dinner is among the most accomplished in the valley; lunch is equally worth it. Appointment tastings available in the vineyard cave.",
     category: "winery",
-    lat: 36.4734,
-    lng: -121.7296,
+    lat: 36.4791983,
+    lng: -121.7304897,
     website: "https://bernardus.com",
   },
   {
@@ -206,8 +206,8 @@ const SEED_DATA = [
     city: "Monterey",
     note: "The most efficient single stop for understanding Monterey wine without driving the appellation. Over 70 local wines available by the glass, flight, or bottle, plus retail. Cannery Row location has bay views. The staff knows the producers personally — ask what they're excited about.",
     category: "winery",
-    lat: 36.6188,
-    lng: -121.8948,
+    lat: 36.6166986,
+    lng: -121.8997165,
     website: "https://atasteofmonterey.com",
   },
 
