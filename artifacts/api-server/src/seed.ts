@@ -17,6 +17,14 @@ const REMOVED_FROM_SEED: string[] = [
   "Mundaka",                     // Permanently closed
   "Holman Ranch Tavern",         // Permanently closed
   "Schoch Family Farmstead",     // Removed from curated list
+  // Removed during May 2026 place-review session
+  "Big Sur Bakery",                       // Permanently closed
+  "Pacific Grove Certified Farmers Market", // Permanently closed
+  "Boekenoogen Vineyard & Winery",        // Duplicate of McIntyre Vineyards
+  "Hahn Family Wines",                    // Permanently closed
+  "Joullian Vineyards",                   // Permanently closed
+  "Paraiso Vineyards",                    // Permanently closed
+  "Talbott Vineyards",                    // Permanently closed
 ];
 
 const SEED_DATA = [
