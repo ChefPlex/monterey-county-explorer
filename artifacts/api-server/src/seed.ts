@@ -355,8 +355,8 @@ const SEED_DATA = [
     city: "Monterey",
     note: "The Monterey Peninsula's best weekly market, drawing farms from across the Salinas Valley floor and coastal hills. Castroville artichoke growers, Watsonville strawberry farms, coastal microgreens, and specialty produce direct from growers. Tuesday and Saturday in the Old Monterey Marketplace. The most direct connection to what's actually growing in the county right now.",
     category: "farmstand",
-    lat: 36.6001,
-    lng: -121.8932,
+    lat: 36.5836894,
+    lng: -121.8937543,
     website: "https://montereybayfarmers.org",
   },
   {
@@ -379,21 +379,12 @@ const SEED_DATA = [
   },
 
   {
-    name: "Pacific Grove Certified Farmers Market",
-    city: "Pacific Grove",
-    note: "Monday and Saturday market at Lighthouse and Congress covers coastal and inland growers that don't overlap heavily with the Monterey market. Seaweed, coastal microgreens, and backyard honey operations that don't travel to larger venues. A short walk from Passionfish and Wild Fish — pair the two naturally.",
-    category: "farmstand",
-    lat: 36.6175,
-    lng: -121.9051,
-    website: "https://montereybayfarmers.org",
-  },
-  {
     name: "Pezzini Farms",
     city: "Castroville",
     note: "Four generations of artichoke farming in the county that named itself the artichoke capital of the world. Direct retail at their Merritt Street stand gives you the freshest possible Castroville artichokes, year-round, from the family that grows them. Peak is February through May. They know how to cook them; ask.",
     category: "farmstand",
-    lat: 36.7655,
-    lng: -121.7545,
+    lat: 36.74293,
+    lng: -121.768829,
     website: "https://pezzinifarms.com",
   },
 
