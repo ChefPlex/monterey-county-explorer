@@ -51,7 +51,7 @@ const SEED_DATA = [
   {
     name: "Morgan Winery",
     city: "Carmel Valley",
-    note: "The original Santa Lucia Highlands champion. Dan Lee planted in the SLH before anyone else believed in it. The Double L Vineyard Pinot is the reference point for the appellation — bright, savory, and unmistakably coastal. Carmel Valley Village tasting room is an easy walk from the main strip.",
+    note: "The original Santa Lucia Highlands champion. Dan Lee planted in the SLH before anyone else believed in it. The Double L Vineyard Pinot is the reference point for the appellation — bright, savory, and unmistakably coastal. The Taste Morgan tasting room is in the Crossroads Shopping Center off Highway One — open daily 11–6, walk-ins welcome. The SLH provenance is the story; the address is just the door.",
     category: "winery",
     lat: 36.5368831,
     lng: -121.9091034,
@@ -112,7 +112,7 @@ const SEED_DATA = [
   {
     name: "Silvestri Vineyards",
     city: "Carmel Valley",
-    note: "Estate Sangiovese in the Carmel Valley — unusual and worth seeking out. The family planted Italian varieties in the warm mid-valley, which turns out to be a reasonable analog for Tuscan growing conditions. The Sangiovese is the reason to visit; the Cabernet Sauvignon is solid backup. Tasting room in the Village.",
+    note: "Estate vineyard in Carmel Valley, tasting room in downtown Carmel-by-the-Sea. The Silvestri family planted Italian varieties — Sangiovese, Barbera, Syrah — alongside Pinot Noir, Chardonnay, Pinot Blanc, and Pinot Gris, a portfolio that is genuinely unusual for Monterey County. The beautifully appointed Carmel tasting room is the only place to try the full range.",
     category: "winery",
     lat: 36.5538716,
     lng: -121.9223211,
