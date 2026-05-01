@@ -403,8 +403,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "The Village coffee institution. Small-batch roasting, knowledgeable staff, and the kind of laid-back porch energy that makes Carmel Valley what it is. A proper stop before a morning of tasting rooms.",
     category: "artisan",
-    lat: 36.4797,
-    lng: -121.7199,
+    lat: 36.5549331,
+    lng: -121.9237493,
     website: "https://carmelvalleycoffee.com",
   },
   {
@@ -439,8 +439,8 @@ const SEED_DATA = [
     city: "Pacific Grove",
     note: "Fermentation studio, canning operation, and cafe on Central Avenue. Small-batch pickles, jams, kimchi, and fermented vegetables made from Salinas Valley and coastal produce. They run hands-on canning workshops if you want to understand how the pantry gets built. The cafe side runs a quiet breakfast and lunch. Doing the slow-food work without the label.",
     category: "artisan",
-    lat: 36.6187,
-    lng: -121.9064,
+    lat: 36.6185417,
+    lng: -121.9065222,
     website: "https://happygirlkitchen.com",
   },
   {
@@ -448,8 +448,8 @@ const SEED_DATA = [
     city: "Monterey",
     note: "The serious craft brewery in Monterey County. Local grain sourcing, a farm-to-table beer approach, and a tap room on Alvarado Street that has built a real identity. The IPA program is the headline, but the farmhouse ales and barrel-aged program show real depth. A credible stop for anyone who finds the Peninsula's wine-only focus occasionally exhausting.",
     category: "artisan",
-    lat: 36.5997,
-    lng: -121.8945,
+    lat: 36.5993012,
+    lng: -121.894812,
     website: "https://alvaradostreetbrewery.com",
   },
   {
