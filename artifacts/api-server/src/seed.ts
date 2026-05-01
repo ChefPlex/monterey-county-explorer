@@ -410,7 +410,7 @@ const SEED_DATA = [
 
 export async function seedIfEmpty() {
   try {
-    // Purge any entries that have been removed from the curated list
+    // 1. Purge any entries that have been removed from the curated list
     if (REMOVED_FROM_SEED.length > 0) {
       const deleted = await db
         .delete(markersTable)
@@ -421,36 +421,52 @@ export async function seedIfEmpty() {
       }
     }
 
-    // Find which seed entries are not yet in the DB and insert only those
+    // 2. Sync all seed entries — update existing rows, insert missing ones
     const existing = await db
       .select({ name: markersTable.name })
       .from(markersTable);
     const existingNames = new Set(existing.map((r) => r.name));
 
+    const toUpdate = SEED_DATA.filter((entry) => existingNames.has(entry.name));
     const toInsert = SEED_DATA.filter((entry) => !existingNames.has(entry.name));
 
-    if (toInsert.length === 0) {
-      logger.info("All seed markers already present — nothing to insert");
-      return;
-    }
-
-    // Insert only the new entries
-    const inserted = await db
-      .insert(markersTable)
-      .values(
-        toInsert.map((entry) => ({
-          name: entry.name,
-          city: entry.city,
-          note: entry.note ?? null,
-          category: entry.category as "winery" | "restaurant" | "farmstand" | "artisan",
+    // Update every existing marker from seed (syncs coords, city, note, website on every boot)
+    for (const entry of toUpdate) {
+      await db
+        .update(markersTable)
+        .set({
           lat: String(entry.lat),
           lng: String(entry.lng),
+          city: entry.city,
+          note: entry.note ?? null,
           website: entry.website ?? null,
-        }))
-      )
-      .returning({ id: markersTable.id, name: markersTable.name });
+        })
+        .where(eq(markersTable.name, entry.name));
+    }
+    if (toUpdate.length > 0) {
+      logger.info({ count: toUpdate.length }, "Synced seed data to existing markers");
+    }
 
-    logger.info({ count: inserted.length, names: inserted.map((r) => r.name) }, "New seed markers inserted");
+    // Insert any markers not yet in the DB
+    if (toInsert.length > 0) {
+      const inserted = await db
+        .insert(markersTable)
+        .values(
+          toInsert.map((entry) => ({
+            name: entry.name,
+            city: entry.city,
+            note: entry.note ?? null,
+            category: entry.category as "winery" | "restaurant" | "farmstand" | "artisan",
+            lat: String(entry.lat),
+            lng: String(entry.lng),
+            website: entry.website ?? null,
+          }))
+        )
+        .returning({ id: markersTable.id, name: markersTable.name });
+      logger.info({ count: inserted.length, names: inserted.map((r) => r.name) }, "New seed markers inserted");
+    } else {
+      logger.info("All seed markers already present — nothing to insert");
+    }
   } catch (err) {
     logger.error({ err }, "Seed failed");
     throw err;
