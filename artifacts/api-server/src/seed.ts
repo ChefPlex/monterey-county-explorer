@@ -62,8 +62,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "400 acres of Carmel Valley hillside with a cave tasting room that earns the drive. Their Pinot Noir and Chardonnay from the estate vineyard show genuine SLH restraint. One of the most beautiful properties in the county — the setting alone justifies the appointment.",
     category: "winery",
-    lat: 36.4895,
-    lng: -121.7312,
+    lat: 36.479208,
+    lng: -121.7317402,
     website: "https://holmanranch.com",
   },
   {
