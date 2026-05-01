@@ -253,8 +253,8 @@ const SEED_DATA = [
     city: "Monterey",
     note: "The classic for a reason. Stone farmhouse building, wood-fired cooking, and a menu built for people who actually eat — not people performing a dining experience. The prime rib is a weekend ritual for half the Peninsula. Reliable, honest, and genuinely good.",
     category: "restaurant",
-    lat: 36.6049,
-    lng: -121.8615,
+    lat: 36.5822807,
+    lng: -121.8303061,
     website: "https://tarpys.com",
   },
   {
@@ -262,8 +262,8 @@ const SEED_DATA = [
     city: "Pacific Grove",
     note: "Small, focused, and genuinely committed to sustainable local seafood. Pacific Grove's quiet gem. The menu changes with what came off the boats. No swordfish, no farmed salmon — Wild Fish means it. Book ahead; it seats very few.",
     category: "restaurant",
-    lat: 36.6261,
-    lng: -121.9205,
+    lat: 36.6204974,
+    lng: -121.9170213,
     website: "https://wild-fish.com",
   },
   {
@@ -332,11 +332,11 @@ const SEED_DATA = [
   },
   {
     name: "The Stationaery",
-    city: "Carmel Valley",
+    city: "Carmel",
     note: "The Village's casual lunch and early dinner stop — California-seasonal cooking, a solid wine-by-the-glass list, and a patio that handles the valley heat well. Fills the practical gap between a morning of tasting rooms and a dinner at Bernardus without requiring a reservation or a jacket.",
     category: "restaurant",
-    lat: 36.4791,
-    lng: -121.7318,
+    lat: 36.5561884,
+    lng: -121.9214131,
     website: "https://thestationaery.com",
   },
   {
