@@ -88,11 +88,11 @@ const SEED_DATA = [
   // ── WINERIES: CHALONE AVA ────────────────────────────────────────────────────
   {
     name: "Chalone Vineyard",
-    city: "Soledad",
+    city: "Carmel",
     note: "California's most isolated wine estate — 1,300 feet up in the Gavilan Range on alkaline limestone, surrounded by Pinnacles National Monument. Planted 1919. The Chalone AVA has no other members. Chenin Blanc, Pinot Blanc, and Pinot Noir from these soils produce a genuinely unusual mineral profile — austere, slow to open, unlike anything in the Salinas Valley below. The geology here is the story.",
     category: "winery",
-    lat: 36.4701,
-    lng: -121.2299,
+    lat: 36.554492,
+    lng: -121.9206403,
     website: "https://chalonevineyard.com",
   },
 
@@ -170,8 +170,8 @@ const SEED_DATA = [
     city: "Carmel",
     note: "The best sparkling wine argument for Monterey County you'll find in a single tasting room. Gary Caraccioli grew up farming in the Salinas Valley; he brought in Michel Salgues — the Frenchman who built Roederer Estate — to translate Santa Lucia Highlands fruit into méthode champenoise wines with real Champagne structure. The Brut and Brut Rosé from the SLH are benchmarks. Quiet, unhurried tasting room on Dolores Street in the village.",
     category: "winery",
-    lat: 36.5557,
-    lng: -121.9240,
+    lat: 36.5547022,
+    lng: -121.9225815,
     website: "https://caracciolicellars.com",
   },
   {
