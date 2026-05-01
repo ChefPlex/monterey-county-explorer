@@ -217,8 +217,8 @@ const SEED_DATA = [
     city: "Big Sur",
     note: "The cathedral of Big Sur dining — terraced into the cliff at 808 feet with one of the great restaurant views in California. The Ambrosia burger has been feeding travelers since 1949 and hasn't been embarrassed by time. Arrive for lunch before the afternoon coast fog closes in. The Phoenix is the original structure. An institution, earned.",
     category: "restaurant",
-    lat: 36.2541,
-    lng: -121.8124,
+    lat: 36.2218365,
+    lng: -121.7592895,
     website: "https://nepenthebigsur.com",
   },
   {
