@@ -1,4 +1,4 @@
-import { Router, type IRouter } from "express";
+import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
 import { db, conversations, messages } from "@workspace/db";
 import { eq, asc } from "drizzle-orm";
 import { openai } from "@workspace/integrations-openai-ai-server";
@@ -59,6 +59,8 @@ STYLE: Knowledgeable but human. Confident but never pompous. Ingredient-forward.
 
 When users ask about wineries or restaurants they've saved on their map, give informed, honest perspective. Don't just validate — if you know the place well, bring your knowledge. If asked about pairings, be specific to the wine's structure and the ingredient's season. Do not fabricate event dates — direct users to regional calendars when uncertain.`;
 
+const LEGACY_SESSION_SENTINEL = "00000000-0000-0000-0000-000000000000";
+
 const CONTEXT_MESSAGE_LIMIT = 40;
 
 function buildSystemPrompt(): string {
@@ -71,7 +73,16 @@ function parseIdParam(param: string): number | null {
   return isNaN(id) ? null : id;
 }
 
-router.get("/openai/conversations", conversationRateLimit, async (req, res) => {
+function requireSession(req: Request, _res: Response, next: NextFunction) {
+  const header = req.headers["x-session-id"];
+  (req as Request & { sessionId: string }).sessionId =
+    typeof header === "string" && header.length > 0
+      ? header
+      : LEGACY_SESSION_SENTINEL;
+  next();
+}
+
+router.get("/openai/conversations", conversationRateLimit, requireSession, async (req, res) => {
   try {
     const all = await db.select().from(conversations).orderBy(asc(conversations.createdAt));
     res.json(all.map(c => ({ ...c, createdAt: c.createdAt.toISOString() })));
@@ -81,7 +92,7 @@ router.get("/openai/conversations", conversationRateLimit, async (req, res) => {
   }
 });
 
-router.post("/openai/conversations", conversationRateLimit, async (req, res) => {
+router.post("/openai/conversations", conversationRateLimit, requireSession, async (req, res) => {
   try {
     const { title } = req.body;
     if (!title) { res.status(400).json({ error: "title required" }); return; }
@@ -93,7 +104,7 @@ router.post("/openai/conversations", conversationRateLimit, async (req, res) => 
   }
 });
 
-router.get("/openai/conversations/:id", conversationRateLimit, async (req, res) => {
+router.get("/openai/conversations/:id", conversationRateLimit, requireSession, async (req, res) => {
   const id = parseIdParam(req.params.id);
   if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
   try {
@@ -111,7 +122,7 @@ router.get("/openai/conversations/:id", conversationRateLimit, async (req, res) 
   }
 });
 
-router.delete("/openai/conversations/:id", conversationRateLimit, async (req, res) => {
+router.delete("/openai/conversations/:id", conversationRateLimit, requireSession, async (req, res) => {
   const id = parseIdParam(req.params.id);
   if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
   try {
@@ -124,7 +135,7 @@ router.delete("/openai/conversations/:id", conversationRateLimit, async (req, re
   }
 });
 
-router.get("/openai/conversations/:id/messages", conversationRateLimit, async (req, res) => {
+router.get("/openai/conversations/:id/messages", conversationRateLimit, requireSession, async (req, res) => {
   const id = parseIdParam(req.params.id);
   if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
   try {
@@ -136,7 +147,7 @@ router.get("/openai/conversations/:id/messages", conversationRateLimit, async (r
   }
 });
 
-router.post("/openai/conversations/:id/messages", aiRateLimit, async (req, res) => {
+router.post("/openai/conversations/:id/messages", aiRateLimit, requireSession, async (req, res) => {
   const id = parseIdParam(req.params.id);
   if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
 

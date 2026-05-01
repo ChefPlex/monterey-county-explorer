@@ -1,4 +1,4 @@
-import { Router, type IRouter } from "express";
+import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
 import { db, markersTable, insertMarkerSchema } from "@workspace/db";
 import { eq, count, sql } from "drizzle-orm";
 import { rateLimit } from "express-rate-limit";
@@ -10,6 +10,20 @@ const markersRateLimit = rateLimit({
   legacyHeaders: false,
   message: { error: "Too many requests — please slow down." },
 });
+
+function requireAdminToken(req: Request, res: Response, next: NextFunction) {
+  const token = process.env.ADMIN_TOKEN;
+  if (!token) {
+    res.status(503).json({ error: "Marker mutations are not configured on this server." });
+    return;
+  }
+  const auth = req.headers["authorization"];
+  if (!auth || auth !== `Bearer ${token}`) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+  next();
+}
 
 const router: IRouter = Router();
 
@@ -45,7 +59,7 @@ router.get("/markers", async (req, res) => {
   }
 });
 
-router.post("/markers", async (req, res) => {
+router.post("/markers", requireAdminToken, async (req, res) => {
   try {
     const input = insertMarkerSchema.safeParse(req.body);
     if (!input.success) {
@@ -79,7 +93,7 @@ router.get("/markers/:id", async (req, res) => {
   }
 });
 
-router.put("/markers/:id", async (req, res) => {
+router.put("/markers/:id", requireAdminToken, async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);
     if (isNaN(id)) {
@@ -107,7 +121,7 @@ router.put("/markers/:id", async (req, res) => {
   }
 });
 
-router.delete("/markers/:id", async (req, res) => {
+router.delete("/markers/:id", requireAdminToken, async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);
     if (isNaN(id)) {
