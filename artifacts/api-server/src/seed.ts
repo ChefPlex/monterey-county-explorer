@@ -271,8 +271,8 @@ const SEED_DATA = [
     city: "Monterey",
     note: "The only Michelin-rated restaurant in downtown Monterey — and it earns it quietly, without the fuss of a tasting menu. Set inside Monterey's historic first firehouse (built 1910), the kitchen runs a rotating seasonal menu of American and European-inflected small plates and entrées. Sustainably certified, garden-to-table committed, and genuinely well-executed. The wine list covers California and beyond without being exhausting. Book ahead on weekends.",
     category: "restaurant",
-    lat: 36.5997,
-    lng: -121.8929,
+    lat: 36.599774,
+    lng: -121.8953841,
     website: "https://montrio.com",
   },
   {
@@ -326,8 +326,8 @@ const SEED_DATA = [
     city: "Pacific Grove",
     note: "The best natural wine list on the Peninsula after Chez Noir, in a small Pacific Grove dining room that punches well above its address. Mediterranean-inflected small plates built around what's in season locally. The cheese program is strong and the staff knows the list. Come for dinner; the regulars fill it quickly.",
     category: "restaurant",
-    lat: 36.6208,
-    lng: -121.9170,
+    lat: 36.6208136,
+    lng: -121.916751,
     website: "https://jeninni.com",
   },
   {
