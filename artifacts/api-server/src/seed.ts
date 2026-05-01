@@ -35,8 +35,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "The hospitality standout in the valley. Live music weekends, a full food menu, and a portfolio ranging from sparkling to Pinot Noir. The grounds are stunning and the vibe is the opposite of stuffy. Great for an afternoon that turns into an evening.",
     category: "winery",
-    lat: 36.5097,
-    lng: -121.8160,
+    lat: 36.5287459,
+    lng: -121.8202824,
     website: "https://folktalewinery.com",
   },
   {
@@ -71,8 +71,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "Small-production, family-run, and poured by the people who made it. Chesebro sources from Carmel Valley vineyards and keeps the tasting room personal and unpretentious. The kind of stop that reminds you why wine country should feel like meeting someone, not touring an attraction.",
     category: "winery",
-    lat: 36.4805,
-    lng: -121.7197,
+    lat: 36.4777954,
+    lng: -121.7291107,
     website: "https://chesebrowines.com",
   },
   {
@@ -97,15 +97,6 @@ const SEED_DATA = [
   },
 
   // ── WINERIES: SANTA LUCIA HIGHLANDS ────────────────────────────────────────
-  {
-    name: "Hahn Family Wines",
-    city: "Soledad",
-    note: "Estate winery in the heart of the Santa Lucia Highlands at 1,200 feet elevation. The cool marine-influenced climate produces Pinot Noir and Chardonnay with real texture and grip. The tasting room has sweeping views of the Salinas Valley floor and runs the full range from accessible to single-vineyard serious.",
-    category: "winery",
-    lat: 36.3961,
-    lng: -121.3390,
-    website: "https://hahnwines.com",
-  },
   {
     name: "Scheid Family Wines",
     city: "Greenfield",
@@ -188,8 +179,8 @@ const SEED_DATA = [
     city: "Carmel",
     note: "Small-production Monterey County winery with a tasting room at the Carmel Crossroads. The sourcing spans cool blocks across the county — SLH, Arroyo Seco, Carmel Valley. An easy stop that doesn't require driving the valley and pours more seriously than the strip-mall location would suggest.",
     category: "winery",
-    lat: 36.5380,
-    lng: -121.9092,
+    lat: 36.556637,
+    lng: -121.9208573,
     website: "https://detierra.com",
   },
   {
