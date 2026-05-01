@@ -235,8 +235,8 @@ const SEED_DATA = [
     city: "Pacific Grove",
     note: "The neighborhood restaurant Pacific Grove deserves and almost doesn't know it has. Ted Walter's wine list is famously well-priced — zero markup on most bottles is the stated goal — and the sustainable seafood is sourced with real intention. Book ahead. The regulars fill it.",
     category: "restaurant",
-    lat: 36.6275,
-    lng: -121.9170,
+    lat: 36.6223375,
+    lng: -121.9209735,
     website: "https://passionfish.net",
   },
   {
@@ -298,8 +298,8 @@ const SEED_DATA = [
     city: "Castroville",
     note: "Forty years and one move later, still the definitive cioppino stop in Monterey County. Phil DiGirolamo's market relocated from Moss Landing to a historic 1869 building on Merritt Street in Castroville in 2022. The cioppino — built on local crab, clams, mussels, shrimp, and fish in a tomato-wine broth — is the reason most people come, and it holds up. The fish market operation still sells direct. Artichoke country is right outside the door.",
     category: "restaurant",
-    lat: 36.7660,
-    lng: -121.7552,
+    lat: 36.7657319,
+    lng: -121.7583329,
     website: "https://philsfishmarket.com",
   },
   {
@@ -307,8 +307,8 @@ const SEED_DATA = [
     city: "Big Sur",
     note: "A 1,200-foot cliff perch with one of the most dramatic dining rooms in California. The cuisine leans organic and local; the wine list is genuinely exceptional. The price reflects the setting — but the setting is legitimately extraordinary. Lunch is more accessible than dinner. Reserve the moment you book lodging.",
     category: "restaurant",
-    lat: 36.2366,
-    lng: -121.8091,
+    lat: 36.2298911,
+    lng: -121.7651322,
     website: "https://postranchinn.com/dining",
   },
   {
