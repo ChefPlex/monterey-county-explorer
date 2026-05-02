@@ -26,6 +26,7 @@ const REMOVED_FROM_SEED: string[] = [
   "Paraiso Vineyards",                    // Permanently closed
   "Talbott Vineyards",                    // Permanently closed
   "Lady & Larder + Marmee's",             // Dropped from curated list
+  "Carmel Valley Village Farmers Market", // Renamed to "Carmel Valley Farmers Market"
 ];
 
 const SEED_DATA = [
