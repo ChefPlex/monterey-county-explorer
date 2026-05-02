@@ -324,8 +324,8 @@ const SEED_DATA = [
     website: "https://montereybayfarmers.org",
   },
   {
-    name: "Carmel Valley Village Farmers Market",
-    city: "Carmel",
+    name: "Carmel Valley Farmers Market",
+    city: "Carmel Valley",
     note: "Small but honest weekly market in the Village. Local farms, backyard growers, valley honey, and seasonal vegetables. Worth pairing with a tasting room stop — it runs Sunday mornings in the Village.",
     category: "farmstand",
     lat: 36.5407246,
