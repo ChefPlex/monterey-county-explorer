@@ -14,6 +14,24 @@ export const markersTable = pgTable("markers", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-export const insertMarkerSchema = createInsertSchema(markersTable).omit({ id: true, createdAt: true });
+const safeWebsiteSchema = z
+  .string()
+  .refine(
+    (url) => {
+      try {
+        const { protocol } = new URL(url);
+        return protocol === "http:" || protocol === "https:";
+      } catch {
+        return false;
+      }
+    },
+    { message: "Website must be an http or https URL" }
+  )
+  .nullable()
+  .optional();
+
+export const insertMarkerSchema = createInsertSchema(markersTable, {
+  website: safeWebsiteSchema,
+}).omit({ id: true, createdAt: true });
 export type InsertMarker = z.infer<typeof insertMarkerSchema>;
 export type Marker = typeof markersTable.$inferSelect;

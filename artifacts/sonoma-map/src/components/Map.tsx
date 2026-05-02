@@ -17,6 +17,15 @@ import { Label } from "@/components/ui/label";
 import { Loader2, Trash2, MapPin, Wine, Utensils, Leaf, ExternalLink, Bookmark, Store } from "lucide-react";
 import { format } from "date-fns";
 
+function safeWebsiteUrl(url: string): string | null {
+  try {
+    const { protocol } = new URL(url);
+    return protocol === "http:" || protocol === "https:" ? url : null;
+  } catch {
+    return null;
+  }
+}
+
 // Fix Leaflet default icon issues
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -165,18 +174,21 @@ export function MapComponent({ activeFilter, onToggleSave, isSaved }: MapCompone
               {marker.note && (
                 <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{marker.note}</p>
               )}
-              {marker.website && (
-                <a
-                  href={marker.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline mb-3"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <ExternalLink className="w-3 h-3" />
-                  Visit website
-                </a>
-              )}
+              {(() => {
+                const safeUrl = marker.website ? safeWebsiteUrl(marker.website) : null;
+                return safeUrl ? (
+                  <a
+                    href={safeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline mb-3"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    Visit website
+                  </a>
+                ) : null;
+              })()}
               <div className="pt-3 mt-1 border-t border-border flex items-center justify-between">
                 <Button
                   variant="ghost"

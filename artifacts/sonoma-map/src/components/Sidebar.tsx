@@ -4,6 +4,15 @@ import { format } from "date-fns";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
+function safeWebsiteUrl(url: string): string | null {
+  try {
+    const { protocol } = new URL(url);
+    return protocol === "http:" || protocol === "https:" ? url : null;
+  } catch {
+    return null;
+  }
+}
+
 interface SidebarProps {
   activeFilter: "all" | "winery" | "restaurant" | "farmstand" | "artisan";
   setActiveFilter: (filter: "all" | "winery" | "restaurant" | "farmstand" | "artisan") => void;
@@ -174,18 +183,21 @@ export function Sidebar({ activeFilter, setActiveFilter }: SidebarProps) {
                   <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
                     Added {format(new Date(marker.createdAt), 'MMM d, yyyy')}
                   </div>
-                  {marker.website && (
-                    <a
-                      href={marker.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[10px] font-medium text-primary hover:underline shrink-0"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <ExternalLink className="w-2.5 h-2.5" />
-                      Website
-                    </a>
-                  )}
+                  {(() => {
+                    const safeUrl = marker.website ? safeWebsiteUrl(marker.website) : null;
+                    return safeUrl ? (
+                      <a
+                        href={safeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[10px] font-medium text-primary hover:underline shrink-0"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ExternalLink className="w-2.5 h-2.5" />
+                        Website
+                      </a>
+                    ) : null;
+                  })()}
                 </div>
               </div>
             ))

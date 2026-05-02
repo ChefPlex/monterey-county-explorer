@@ -136,6 +136,15 @@ interface SpotSheetProps {
   isDeleting: boolean;
 }
 
+function isSafeUrl(url: string): boolean {
+  try {
+    const { protocol } = new URL(url);
+    return protocol === "http:" || protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 function buildShareMessage(spot: MarkerType) {
   const catLabel = spot.category === "winery" ? "Winery" : spot.category === "restaurant" ? "Dining" : spot.category === "artisan" ? "Artisan" : "Farm Stand";
   const parts: string[] = [
@@ -143,7 +152,8 @@ function buildShareMessage(spot: MarkerType) {
     "",
   ];
   if (spot.note) parts.push(spot.note, "");
-  if (spot.website) parts.push(spot.website);
+  const safeWebsite = spot.website && isSafeUrl(spot.website) ? spot.website : null;
+  if (safeWebsite) parts.push(safeWebsite);
   parts.push("", "Shared via the Monterey Chef app");
   return parts.join("\n");
 }
@@ -216,7 +226,7 @@ function SpotDetailModal({ spot, onClose, onToggleSave, isSaved, onDelete, isDel
           <Text style={[styles.spotNote, { color: colors.mutedForeground }]}>{spot.note}</Text>
         ) : null}
 
-        {spot.website ? (
+        {spot.website && isSafeUrl(spot.website) ? (
           <TouchableOpacity
             style={[styles.websiteBtn, { borderColor: colors.primary }]}
             onPress={() => Linking.openURL(spot.website!)}
@@ -309,7 +319,7 @@ function SpotDetailPanel({ spot, onClose, onToggleSave, isSaved, onDelete, isDel
         </ScrollView>
       ) : null}
 
-      {spot.website ? (
+      {spot.website && isSafeUrl(spot.website) ? (
         <TouchableOpacity
           style={[styles.websiteBtn, { borderColor: colors.primary }]}
           onPress={() => Linking.openURL(spot.website!)}
