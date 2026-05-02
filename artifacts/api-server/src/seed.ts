@@ -12,7 +12,7 @@ const REMOVED_FROM_SEED: string[] = [
   "Lucia Restaurant at Bernardus Lodge", // Redundant — already covered under Bernardus Winery
   "Cantinetta Luca",             // Website dead on all domains; likely permanently closed
   "Café Rustica",                // Website dead on all domains; likely permanently closed
-  "Carmel Valley Creamery",      // No web presence; too new/unverifiable
+  "Carmel Valley Creamery",      // Name superseded by verified entry "Carmel Valley Creamery Co."
   "Aubergine",                   // Reverted — name restored to "Aubergine at L'Auberge Carmel"
   "Mundaka",                     // Permanently closed
   "Holman Ranch Tavern",         // Permanently closed
@@ -343,6 +343,15 @@ const SEED_DATA = [
   },
 
   // ── ARTISAN PRODUCERS ─────────────────────────────────────────────────────
+  {
+    name: "Carmel Valley Creamery Co.",
+    city: "Carmel Valley",
+    note: "Artisan creamery in Carmel Valley Village at 1 Esquiline Road. Small-batch ice cream and dairy made with local ingredients — the kind of focused, ingredient-driven operation that fits the Village's slow-food character. A natural stop after a morning of tasting rooms.",
+    category: "artisan",
+    lat: 36.4735539,
+    lng: -121.7280782,
+    website: "https://www.carmelvalleycreameryco.com",
+  },
   {
     name: "Carmel Valley Coffee Roasting Co.",
     city: "Carmel Valley",
