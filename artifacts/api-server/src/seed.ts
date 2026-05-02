@@ -25,6 +25,7 @@ const REMOVED_FROM_SEED: string[] = [
   "Joullian Vineyards",                   // Permanently closed
   "Paraiso Vineyards",                    // Permanently closed
   "Talbott Vineyards",                    // Permanently closed
+  "Lady & Larder + Marmee's",             // Dropped from curated list
 ];
 
 const SEED_DATA = [
@@ -331,16 +332,6 @@ const SEED_DATA = [
     lng: -121.9075407,
     website: "https://montereybayfarmers.org",
   },
-  {
-    name: "Lady & Larder + Marmee's",
-    city: "Carmel Valley",
-    note: "The cheese and charcuterie anchor of Carmel Valley Village — run by a cheesemaker who serves as president of the California Artisan Cheese Guild. Marmee's, the attached natural wine bar, gives the stop a proper afternoon dimension. At 9 Del Fino Place in the Village. Hours have been subject to pause — call ahead or check the website before visiting.",
-    category: "farmstand",
-    lat: 36.4806565,
-    lng: -121.7328896,
-    website: "https://ladyandlarder.com",
-  },
-
   {
     name: "Pezzini Farms",
     city: "Castroville",
