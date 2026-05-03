@@ -233,6 +233,15 @@ const SEED_DATA = [
     website: "https://culturacarmel.com",
   },
   {
+    name: "Alta Monterey",
+    city: "Monterey",
+    note: "Ben Spungin is the chef and owner behind Alta Bakery and Cella Restaurant, both housed at the Historic Cooper Molera Adobe at 502 Munras Ave in downtown Monterey. Ben has cooked on the Peninsula for 26 years — from Post Ranch Inn in Big Sur to Bernardus Lodge with Cal Stamenov, with stints opening Faith and Flower in L.A. and Rose Rabbit Lie in Las Vegas. His cooking is rooted in locally grown, seasonal ingredients with a balance of savory and sweet. Featured in Wine Spectator, Art Culinaire, and photographed in the French Laundry Cookbook.",
+    category: "restaurant",
+    lat: 36.5976296,
+    lng: -121.8949869,
+    website: "https://www.altamonterey.com",
+  },
+  {
     name: "Tarpy's Roadhouse",
     city: "Monterey",
     note: "The classic for a reason. Stone farmhouse building, wood-fired cooking, and a menu built for people who actually eat — not people performing a dining experience. The prime rib is a weekend ritual for half the Peninsula. Reliable, honest, and genuinely good.",
