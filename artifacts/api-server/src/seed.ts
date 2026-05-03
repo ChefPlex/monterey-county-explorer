@@ -33,6 +33,15 @@ const REMOVED_FROM_SEED: string[] = [
 const SEED_DATA = [
   // ── WINERIES: CARMEL VALLEY ────────────────────────────────────────────────
   {
+    name: "Rombi Wines",
+    city: "Carmel Valley",
+    note: "Salvatore Rombi is a one-man winemaking operation — he prunes, picks, crushes, ages in French oak barrels in his garage, and bottles himself. Estate Cabernet Sauvignon, Merlot, and Petite Sirah from 1⅓ acres on a 1,650-foot chalk ridge in Cachagua, fewer than 200 cases a year. Sal is usually behind the bar pouring and talking you through it. At 1 Center St in the Village. Saturday–Sunday, noon to 5 pm.",
+    category: "winery",
+    lat: 36.4790800,
+    lng: -121.7320590,
+    website: "https://rombiwines.com",
+  },
+  {
     name: "Corral Wine Co.",
     city: "Carmel Valley",
     note: "A production of Bell Family Vineyards. In 2017, they barreled their first batch of estate Pinot Noir in a barn in Corral de Tierra — they're still in that same barn. Estate fruit, traditional practices, expanded to include Pinot and other Central Coast varietals. Family-owned, unfussy, and making honest wine that honors the character of the region. Tasting room at 19 E. Carmel Valley Road, Suite A, in the Village.",
