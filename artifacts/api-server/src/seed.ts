@@ -37,8 +37,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "Salvatore Rombi is a one-man winemaking operation — he prunes, picks, crushes, ages in French oak barrels in his garage, and bottles himself. Estate Cabernet Sauvignon, Merlot, and Petite Sirah from 1⅓ acres on a 1,650-foot chalk ridge in Cachagua, fewer than 200 cases a year. Sal is usually behind the bar pouring and talking you through it. At 1 Center St in the Village. Saturday–Sunday, noon to 5 pm.",
     category: "winery",
-    lat: 36.4790800,
-    lng: -121.7320590,
+    lat: 36.4787585,
+    lng: -121.7315368,
     website: "https://rombiwines.com",
   },
   {
