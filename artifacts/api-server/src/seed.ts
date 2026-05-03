@@ -26,7 +26,8 @@ const REMOVED_FROM_SEED: string[] = [
   "Paraiso Vineyards",                    // Permanently closed
   "Talbott Vineyards",                    // Permanently closed
   "Lady & Larder + Marmee's",             // Dropped from curated list
-  "Carmel Valley Village Farmers Market", // Renamed to "Carmel Valley Farmers Market"
+  "Carmel Valley Village Farmers Market", // Renamed to "Carmel Farmers Market"
+  "Carmel Valley Farmers Market",         // Renamed to "Carmel Farmers Market"
 ];
 
 const SEED_DATA = [
@@ -325,9 +326,9 @@ const SEED_DATA = [
     website: "https://montereybayfarmers.org",
   },
   {
-    name: "Carmel Valley Farmers Market",
-    city: "Carmel Valley",
-    note: "Small but honest weekly market in the Village. Local farms, backyard growers, valley honey, and seasonal vegetables. Worth pairing with a tasting room stop — it runs Sunday mornings in the Village.",
+    name: "Carmel Farmers Market",
+    city: "Carmel",
+    note: "The Barnyard Shopping Village market at Highway 1 and Carmel Valley Road. Over 25 farmers and vendors — local produce, specialty items, valley honey. Tuesdays 9 am to 1 pm, May through September, rain or shine.",
     category: "farmstand",
     lat: 36.5407246,
     lng: -121.9075407,
