@@ -31,6 +31,12 @@ const CHEF_SESSION_STORAGE_KEY = "monterey-chef-session-id";
 let _sessionTokenCache: string | null = null;
 let _sessionTokenPromise: Promise<string> | null = null;
 
+async function clearSessionToken(): Promise<void> {
+  _sessionTokenCache = null;
+  _sessionTokenPromise = null;
+  await AsyncStorage.removeItem(CHEF_SESSION_STORAGE_KEY);
+}
+
 async function ensureSessionToken(apiUrl: string): Promise<string> {
   if (_sessionTokenCache) return _sessionTokenCache;
 
@@ -72,7 +78,7 @@ const PROMPTS = [
   "What makes Passionfish worth it?",
 ];
 
-async function createConversation(apiUrl: string): Promise<number> {
+async function createConversation(apiUrl: string, retry = true): Promise<number> {
   const sessionId = await ensureSessionToken(apiUrl);
   const res = await fetch(`${apiUrl}api/openai/conversations`, {
     method: "POST",
@@ -82,6 +88,10 @@ async function createConversation(apiUrl: string): Promise<number> {
     },
     body: JSON.stringify({ title: "Monterey Chef Mobile" }),
   });
+  if (res.status === 401 && retry) {
+    await clearSessionToken();
+    return createConversation(apiUrl, false);
+  }
   if (!res.ok) throw new Error("Failed to create conversation");
   const data = await res.json();
   return data.id;
@@ -107,6 +117,10 @@ async function streamMessage(
     }
   );
 
+  if (res.status === 401) {
+    await clearSessionToken();
+    throw new Error("Session expired");
+  }
   if (!res.ok || !res.body) throw new Error("Failed to send message");
 
   const reader = res.body.getReader();
@@ -241,6 +255,8 @@ export default function ChefScreen() {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       } catch {
         setShowTyping(false);
+        // Reset conversation so next send starts fresh (handles stale session/conversation)
+        setConversationId(null);
         setMessages((prev) => [
           {
             id: generateId(),
