@@ -33,6 +33,15 @@ const REMOVED_FROM_SEED: string[] = [
 const SEED_DATA = [
   // ── WINERIES: CARMEL VALLEY ────────────────────────────────────────────────
   {
+    name: "Corral Wine Co.",
+    city: "Carmel Valley",
+    note: "Small-production winery tasting room in Carmel Valley Village at 19 E. Carmel Valley Road. Named for Corral de Tierra — the Land of the Bull — rooted in the ranching and farming heritage of the Monterey Peninsula. Worth a stop on any Village tasting circuit.",
+    category: "winery",
+    lat: 36.4773563,
+    lng: -121.7270098,
+    website: "https://www.corralwine.com",
+  },
+  {
     name: "Bernardus Winery",
     city: "Carmel Valley",
     note: "The flagship Carmel Valley estate. Winemaker Dean DeKorth's Marinus Bordeaux blend is the benchmark for the appellation — structured, age-worthy, and genuinely Carmel Valley in character. The on-property Lucia restaurant with Cal Stamenov in the kitchen makes this a full culinary destination — dinner is among the most accomplished in the valley; lunch is equally worth it. Appointment tastings available in the vineyard cave.",
