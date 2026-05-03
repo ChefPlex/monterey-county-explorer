@@ -373,6 +373,15 @@ const SEED_DATA = [
 
   // ── ARTISAN PRODUCERS ─────────────────────────────────────────────────────
   {
+    name: "Ad Astra Bread Co.",
+    city: "Monterey",
+    note: "Serious artisan bread on Alvarado Street in downtown Monterey. Open seven days a week, 7am to 5pm — loaves, pastries, and baking classes out of a focused bakery that takes the craft seriously. The name means 'to the stars.' At 479 Alvarado St.",
+    category: "artisan",
+    lat: 36.5981886,
+    lng: -121.8946152,
+    website: "https://www.adastrabread.com",
+  },
+  {
     name: "Carmel Valley Creamery Co.",
     city: "Carmel Valley",
     note: "Artisan creamery in Carmel Valley Village at 1 Esquiline Road. Small-batch ice cream and dairy made with local ingredients — the kind of focused, ingredient-driven operation that fits the Village's slow-food character. A natural stop after a morning of tasting rooms.",
