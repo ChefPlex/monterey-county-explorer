@@ -37,8 +37,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "A production of Bell Family Vineyards. In 2017, they barreled their first batch of estate Pinot Noir in a barn in Corral de Tierra — they're still in that same barn. Estate fruit, traditional practices, expanded to include Pinot and other Central Coast varietals. Family-owned, unfussy, and making honest wine that honors the character of the region. Tasting room at 19 E. Carmel Valley Road, Suite A, in the Village.",
     category: "winery",
-    lat: 36.4773563,
-    lng: -121.7270098,
+    lat: 36.4781314,
+    lng: -121.7299498,
     website: "https://www.corralwine.com",
   },
   {
