@@ -6,6 +6,7 @@ import { ChefHat, X, Send, Loader2, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const CHEF_TOOLTIP_KEY = "monterey-chef-tooltip-seen";
+const CHEF_SESSION_KEY = "monterey-chef-session-id";
 
 interface Message {
   role: "user" | "assistant";
@@ -15,10 +16,37 @@ interface Message {
 const BASE_URL = import.meta.env.BASE_URL ?? "/";
 const API_BASE = `${BASE_URL}api`.replace(/\/+/g, "/").replace(/\/$/, "");
 
+let _sessionTokenPromise: Promise<string> | null = null;
+
+async function ensureSessionToken(): Promise<string> {
+  const cached = localStorage.getItem(CHEF_SESSION_KEY);
+  if (cached) return cached;
+
+  if (_sessionTokenPromise) return _sessionTokenPromise;
+
+  _sessionTokenPromise = (async () => {
+    const res = await fetch(`${API_BASE}/openai/sessions`, { method: "POST" });
+    if (!res.ok) throw new Error("Failed to create session");
+    const data = await res.json();
+    localStorage.setItem(CHEF_SESSION_KEY, data.sessionId);
+    return data.sessionId as string;
+  })();
+
+  try {
+    return await _sessionTokenPromise;
+  } finally {
+    _sessionTokenPromise = null;
+  }
+}
+
 async function createConversation(): Promise<number> {
+  const sessionId = await ensureSessionToken();
   const res = await fetch(`${API_BASE}/openai/conversations`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "x-session-id": sessionId,
+    },
     body: JSON.stringify({ title: "Monterey Chef Chat" }),
   });
   if (!res.ok) throw new Error("Failed to create conversation");
@@ -30,11 +58,15 @@ async function* streamMessage(
   conversationId: number,
   content: string
 ): AsyncGenerator<string> {
+  const sessionId = await ensureSessionToken();
   const res = await fetch(
     `${API_BASE}/openai/conversations/${conversationId}/messages`,
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-session-id": sessionId,
+      },
       body: JSON.stringify({ content }),
     }
   );

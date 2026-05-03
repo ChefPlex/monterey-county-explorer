@@ -1,8 +1,9 @@
 import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
-import { db, conversations, messages } from "@workspace/db";
-import { eq, asc } from "drizzle-orm";
+import { db, conversations, messages, sessions } from "@workspace/db";
+import { eq, asc, and, sql } from "drizzle-orm";
 import { openai } from "@workspace/integrations-openai-ai-server";
 import { rateLimit } from "express-rate-limit";
+import { randomUUID } from "crypto";
 
 const aiRateLimit = rateLimit({
   windowMs: 60 * 1000,
@@ -12,12 +13,28 @@ const aiRateLimit = rateLimit({
   message: { error: "Too many AI requests — please wait a minute and try again." },
 });
 
+const aiHourlyRateLimit = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 50,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Hourly AI request limit reached — please try again later." },
+});
+
 const conversationRateLimit = rateLimit({
   windowMs: 60 * 1000,
   limit: 30,
   standardHeaders: "draft-8",
   legacyHeaders: false,
   message: { error: "Too many requests — please slow down." },
+});
+
+const sessionCreateRateLimit = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 10,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Too many session creation requests — please try again later." },
 });
 
 const router: IRouter = Router();
@@ -59,9 +76,10 @@ STYLE: Knowledgeable but human. Confident but never pompous. Ingredient-forward.
 
 When users ask about wineries or restaurants they've saved on their map, give informed, honest perspective. Don't just validate — if you know the place well, bring your knowledge. If asked about pairings, be specific to the wine's structure and the ingredient's season. Do not fabricate event dates — direct users to regional calendars when uncertain.`;
 
-const LEGACY_SESSION_SENTINEL = "00000000-0000-0000-0000-000000000000";
-
 const CONTEXT_MESSAGE_LIMIT = 40;
+const MAX_PROMPT_LENGTH = 2000;
+const DAILY_SESSION_QUOTA = 20;
+const GLOBAL_DAILY_BUDGET = 500;
 
 function buildSystemPrompt(): string {
   const monthYear = new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" });
@@ -73,18 +91,78 @@ function parseIdParam(param: string): number | null {
   return isNaN(id) ? null : id;
 }
 
-function requireSession(req: Request, _res: Response, next: NextFunction) {
+type AuthedRequest = Request & { sessionId: string };
+
+async function requireSession(req: Request, res: Response, next: NextFunction) {
   const header = req.headers["x-session-id"];
-  (req as Request & { sessionId: string }).sessionId =
-    typeof header === "string" && header.length > 0
-      ? header
-      : LEGACY_SESSION_SENTINEL;
+  if (typeof header !== "string" || header.length < 8) {
+    res.status(401).json({ error: "A valid x-session-id is required" });
+    return;
+  }
+  const [session] = await db.select({ id: sessions.id }).from(sessions).where(eq(sessions.id, header));
+  if (!session) {
+    res.status(401).json({ error: "Session not found — please create a session first" });
+    return;
+  }
+  (req as AuthedRequest).sessionId = header;
   next();
 }
 
-router.get("/openai/conversations", conversationRateLimit, requireSession, async (req, res) => {
+async function checkAndIncrementGlobalBudget(): Promise<boolean> {
+  const today = new Date().toISOString().slice(0, 10);
+  const result = await db.execute(sql`
+    INSERT INTO daily_budget (date, ai_calls)
+    VALUES (${today}::date, 1)
+    ON CONFLICT (date) DO UPDATE
+      SET ai_calls = daily_budget.ai_calls + 1
+      WHERE daily_budget.ai_calls < ${GLOBAL_DAILY_BUDGET}
+    RETURNING ai_calls
+  `);
+  return (result.rows?.length ?? 0) > 0;
+}
+
+async function checkAndIncrementSessionQuota(sessionId: string): Promise<boolean> {
+  const result = await db.execute(sql`
+    UPDATE sessions
+    SET
+      daily_messages = CASE
+        WHEN daily_reset_at < NOW() - INTERVAL '24 hours' THEN 1
+        ELSE daily_messages + 1
+      END,
+      daily_reset_at = CASE
+        WHEN daily_reset_at < NOW() - INTERVAL '24 hours' THEN NOW()
+        ELSE daily_reset_at
+      END
+    WHERE id = ${sessionId}
+      AND (
+        daily_reset_at < NOW() - INTERVAL '24 hours'
+        OR daily_messages < ${DAILY_SESSION_QUOTA}
+      )
+    RETURNING daily_messages
+  `);
+  return (result.rows?.length ?? 0) > 0;
+}
+
+router.post("/openai/sessions", sessionCreateRateLimit, async (req, res) => {
   try {
-    const all = await db.select().from(conversations).orderBy(asc(conversations.createdAt));
+    const token = randomUUID();
+    const now = new Date();
+    await db.insert(sessions).values({ id: token, dailyMessages: 0, dailyResetAt: now });
+    res.status(201).json({ sessionId: token });
+  } catch (err) {
+    req.log.error({ err }, "Failed to create session");
+    res.status(500).json({ error: "Failed to create session" });
+  }
+});
+
+router.get("/openai/conversations", conversationRateLimit, requireSession, async (req, res) => {
+  const sessionId = (req as AuthedRequest).sessionId;
+  try {
+    const all = await db
+      .select()
+      .from(conversations)
+      .where(eq(conversations.sessionId, sessionId))
+      .orderBy(asc(conversations.createdAt));
     res.json(all.map(c => ({ ...c, createdAt: c.createdAt.toISOString() })));
   } catch (err) {
     req.log.error({ err }, "Failed to list conversations");
@@ -93,10 +171,11 @@ router.get("/openai/conversations", conversationRateLimit, requireSession, async
 });
 
 router.post("/openai/conversations", conversationRateLimit, requireSession, async (req, res) => {
+  const sessionId = (req as AuthedRequest).sessionId;
   try {
     const { title } = req.body;
     if (!title) { res.status(400).json({ error: "title required" }); return; }
-    const [conv] = await db.insert(conversations).values({ title }).returning();
+    const [conv] = await db.insert(conversations).values({ title, sessionId }).returning();
     res.status(201).json({ ...conv, createdAt: conv.createdAt.toISOString() });
   } catch (err) {
     req.log.error({ err }, "Failed to create conversation");
@@ -105,10 +184,14 @@ router.post("/openai/conversations", conversationRateLimit, requireSession, asyn
 });
 
 router.get("/openai/conversations/:id", conversationRateLimit, requireSession, async (req, res) => {
+  const sessionId = (req as AuthedRequest).sessionId;
   const id = parseIdParam(req.params.id);
   if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
   try {
-    const [conv] = await db.select().from(conversations).where(eq(conversations.id, id));
+    const [conv] = await db
+      .select()
+      .from(conversations)
+      .where(and(eq(conversations.id, id), eq(conversations.sessionId, sessionId)));
     if (!conv) { res.status(404).json({ error: "Not found" }); return; }
     const msgs = await db.select().from(messages).where(eq(messages.conversationId, id)).orderBy(asc(messages.createdAt));
     res.json({
@@ -123,10 +206,14 @@ router.get("/openai/conversations/:id", conversationRateLimit, requireSession, a
 });
 
 router.delete("/openai/conversations/:id", conversationRateLimit, requireSession, async (req, res) => {
+  const sessionId = (req as AuthedRequest).sessionId;
   const id = parseIdParam(req.params.id);
   if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
   try {
-    const [deleted] = await db.delete(conversations).where(eq(conversations.id, id)).returning();
+    const [deleted] = await db
+      .delete(conversations)
+      .where(and(eq(conversations.id, id), eq(conversations.sessionId, sessionId)))
+      .returning();
     if (!deleted) { res.status(404).json({ error: "Not found" }); return; }
     res.status(204).end();
   } catch (err) {
@@ -136,9 +223,15 @@ router.delete("/openai/conversations/:id", conversationRateLimit, requireSession
 });
 
 router.get("/openai/conversations/:id/messages", conversationRateLimit, requireSession, async (req, res) => {
+  const sessionId = (req as AuthedRequest).sessionId;
   const id = parseIdParam(req.params.id);
   if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
   try {
+    const [conv] = await db
+      .select()
+      .from(conversations)
+      .where(and(eq(conversations.id, id), eq(conversations.sessionId, sessionId)));
+    if (!conv) { res.status(404).json({ error: "Not found" }); return; }
     const msgs = await db.select().from(messages).where(eq(messages.conversationId, id)).orderBy(asc(messages.createdAt));
     res.json(msgs.map(m => ({ ...m, createdAt: m.createdAt.toISOString() })));
   } catch (err) {
@@ -147,78 +240,104 @@ router.get("/openai/conversations/:id/messages", conversationRateLimit, requireS
   }
 });
 
-router.post("/openai/conversations/:id/messages", aiRateLimit, requireSession, async (req, res) => {
-  const id = parseIdParam(req.params.id);
-  if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
+router.post(
+  "/openai/conversations/:id/messages",
+  aiRateLimit,
+  aiHourlyRateLimit,
+  requireSession,
+  async (req, res) => {
+    const sessionId = (req as AuthedRequest).sessionId;
+    const id = parseIdParam(req.params.id);
+    if (id === null) { res.status(400).json({ error: "Invalid conversation id" }); return; }
 
-  const { content } = req.body;
-  if (!content) { res.status(400).json({ error: "content required" }); return; }
-
-  try {
-    const [conv] = await db.select().from(conversations).where(eq(conversations.id, id));
-    if (!conv) { res.status(404).json({ error: "Conversation not found" }); return; }
-
-    await db.insert(messages).values({ conversationId: id, role: "user", content });
-
-    const history = await db.select().from(messages).where(eq(messages.conversationId, id)).orderBy(asc(messages.createdAt));
-    const recentHistory = history.slice(-CONTEXT_MESSAGE_LIMIT);
-    const chatMessages = [
-      { role: "system" as const, content: buildSystemPrompt() },
-      ...recentHistory.map(m => ({ role: m.role as "user" | "assistant", content: m.content })),
-    ];
-
-    res.setHeader("Content-Type", "text/event-stream");
-    res.setHeader("Cache-Control", "no-cache, no-transform");
-    res.setHeader("Connection", "keep-alive");
-    res.setHeader("X-Accel-Buffering", "no");
-    res.flushHeaders();
-
-    const controller = new AbortController();
-    req.on("close", () => controller.abort());
-
-    let fullResponse = "";
+    const { content } = req.body;
+    if (!content) { res.status(400).json({ error: "content required" }); return; }
+    if (typeof content !== "string" || content.length > MAX_PROMPT_LENGTH) {
+      res.status(400).json({ error: `Prompt must be ${MAX_PROMPT_LENGTH} characters or fewer` });
+      return;
+    }
 
     try {
-      const stream = await openai.chat.completions.create({
-        model: "gpt-5.2",
-        max_completion_tokens: 8192,
-        messages: chatMessages,
-        stream: true,
-      }, { signal: controller.signal });
+      const [conv] = await db
+        .select()
+        .from(conversations)
+        .where(and(eq(conversations.id, id), eq(conversations.sessionId, sessionId)));
+      if (!conv) { res.status(404).json({ error: "Conversation not found" }); return; }
 
-      for await (const chunk of stream) {
-        const text = chunk.choices[0]?.delta?.content;
-        if (text) {
-          fullResponse += text;
-          res.write(`data: ${JSON.stringify({ content: text })}\n\n`);
-        }
-      }
-
-      if (fullResponse) {
-        await db.insert(messages).values({ conversationId: id, role: "assistant", content: fullResponse });
-      }
-
-      res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
-      res.end();
-    } catch (streamErr: any) {
-      if (streamErr?.name === "AbortError" || controller.signal.aborted) {
-        req.log.info({ conversationId: id }, "Client disconnected — stream aborted");
-        if (fullResponse) {
-          await db.insert(messages).values({ conversationId: id, role: "assistant", content: fullResponse }).catch(() => {});
-        }
+      const globalOk = await checkAndIncrementGlobalBudget();
+      if (!globalOk) {
+        res.status(429).json({ error: "Service is temporarily unavailable due to high demand. Please try again tomorrow." });
         return;
       }
-      throw streamErr;
-    }
-  } catch (err) {
-    req.log.error({ err }, "Failed to send message");
-    if (!res.headersSent) {
-      res.status(500).json({ error: "Failed to generate response" });
-    } else {
-      res.write(`data: ${JSON.stringify({ error: "Failed to generate response" })}\n\n`);
-      res.end();
+
+      const sessionOk = await checkAndIncrementSessionQuota(sessionId);
+      if (!sessionOk) {
+        res.status(429).json({ error: "Daily AI usage limit reached for this session. Please try again tomorrow." });
+        return;
+      }
+
+      await db.insert(messages).values({ conversationId: id, role: "user", content });
+
+      const history = await db.select().from(messages).where(eq(messages.conversationId, id)).orderBy(asc(messages.createdAt));
+      const recentHistory = history.slice(-CONTEXT_MESSAGE_LIMIT);
+      const chatMessages = [
+        { role: "system" as const, content: buildSystemPrompt() },
+        ...recentHistory.map(m => ({ role: m.role as "user" | "assistant", content: m.content })),
+      ];
+
+      res.setHeader("Content-Type", "text/event-stream");
+      res.setHeader("Cache-Control", "no-cache, no-transform");
+      res.setHeader("Connection", "keep-alive");
+      res.setHeader("X-Accel-Buffering", "no");
+      res.flushHeaders();
+
+      const controller = new AbortController();
+      req.on("close", () => controller.abort());
+
+      let fullResponse = "";
+
+      try {
+        const stream = await openai.chat.completions.create({
+          model: "gpt-5.2",
+          max_completion_tokens: 2048,
+          messages: chatMessages,
+          stream: true,
+        }, { signal: controller.signal });
+
+        for await (const chunk of stream) {
+          const text = chunk.choices[0]?.delta?.content;
+          if (text) {
+            fullResponse += text;
+            res.write(`data: ${JSON.stringify({ content: text })}\n\n`);
+          }
+        }
+
+        if (fullResponse) {
+          await db.insert(messages).values({ conversationId: id, role: "assistant", content: fullResponse });
+        }
+
+        res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
+        res.end();
+      } catch (streamErr: any) {
+        if (streamErr?.name === "AbortError" || controller.signal.aborted) {
+          req.log.info({ conversationId: id }, "Client disconnected — stream aborted");
+          if (fullResponse) {
+            await db.insert(messages).values({ conversationId: id, role: "assistant", content: fullResponse }).catch(() => {});
+          }
+          return;
+        }
+        throw streamErr;
+      }
+    } catch (err) {
+      req.log.error({ err }, "Failed to send message");
+      if (!res.headersSent) {
+        res.status(500).json({ error: "Failed to generate response" });
+      } else {
+        res.write(`data: ${JSON.stringify({ error: "Failed to generate response" })}\n\n`);
+        res.end();
+      }
     }
   }
-});
+);
 
 export default router;

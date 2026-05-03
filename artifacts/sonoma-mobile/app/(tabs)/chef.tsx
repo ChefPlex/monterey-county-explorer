@@ -15,6 +15,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { fetch } from "expo/fetch";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColors } from "@/hooks/useColors";
 import { useIsTablet } from "@/hooks/useIsTablet";
 import { getApiUrl } from "@/lib/api";
@@ -25,30 +26,37 @@ interface Message {
   content: string;
 }
 
-function generateUUID(): string {
-  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
-    return crypto.randomUUID();
-  }
-  if (typeof crypto !== "undefined" && typeof crypto.getRandomValues === "function") {
-    const bytes = new Uint8Array(16);
-    crypto.getRandomValues(bytes);
-    bytes[6] = (bytes[6] & 0x0f) | 0x40;
-    bytes[8] = (bytes[8] & 0x3f) | 0x80;
-    const hex = Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join("");
-    return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
-  }
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0;
-    return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-  });
-}
+const CHEF_SESSION_STORAGE_KEY = "monterey-chef-session-id";
 
-let _sessionId: string | null = null;
-function getOrCreateSessionId(): string {
-  if (!_sessionId) {
-    _sessionId = generateUUID();
+let _sessionTokenCache: string | null = null;
+let _sessionTokenPromise: Promise<string> | null = null;
+
+async function ensureSessionToken(apiUrl: string): Promise<string> {
+  if (_sessionTokenCache) return _sessionTokenCache;
+
+  const stored = await AsyncStorage.getItem(CHEF_SESSION_STORAGE_KEY);
+  if (stored) {
+    _sessionTokenCache = stored;
+    return stored;
   }
-  return _sessionId;
+
+  if (_sessionTokenPromise) return _sessionTokenPromise;
+
+  _sessionTokenPromise = (async () => {
+    const res = await fetch(`${apiUrl}api/openai/sessions`, { method: "POST" });
+    if (!res.ok) throw new Error("Failed to create session");
+    const data = await res.json();
+    const token = data.sessionId as string;
+    await AsyncStorage.setItem(CHEF_SESSION_STORAGE_KEY, token);
+    _sessionTokenCache = token;
+    return token;
+  })();
+
+  try {
+    return await _sessionTokenPromise;
+  } finally {
+    _sessionTokenPromise = null;
+  }
 }
 
 let messageCounter = 0;
@@ -65,9 +73,13 @@ const PROMPTS = [
 ];
 
 async function createConversation(apiUrl: string): Promise<number> {
+  const sessionId = await ensureSessionToken(apiUrl);
   const res = await fetch(`${apiUrl}api/openai/conversations`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "x-session-id": sessionId,
+    },
     body: JSON.stringify({ title: "Monterey Chef Mobile" }),
   });
   if (!res.ok) throw new Error("Failed to create conversation");
@@ -81,6 +93,7 @@ async function streamMessage(
   content: string,
   onChunk: (chunk: string) => void
 ): Promise<void> {
+  const sessionId = await ensureSessionToken(apiUrl);
   const res = await fetch(
     `${apiUrl}api/openai/conversations/${conversationId}/messages`,
     {
@@ -88,6 +101,7 @@ async function streamMessage(
       headers: {
         "Content-Type": "application/json",
         Accept: "text/event-stream",
+        "x-session-id": sessionId,
       },
       body: JSON.stringify({ content }),
     }
