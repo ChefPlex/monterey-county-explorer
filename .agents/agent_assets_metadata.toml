@@ -41,3 +41,9 @@ id = "FmQ4vVF4Z6YKYhHTcaDwJ"
 uri = "file://place-review.txt"
 type = "text"
 title = "Monterey County Explorer — Place Review"
+
+[[outputs]]
+id = "U_Wc2o5mQXOEdEHdmWarn"
+uri = "file://monterey-county-food-wine-farms.txt"
+type = "text"
+title = "monterey-county-food-wine-farms.txt"
