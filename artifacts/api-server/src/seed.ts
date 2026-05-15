@@ -12,7 +12,6 @@ const REMOVED_FROM_SEED: string[] = [
   "Lucia Restaurant at Bernardus Lodge", // Redundant — already covered under Bernardus Winery
   "Cantinetta Luca",             // Website dead on all domains; likely permanently closed
   "Café Rustica",                // Website dead on all domains; likely permanently closed
-  "Carmel Valley Creamery",      // Name superseded by verified entry "Carmel Valley Creamery Co."
   "Aubergine",                   // Reverted — name restored to "Aubergine at L'Auberge Carmel"
   "Mundaka",                     // Permanently closed
   "Holman Ranch Tavern",         // Permanently closed
@@ -26,8 +25,23 @@ const REMOVED_FROM_SEED: string[] = [
   "Paraiso Vineyards",                    // Permanently closed
   "Talbott Vineyards",                    // Permanently closed
   "Lady & Larder + Marmee's",             // Dropped from curated list
-  "Carmel Valley Village Farmers Market", // Renamed to "Carmel Farmers Market"
-  "Carmel Valley Farmers Market",         // Renamed to "Carmel Farmers Market"
+  "Carmel Valley Village Farmers Market", // Renamed to "Carmel Farmers Market at The Barnyard"
+  "Carmel Valley Farmers Market",         // Renamed to "Carmel Farmers Market at The Barnyard"
+  // Renamed during June 2026 audit
+  "Carmel Valley Creamery Co.",     // Renamed to "Carmel Valley Creamery"
+  "Alvarado Street Brewery",        // Renamed to "Alvarado Street Brewery & Grill"
+  "Wild Plum Cafe & Bakery",        // Renamed to "The Wild Plum Cafe"
+  "Happy Girl Kitchen",             // Renamed to "Happy Girl Kitchen Co."
+  "Carmel Farmers Market",          // Renamed to "Carmel Farmers Market at The Barnyard"
+  "Monterey Bay Certified Farmers Market — Monterey", // Renamed to "Monterey Farmers Market at Del Monte Shopping Center"
+  "The Stationaery",                // Renamed to "Stationaery"
+  "Phil's Fish Market",             // Renamed to "Phil's Fish Market & Eatery"
+  "Alta Monterey",                  // Renamed to "Alta Bakery & Cella Restaurant"
+  "Montrio Bistro",                 // Renamed to "Montrio"
+  "Jeninni Kitchen + Wine Bar",     // Replaced by "Spotted Duck Restaurant"
+  "Morgan Winery",                  // Renamed to "Taste Morgan"
+  "Wrath Winery",                   // Renamed to "Wrath Wines"
+  "Scheid Family Wines",            // Renamed to "Scheid Vineyards Estate Winery"
 ];
 
 const SEED_DATA = [
@@ -35,7 +49,7 @@ const SEED_DATA = [
   {
     name: "Rombi Wines",
     city: "Carmel Valley",
-    note: "Salvatore Rombi is a one-man winemaking operation — he prunes, picks, crushes, ages in French oak barrels in his garage, and bottles himself. Estate Cabernet Sauvignon, Merlot, and Petite Sirah from 1⅓ acres on a 1,650-foot chalk ridge in Cachagua, fewer than 200 cases a year. Sal is usually behind the bar pouring and talking you through it. At 1 Center St in the Village. Saturday–Sunday, noon to 5 pm.",
+    note: "Tiny Carmel Valley Village tasting room at 1 Center St for Salvatore Rombi's limited-production reds. The estate is small, the wines are direct-to-consumer, and weekend tastings often mean talking through Cabernet, Merlot, Petite Sirah, and Petit Verdot with the people closest to the vines and barrels. Saturday–Sunday noon to 5pm; weekday tastings by appointment.",
     category: "winery",
     lat: 36.4787585,
     lng: -121.7315368,
@@ -44,7 +58,7 @@ const SEED_DATA = [
   {
     name: "Corral Wine Co.",
     city: "Carmel Valley",
-    note: "A production of Bell Family Vineyards. In 2017, they barreled their first batch of estate Pinot Noir in a barn in Corral de Tierra — they're still in that same barn. Estate fruit, traditional practices, expanded to include Pinot and other Central Coast varietals. Family-owned, unfussy, and making honest wine that honors the character of the region. Tasting room at 19 E. Carmel Valley Road, Suite A, in the Village.",
+    note: "Family-owned Corral Wine Co. tasting room at 19 E. Carmel Valley Rd., Suite A. A Bell Family Vineyards project with estate fruit from Corral de Tierra / Pastures of Heaven and Monterey AVA sources, started from a barn-barreled estate Pinot Noir in 2017 and now pouring an unfussy Central Coast range in the Village.",
     category: "winery",
     lat: 36.4781314,
     lng: -121.7299498,
@@ -53,7 +67,7 @@ const SEED_DATA = [
   {
     name: "Bernardus Winery",
     city: "Carmel Valley",
-    note: "The flagship Carmel Valley estate. Winemaker Dean DeKorth's Marinus Bordeaux blend is the benchmark for the appellation — structured, age-worthy, and genuinely Carmel Valley in character. The on-property Lucia restaurant with Cal Stamenov in the kitchen makes this a full culinary destination — dinner is among the most accomplished in the valley; lunch is equally worth it. Appointment tastings available in the vineyard cave.",
+    note: "Flagship Carmel Valley producer with the Village tasting room at 5 W. Carmel Valley Road. Bernardus is still the Marinus Bordeaux-blend reference point for the appellation, but Lucia Restaurant is at Bernardus Lodge down the valley, not on the tasting-room property. Treat this as a winery stop first; make separate plans for the lodge restaurant.",
     category: "winery",
     lat: 36.4791983,
     lng: -121.7304897,
@@ -62,25 +76,25 @@ const SEED_DATA = [
   {
     name: "Folktale Winery",
     city: "Carmel Valley",
-    note: "The hospitality standout in the valley. Live music weekends, a full food menu, and a portfolio ranging from sparkling to Pinot Noir. The grounds are stunning and the vibe is the opposite of stuffy. Great for an afternoon that turns into an evening.",
+    note: "Hospitality standout on 15 acres of sustainably farmed vineyards and gardens along the Carmel River. Daily tastings, food, weekend live music, larger events, and a setting that works for people who want wine without the stiff tasting-room ritual. One of the easiest Carmel Valley stops to turn into an afternoon.",
     category: "winery",
     lat: 36.5287459,
     lng: -121.8202824,
     website: "https://folktalewinery.com",
   },
   {
-    name: "Wrath Winery",
-    city: "Carmel Valley",
-    note: "Focused, serious wines from Santa Lucia Highlands fruit. The Chardonnay and Pinot Noir here show what the SLH appellation does better than anywhere in California — bright acidity, savory structure, unmistakably coastal. Quiet tasting room, knowledgeable pours. If you're serious about SLH, this is a required stop.",
+    name: "Wrath Wines",
+    city: "Carmel",
+    note: "Carmel Plaza tasting room for Wrath's small-production, site-driven Pinot Noir, Chardonnay, Syrah, and Sauvignon Blanc from its estate vineyard and selected Santa Lucia Highlands sites. Open daily in downtown Carmel; the wines are serious, coastal, and built around vineyard character rather than tasting-room flash.",
     category: "winery",
     lat: 36.5541839,
     lng: -121.9203484,
     website: "https://wrathwines.com",
   },
   {
-    name: "Morgan Winery",
-    city: "Carmel Valley",
-    note: "The original Santa Lucia Highlands champion. Dan Lee planted in the SLH before anyone else believed in it. The Double L Vineyard Pinot is the reference point for the appellation — bright, savory, and unmistakably coastal. The Taste Morgan tasting room is in the Crossroads Shopping Center off Highway One — open daily 11–6, walk-ins welcome. The SLH provenance is the story; the address is just the door.",
+    name: "Taste Morgan",
+    city: "Carmel",
+    note: "Taste Morgan is Morgan Winery's Crossroads Carmel tasting room at 204 Crossroads Blvd. Dan Lee and the Morgan label are Santa Lucia Highlands originals, with Double L Vineyard Pinot Noir and Chardonnay as reference points. Open daily; walk-ins are typically welcome.",
     category: "winery",
     lat: 36.5368831,
     lng: -121.9091034,
@@ -89,7 +103,7 @@ const SEED_DATA = [
   {
     name: "Holman Ranch",
     city: "Carmel Valley",
-    note: "400 acres of Carmel Valley hillside with a cave tasting room that earns the drive. Their Pinot Noir and Chardonnay from the estate vineyard show genuine SLH restraint. One of the most beautiful properties in the county — the setting alone justifies the appointment.",
+    note: "Historic Holman Ranch tasting room is in Carmel Valley Village at 18 W. Carmel Valley Road; the private estate and winery at 60 Holman Road are by appointment. Estate-grown Pinot Noir and Chardonnay are the focus, with ranch tours and cave/hacienda experiences available when booked separately.",
     category: "winery",
     lat: 36.479208,
     lng: -121.7317402,
@@ -98,7 +112,7 @@ const SEED_DATA = [
   {
     name: "Chesebro Wines",
     city: "Carmel Valley",
-    note: "Small-production, family-run, and poured by the people who made it. Chesebro sources from Carmel Valley vineyards and keeps the tasting room personal and unpretentious. The kind of stop that reminds you why wine country should feel like meeting someone, not touring an attraction.",
+    note: "Small, family-owned Carmel Valley Village winery with a casual tasting room and estate-grown wines from Carmel Valley and Arroyo Seco vineyards. The strength is personal, unpretentious pouring — often by people close to the farming and cellar work — rather than resort-style theater.",
     category: "winery",
     lat: 36.4777954,
     lng: -121.7291107,
@@ -109,7 +123,7 @@ const SEED_DATA = [
   {
     name: "Chalone Vineyard",
     city: "Carmel",
-    note: "California's most isolated wine estate — 1,300 feet up in the Gavilan Range on alkaline limestone, surrounded by Pinnacles National Monument. Planted 1919. The Chalone AVA has no other members. Chenin Blanc, Pinot Blanc, and Pinot Noir from these soils produce a genuinely unusual mineral profile — austere, slow to open, unlike anything in the Salinas Valley below. The geology here is the story.",
+    note: "Historic Chalone estate fruit, tasted from the Carmel Plaza room at Ocean and Mission. The vineyard near Pinnacles is Monterey County's oldest producing vineyard, planted in 1919, with limestone and calcium-rich soils that give Chardonnay, Pinot Noir, Chenin Blanc, and Pinot Blanc a distinctive mineral profile. The remote estate remains the story; Carmel is the visitor door.",
     category: "winery",
     lat: 36.554492,
     lng: -121.9206403,
@@ -118,41 +132,38 @@ const SEED_DATA = [
 
   // ── WINERIES: SANTA LUCIA HIGHLANDS ────────────────────────────────────────
   {
-    name: "Scheid Family Wines",
+    name: "Scheid Vineyards Estate Winery",
     city: "Greenfield",
-    note: "One of the most respected growers in Monterey County — over 4,000 acres under vine in the Salinas Valley — now pouring their own label. The Greenfield tasting room is a no-fuss destination for understanding what the valley floor and hillside vineyards produce at different elevations and exposures.",
+    note: "Greenfield estate winery and tasting room just off Highway 101 at 1972 Hobson Ave, with vineyard views, outdoor deck, demonstration vineyard, and bocce. Scheid Family Wines farms thousands of sustainable estate acres across a 70-mile span of the Salinas Valley and is a useful stop for understanding Monterey at grower scale.",
     category: "winery",
     lat: 36.4251448,
     lng: -121.3067767,
-    website: "https://scheidvineyards.com",
+    website: "https://www.scheidvineyards.com",
   },
-
   {
     name: "Pessagno Winery",
     city: "Salinas",
-    note: "High-elevation Santa Lucia Highlands estate on River Road, focused on single-vineyard bottlings from SLH and Arroyo Seco fruit. The Pinot Noir and Chardonnay here show the cooler, more maritime character of the northern SLH blocks. A smaller, more focused operation than Hahn — worth the drive if you're already in the corridor.",
+    note: "River Road tasting room at 1645 River Road, Salinas, pouring limited-production wines from prestigious single vineyards in Monterey and San Benito Counties. Current public hours are generally Thursday through Monday, noon to 5pm; closed Tuesday and Wednesday. A focused stop if you're already driving the River Road corridor.",
     category: "winery",
     lat: 36.4808488,
     lng: -121.4842889,
     website: "https://pessagnowines.com",
   },
 
-  // ── WINERIES: CARMEL VALLEY (ADDITIONAL) ─────────────────────────────────
+  // ── WINERIES: CARMEL (TASTING ROOMS) ───────────────────────────────────────
   {
     name: "Silvestri Vineyards",
-    city: "Carmel Valley",
-    note: "Estate vineyard in Carmel Valley, tasting room in downtown Carmel-by-the-Sea. The Silvestri family planted Italian varieties — Sangiovese, Barbera, Syrah — alongside Pinot Noir, Chardonnay, Pinot Blanc, and Pinot Gris, a portfolio that is genuinely unusual for Monterey County. The beautifully appointed Carmel tasting room is the only place to try the full range.",
+    city: "Carmel",
+    note: "Carmel-by-the-Sea tasting room for Alan Silvestri's Carmel Valley estate vineyard. The range is unusually broad for Monterey — Chardonnay, Pinot Noir, Syrah, Barbera, Pinot Blanc, Pinot Gris, and Cabernet Sauvignon — with the full lineup poured in a polished downtown Carmel room.",
     category: "winery",
     lat: 36.5538716,
     lng: -121.9223211,
     website: "https://silvestrivineyards.com",
   },
-
-  // ── WINERIES: CARMEL (TASTING ROOMS) ───────────────────────────────────────
   {
     name: "McIntyre Vineyards",
     city: "Carmel Valley",
-    note: "Steve McIntyre farms nearly a third of the entire Santa Lucia Highlands AVA — more than any other individual in the appellation. His 80-acre estate, planted in 1973, holds some of the oldest Pinot Noir vines in Monterey County. The tasting room at 24 W. Carmel Valley Rd in the Village makes the wines accessible without a mountain drive. Old-vine SLH at its most authoritative.",
+    note: "Carmel Valley Village tasting room for one of the Santa Lucia Highlands' most authoritative growers. McIntyre's 80-acre estate was first planted in 1973 and includes some of the Highlands' oldest Pinot Noir and Chardonnay vines; the Village room at 24 W. Carmel Valley Rd makes those wines accessible without driving River Road.",
     category: "winery",
     lat: 36.4794409,
     lng: -121.7322583,
@@ -161,7 +172,7 @@ const SEED_DATA = [
   {
     name: "Caraccioli Cellars",
     city: "Carmel",
-    note: "The best sparkling wine argument for Monterey County you'll find in a single tasting room. Gary Caraccioli grew up farming in the Salinas Valley; he brought in Michel Salgues — the Frenchman who built Roederer Estate — to translate Santa Lucia Highlands fruit into méthode champenoise wines with real Champagne structure. The Brut and Brut Rosé from the SLH are benchmarks. Quiet, unhurried tasting room on Dolores Street in the village.",
+    note: "Family-run Carmel-by-the-Sea tasting room making one of Monterey County's strongest sparkling-wine arguments. Estate Escolle Vineyard fruit from the Santa Lucia Highlands, Brut Cuvee and Brut Rose as benchmarks, and a methode champenoise program shaped by the late Michel Salgues of Roederer Estate.",
     category: "winery",
     lat: 36.5547022,
     lng: -121.9225815,
@@ -170,7 +181,7 @@ const SEED_DATA = [
   {
     name: "Albatross Ridge",
     city: "Carmel",
-    note: "Tasting room in Carmel village, estate vineyard high in the Santa Lucia Highlands at 2,200 feet — one of the highest in Monterey County. The elevation and marine influence produce Pinot Noir that is leaner and more savory than Sonoma Coast equivalents. Worth a stop if you're walking Carmel's tasting row.",
+    note: "Downtown Carmel tasting room for a Carmel Valley estate perched about seven miles from the Pacific. The vineyard sits around 1,250 feet, not 2,200, and focuses on estate Pinot Noir and Chardonnay shaped by coastal wind, diatomaceous soils, and low-yield mountain farming.",
     category: "winery",
     lat: 36.5552906,
     lng: -121.9225955,
@@ -179,7 +190,7 @@ const SEED_DATA = [
   {
     name: "De Tierra Vineyards",
     city: "Carmel",
-    note: "Small-production Monterey County winery with a tasting room at the Carmel Crossroads. The sourcing spans cool blocks across the county — SLH, Arroyo Seco, Carmel Valley. An easy stop that doesn't require driving the valley and pours more seriously than the strip-mall location would suggest.",
+    note: "Carmel-by-the-Sea tasting room in a cottage about a block and a half off Ocean Avenue, not the Crossroads. De Tierra pours a broad Monterey County portfolio — Russell Vineyard, single-varietal wines, blends, sparkling, dessert wines — and offers locally sourced small bites in one of Carmel's larger tasting-room spaces.",
     category: "winery",
     lat: 36.556637,
     lng: -121.9208573,
@@ -188,7 +199,7 @@ const SEED_DATA = [
   {
     name: "A Taste of Monterey",
     city: "Monterey",
-    note: "The most efficient single stop for understanding Monterey wine without driving the appellation. Over 70 local wines available by the glass, flight, or bottle, plus retail. Cannery Row location has bay views. The staff knows the producers personally — ask what they're excited about.",
+    note: "Cannery Row wine bar, market, and bistro with bay-facing windows one block from the Aquarium. Now showcases 95-plus Monterey County wineries and 100-plus wines, with flights, by-the-glass pours, retail bottles, small plates, and maps for building a wider wine-country plan.",
     category: "winery",
     lat: 36.6166986,
     lng: -121.8997165,
@@ -199,16 +210,16 @@ const SEED_DATA = [
   {
     name: "Nepenthe",
     city: "Big Sur",
-    note: "The cathedral of Big Sur dining — terraced into the cliff at 808 feet with one of the great restaurant views in California. The Ambrosia burger has been feeding travelers since 1949 and hasn't been embarrassed by time. Arrive for lunch before the afternoon coast fog closes in. The Phoenix is the original structure. An institution, earned.",
+    note: "The classic Big Sur terrace restaurant, about 800 feet above the Pacific at 48510 Highway 1. Opened in 1949 and still built around the Ambrosia Burger, long views, Cafe Kevah, and the Phoenix Shop. Go earlier in the day if you want the best odds of clear coastline before fog moves in.",
     category: "restaurant",
     lat: 36.2218365,
     lng: -121.7592895,
-    website: "https://nepenthebigsur.com",
+    website: "https://www.phoenixshopbigsur.com",
   },
   {
     name: "Aubergine at L'Auberge Carmel",
     city: "Carmel",
-    note: "The best table on the Monterey Peninsula. Justin Cogley's seasonal tasting menu is among the most technically accomplished in Northern California — hyper-local, precise, and entirely worth the price. The bread service alone sets a standard. Book weeks ahead and come hungry.",
+    note: "Two-Michelin-starred tasting-menu restaurant inside L'Auberge Carmel. Chef Justin Cogley's precise, seasonal cooking makes Aubergine the Peninsula's most serious fine-dining room; the experience is polished, intimate, and priced accordingly. Book well ahead and come hungry.",
     category: "restaurant",
     lat: 36.5541304,
     lng: -121.9242179,
@@ -217,7 +228,7 @@ const SEED_DATA = [
   {
     name: "Passionfish",
     city: "Pacific Grove",
-    note: "The neighborhood restaurant Pacific Grove deserves and almost doesn't know it has. Ted Walter's wine list is famously well-priced — zero markup on most bottles is the stated goal — and the sustainable seafood is sourced with real intention. Book ahead. The regulars fill it.",
+    note: "Long-running Pacific Grove sustainable-seafood restaurant at 701 Lighthouse Ave, built by founders Ted and Cindy Walter around realistic wine pricing and ocean-conscious sourcing. Now carried forward by Meral Alpay and Berk Guvenc, it remains the Peninsula's benchmark for well-priced bottles and purpose-driven seafood.",
     category: "restaurant",
     lat: 36.6223375,
     lng: -121.9209735,
@@ -226,16 +237,16 @@ const SEED_DATA = [
   {
     name: "Cultura Comida y Bebida",
     city: "Carmel",
-    note: "The best argument that Carmel's restaurant scene is getting more interesting. Local sourcing, a Mexican-inflected menu built around what's in season in the Salinas Valley, and a natural wine list that would hold its own in San Francisco. Genuinely exciting cooking in a town not always known for it.",
+    note: "Oaxacan-rooted Carmel restaurant in Su Vecino Court. The food and beverage program is scratch-made, local-ingredient driven, and built around the culture of Oaxaca — moles, mezcal, masa, and seasonal Monterey County produce rather than generic resort-town Mexican food.",
     category: "restaurant",
     lat: 36.5559907,
     lng: -121.923069,
     website: "https://culturacarmel.com",
   },
   {
-    name: "Alta Monterey",
+    name: "Alta Bakery & Cella Restaurant",
     city: "Monterey",
-    note: "Ben Spungin is the chef and owner behind Alta Bakery and Cella Restaurant, both housed at the Historic Cooper Molera Adobe at 502 Munras Ave in downtown Monterey. Ben has cooked on the Peninsula for 26 years — from Post Ranch Inn in Big Sur to Bernardus Lodge with Cal Stamenov, with stints opening Faith and Flower in L.A. and Rose Rabbit Lie in Las Vegas. His cooking is rooted in locally grown, seasonal ingredients with a balance of savory and sweet. Featured in Wine Spectator, Art Culinaire, and photographed in the French Laundry Cookbook.",
+    note: "Alta Bakery and Cella share the Historic Cooper-Molera Adobe at 502 Munras Ave. Ben Spungin's daytime bakery/cafe brings breads, pastries, coffee, sandwiches, soups, salads, and garden seating; Cella carries the property into a seasonal Central Coast dinner/bar program with Cal Stamenov also part of the kitchen.",
     category: "restaurant",
     lat: 36.5976296,
     lng: -121.8949869,
@@ -244,7 +255,7 @@ const SEED_DATA = [
   {
     name: "Tarpy's Roadhouse",
     city: "Monterey",
-    note: "The classic for a reason. Stone farmhouse building, wood-fired cooking, and a menu built for people who actually eat — not people performing a dining experience. The prime rib is a weekend ritual for half the Peninsula. Reliable, honest, and genuinely good.",
+    note: "Historic roadhouse steakhouse on Highway 68 at 2999 Monterey-Salinas Hwy. Rustic stone, garden patios, steaks, seafood, ribs, and generous comfort food rather than tiny-plate performance. It remains one of the Peninsula's most reliable group-dinner and special-occasion rooms.",
     category: "restaurant",
     lat: 36.5822807,
     lng: -121.8303061,
@@ -253,16 +264,16 @@ const SEED_DATA = [
   {
     name: "Wild Fish",
     city: "Pacific Grove",
-    note: "Small, focused, and genuinely committed to sustainable local seafood. Pacific Grove's quiet gem. The menu changes with what came off the boats. No swordfish, no farmed salmon — Wild Fish means it. Book ahead; it seats very few.",
+    note: "Pacific Grove seafood restaurant at 545 Lighthouse Ave focused on locally caught sustainable seafood and organic produce. The menu shifts with what suppliers and fishermen bring in, and the room stays small enough that reservations matter. A direct, low-flash counterpoint to the Peninsula's more polished seafood rooms.",
     category: "restaurant",
     lat: 36.6204974,
     lng: -121.9170213,
     website: "https://wild-fish.com",
   },
   {
-    name: "Montrio Bistro",
+    name: "Montrio",
     city: "Monterey",
-    note: "The only Michelin-rated restaurant in downtown Monterey — and it earns it quietly, without the fuss of a tasting menu. Set inside Monterey's historic first firehouse (built 1910), the kitchen runs a rotating seasonal menu of American and European-inflected small plates and entrées. Sustainably certified, garden-to-table committed, and genuinely well-executed. The wine list covers California and beyond without being exhausting. Book ahead on weekends.",
+    note: "Downtown Monterey restaurant in the city's 1910 first firehouse. Michelin-recognized without tasting-menu formality: sustainably minded seafood, local farm produce, prime meats, European-American comfort, and a broad wine/cocktail program. A reliable reservation before or after an Alvarado Street walk.",
     category: "restaurant",
     lat: 36.599774,
     lng: -121.8953841,
@@ -271,7 +282,7 @@ const SEED_DATA = [
   {
     name: "Il Tegamino",
     city: "Carmel",
-    note: "The most honest pizza in Carmel. Giuseppe Panzuto came from Naples and does not compromise: proper Neapolitan dough, correct oven temperature, San Marzano tomatoes, fior di latte. Hidden in the Court of the Golden Bough courtyard off Ocean Avenue — the location is not visible from the street, which means it's still a locals-first spot. The kind of place that makes Carmel more interesting.",
+    note: "Hidden Italian comfort-food restaurant in the Court of the Golden Bough, tucked behind Cottage of Sweets on Ocean Avenue between Lincoln and Monte Verde. Giuseppe and Colleen Panzuto's small family-run room is not visible from the street, which is part of why it still feels like a local find.",
     category: "restaurant",
     lat: 36.5547562,
     lng: -121.9240766,
@@ -280,16 +291,16 @@ const SEED_DATA = [
   {
     name: "Solstice at The Village Big Sur",
     city: "Big Sur",
-    note: "The most exciting new restaurant in Big Sur in years. Chef Tim Eelman's live-fire program centers the menu — whole fish roasted over coals, smoke-treated shellfish, grilled local produce — while manager Matt Peterson curates a wine list of genuine intelligence. Inside The Village Big Sur at 46840 Highway 1, which gives it an infrastructure that most Big Sur restaurants lack. The bodega sidecar next door is coming together as a provisions stop. Book ahead.",
+    note: "Solstice is the wood-hearth restaurant inside The Village Big Sur at 46840 Highway 1. Chef Tim Eelman's menu leans live-fire California: hyper-local produce, sustainably sourced Monterey Bay seafood, smoke, coals, and a wine list built around organic, biodynamic, and sustainably farmed producers. Dinner Wednesday through Sunday.",
     category: "restaurant",
     lat: 36.2697663,
     lng: -121.8079048,
-    website: "https://thevillagebigsur.com",
+    website: "https://www.thevillagebigsur.com/solstice",
   },
   {
-    name: "Phil's Fish Market",
+    name: "Phil's Fish Market & Eatery",
     city: "Castroville",
-    note: "Forty years and one move later, still the definitive cioppino stop in Monterey County. Phil DiGirolamo's market relocated from Moss Landing to a historic 1869 building on Merritt Street in Castroville in 2022. The cioppino — built on local crab, clams, mussels, shrimp, and fish in a tomato-wine broth — is the reason most people come, and it holds up. The fish market operation still sells direct. Artichoke country is right outside the door.",
+    note: "Phil DiGirolamo's cioppino institution, now at 10700 Merritt Street in Castroville after the move from Moss Landing. The eatery and fish market still revolve around cioppino, chowder, fried seafood, and direct retail; the new address puts it squarely in artichoke country rather than on the harbor.",
     category: "restaurant",
     lat: 36.7657319,
     lng: -121.7583329,
@@ -298,7 +309,7 @@ const SEED_DATA = [
   {
     name: "Sierra Mar at Post Ranch Inn",
     city: "Big Sur",
-    note: "A 1,200-foot cliff perch with one of the most dramatic dining rooms in California. The cuisine leans organic and local; the wine list is genuinely exceptional. The price reflects the setting — but the setting is legitimately extraordinary. Lunch is more accessible than dinner. Reserve the moment you book lodging.",
+    note: "Sierra Mar is the dramatic dining room at Post Ranch Inn, high on the Big Sur cliffs with floor-to-ceiling Pacific views. The current public-facing experience is farm-driven coastal California cooking, prix fixe lunch and dinner, and a Wine Spectator Grand Award list. Reserve ahead; availability for nonguests is limited.",
     category: "restaurant",
     lat: 36.2298911,
     lng: -121.7651322,
@@ -307,26 +318,25 @@ const SEED_DATA = [
   {
     name: "Chez Noir",
     city: "Carmel",
-    note: "One Michelin Star earned with a minimum of fuss — James Beard finalist for Best New Restaurant, LA Times Top 101, and arguably the most honest French-inspired kitchen on the Peninsula. The natural wine program is rooted in the Central Coast. On 5th between San Carlos and Dolores in Carmel-by-the-Sea. Book well ahead.",
+    note: "One-Michelin-starred Carmel-by-the-Sea restaurant from Jonny and Monique Black. Coastal California cooking with a seafood spine, serious sourcing from the Monterey Peninsula, and a Central Coast-aware wine program. It still feels like a neighborhood house rather than a trophy room, which is the point.",
     category: "restaurant",
     lat: 36.5569346,
     lng: -121.9223308,
     website: "https://cheznoircarmel.com",
   },
-
   {
-    name: "Jeninni Kitchen + Wine Bar",
+    name: "Spotted Duck Restaurant",
     city: "Pacific Grove",
-    note: "The best natural wine list on the Peninsula after Chez Noir, in a small Pacific Grove dining room that punches well above its address. Mediterranean-inflected small plates built around what's in season locally. The cheese program is strong and the staff knows the list. Come for dinner; the regulars fill it quickly.",
+    note: "Former Jeninni Kitchen + Wine Bar space at 542 Lighthouse Ave, now Spotted Duck. Chef-owner Jerry Regester runs a seasonal brasserie/bistro menu in the Historic Holman Building, with local produce, duck, seafood, and a compact dinner schedule. A current Pacific Grove dinner pick rather than the old Jeninni wine-bar identity.",
     category: "restaurant",
     lat: 36.6208136,
     lng: -121.916751,
-    website: "https://jeninni.com",
+    website: "https://www.spottedduckpg.com",
   },
   {
-    name: "The Stationaery",
+    name: "Stationaery",
     city: "Carmel",
-    note: "A neighborhood restaurant in San Carlos Square that has become a quiet anchor for Carmel locals. Seasonal California cooking, handmade pastas, and a wine program built around small producers and low-intervention bottles from California and Europe. The kitchen draws from farms across Monterey and Santa Cruz Counties; the menu follows the seasons. Brunch is a weekend ritual, dinner runs Thursday through Sunday. Coffee from Carrier Roasting Co. and a take-away window for guests heading to the beach. Chef Amalia Scatena runs the kitchen under owners Anthony and Alissa Carnazzo.",
+    note: "Neighborhood restaurant in San Carlos Square, run by Anthony and Alissa Carnazzo with chef Amalia Scatena leading the kitchen. Breakfast/lunch, a take-away window, natural wines, and dinner service later in the week; the cooking pulls heavily from Monterey and Santa Cruz County farms and ranches. Coffee, bottles, and beach-bound provisions make it more useful than a standard brunch room.",
     category: "restaurant",
     lat: 36.5561884,
     lng: -121.9214131,
@@ -335,36 +345,36 @@ const SEED_DATA = [
   {
     name: "Deetjen's Big Sur Inn",
     city: "Big Sur",
-    note: "The anti-Sierra Mar Big Sur restaurant. Norwegian homestead built by Grandpa Deetjen in the 1930s — wood fires, creaky floors, Castro Canyon outside the window. The menu doesn't try to justify the setting with price. Dinner by reservation; weekend breakfast draws locals who've been coming for years. Earned in a way that newer Big Sur destinations have to work toward.",
+    note: "Historic Big Sur inn and restaurant in a 1930s Norwegian homestead setting: fireplaces, candlelight, wood, and creekside atmosphere instead of cliff-view spectacle. Breakfast is served daily; dinner currently runs Friday through Tuesday and reservations matter. The anti-gloss Big Sur meal, in the best sense.",
     category: "restaurant",
     lat: 36.2174402,
     lng: -121.7508705,
-    website: "https://deetjens.com",
+    website: "https://www.deetjens.org",
   },
 
   // ── FARM STANDS & MARKETS ─────────────────────────────────────────────────
   {
-    name: "Monterey Bay Certified Farmers Market — Monterey",
+    name: "Monterey Farmers Market at Del Monte Shopping Center",
     city: "Monterey",
-    note: "The Monterey Peninsula's best weekly market, drawing farms from across the Salinas Valley floor and coastal hills. Castroville artichoke growers, Watsonville strawberry farms, coastal microgreens, and specialty produce direct from growers. Tuesday and Saturday in the Old Monterey Marketplace. The most direct connection to what's actually growing in the county right now.",
+    note: "Year-round Monterey Bay Certified Farmers Market in the rear parking lot behind California Pizza Kitchen at Del Monte Shopping Center. Fridays 8am to noon, rain or shine, with California-grown produce, artisan products, flowers, and plants. This is not the Tuesday Old Monterey Marketplace on Alvarado Street.",
     category: "farmstand",
     lat: 36.5836894,
     lng: -121.8937543,
-    website: "https://montereybayfarmers.org",
+    website: "https://montereybayfarmers.org/our-markets",
   },
   {
-    name: "Carmel Farmers Market",
+    name: "Carmel Farmers Market at The Barnyard",
     city: "Carmel",
-    note: "The Barnyard Shopping Village market at Highway 1 and Carmel Valley Road. Over 25 farmers and vendors — local produce, specialty items, valley honey. Tuesdays 9 am to 1 pm, May through September, rain or shine.",
+    note: "Seasonal Monterey Bay Certified Farmers Market at The Barnyard Shopping Village, Highway 1 and Carmel Valley Road. More than 25 farmers and specialty-food vendors, Tuesday 9am to 1pm, May through September, rain or shine.",
     category: "farmstand",
     lat: 36.5407246,
     lng: -121.9075407,
-    website: "https://montereybayfarmers.org",
+    website: "https://montereybayfarmers.org/carmel-farmers-market",
   },
   {
     name: "Pezzini Farms",
     city: "Castroville",
-    note: "Four generations of artichoke farming in the county that named itself the artichoke capital of the world. Direct retail at their Merritt Street stand gives you the freshest possible Castroville artichokes, year-round, from the family that grows them. Peak is February through May. They know how to cook them; ask.",
+    note: "Castroville artichoke institution at 460 Nashua Road. Pezzini has grown heirloom Green Globe artichokes for decades and runs a year-round roadside market with fresh artichokes, produce, artichoke foods, and cooking advice from people who actually know the crop.",
     category: "farmstand",
     lat: 36.74293,
     lng: -121.768829,
@@ -375,16 +385,16 @@ const SEED_DATA = [
   {
     name: "Ad Astra Bread Co.",
     city: "Monterey",
-    note: "Serious artisan bread on Alvarado Street in downtown Monterey. Open seven days a week, 7am to 5pm — loaves, pastries, and baking classes out of a focused bakery that takes the craft seriously. The name means 'to the stars.' At 479 Alvarado St.",
+    note: "Serious artisan bread on Alvarado Street in downtown Monterey. Open daily 7am to 4pm, with sourdough loaves, pastries, coffee drinks, and baking classes from a focused bakery that takes the craft seriously. The name means 'to the stars.' At 479 Alvarado St.",
     category: "artisan",
     lat: 36.5981886,
     lng: -121.8946152,
     website: "https://www.adastrabread.com",
   },
   {
-    name: "Carmel Valley Creamery Co.",
+    name: "Carmel Valley Creamery",
     city: "Carmel Valley",
-    note: "Artisan creamery in Carmel Valley Village at 1 Esquiline Road. Small-batch ice cream and dairy made with local ingredients — the kind of focused, ingredient-driven operation that fits the Village's slow-food character. A natural stop after a morning of tasting rooms.",
+    note: "Micro-creamery, coffee shop, and mini epicerie in the historic Village community center at 1 Esquiline Road. Cheesemaker Sophie Hauville's operation makes artisan cheese on site, with coffee, pastries, ice cream, and a patio that fits the slow-food character of Carmel Valley.",
     category: "artisan",
     lat: 36.4735539,
     lng: -121.7280782,
@@ -392,17 +402,17 @@ const SEED_DATA = [
   },
   {
     name: "Carmel Valley Coffee Roasting Co.",
-    city: "Carmel Valley",
-    note: "The Village coffee institution. Small-batch roasting, knowledgeable staff, and the kind of laid-back porch energy that makes Carmel Valley what it is. A proper stop before a morning of tasting rooms.",
+    city: "Carmel",
+    note: "Local organic coffee roaster founded in 1994 with three Carmel locations; this pin is the Ocean Avenue cafe between Lincoln and Monte Verde. Small-batch beans, espresso drinks, sandwiches, and an easy sidewalk stop before wandering Carmel-by-the-Sea.",
     category: "artisan",
     lat: 36.5549331,
     lng: -121.9237493,
-    website: "https://carmelvalleycoffee.com",
+    website: "https://carmelcoffeeroasters.com",
   },
   {
     name: "Monterey Abalone Company",
     city: "Monterey",
-    note: "Art Seavey and Trevor Fay cultivate California red abalone in cages suspended beneath Municipal Wharf 2 — farming in the actual bay rather than tanks. The result is some of the cleanest aquaculture provenance on the Central Coast: abalone fed by wild kelp and plankton of Monterey Bay, harvested and sold from the wharf. Call ahead to visit or purchase direct.",
+    note: "In-ocean abalone farm at 160 Municipal Wharf #2. Art Seavey and Trevor Fay cultivate California red abalone in cages suspended beneath Monterey's commercial wharf, using the bay itself rather than land tanks. Call ahead for tours or direct purchases; operating hours can shift with harvest and holidays.",
     category: "artisan",
     lat: 36.6050598,
     lng: -121.889421,
@@ -411,38 +421,38 @@ const SEED_DATA = [
   {
     name: "Parker-Lusseau Pastries",
     city: "Monterey",
-    note: "The most committed artisan bakery in Monterey County. French laminated doughs — proper croissants, kouign-amann, seasonal pastries — produced with a rigor that makes this a key supplier to the area's better restaurants and a morning anchor for anyone who knows. The Hartnell Street flagship at 539 Hartnell St is the original; a second cafe on Munras has since opened. Open early weekdays.",
+    note: "Historic Fremont Adobe bakery/cafe at 539 Hartnell St. Parker-Lusseau remains the Peninsula's French pastry benchmark: croissants, cakes, tarts, breads, quiche, sandwiches, and coffee made with the discipline that keeps local regulars showing up early. Open Monday–Saturday; closed Sunday.",
     category: "artisan",
     lat: 36.5961403,
     lng: -121.8955473,
     website: "https://parkerlusseau.com",
   },
   {
-    name: "Happy Girl Kitchen",
+    name: "Happy Girl Kitchen Co.",
     city: "Pacific Grove",
-    note: "Fermentation studio, canning operation, and cafe on Central Avenue. Small-batch pickles, jams, kimchi, and fermented vegetables made from Salinas Valley and coastal produce. They run hands-on canning workshops if you want to understand how the pantry gets built. The cafe side runs a quiet breakfast and lunch. Doing the slow-food work without the label.",
+    note: "Fermentation studio, cannery, and cafe at 173 Central Ave. Small-batch preserves, pickles, kimchi, fermented vegetables, and pantry goods made from farm-driven ingredients, plus whole-food breakfast and lunch and recurring workshops for people who want to learn the craft.",
     category: "artisan",
     lat: 36.6185417,
     lng: -121.9065222,
     website: "https://happygirlkitchen.com",
   },
   {
-    name: "Alvarado Street Brewery",
+    name: "Alvarado Street Brewery & Grill",
     city: "Monterey",
-    note: "The serious craft brewery in Monterey County. Local grain sourcing, a farm-to-table beer approach, and a tap room on Alvarado Street that has built a real identity. The IPA program is the headline, but the farmhouse ales and barrel-aged program show real depth. A credible stop for anyone who finds the Peninsula's wine-only focus occasionally exhausting.",
+    note: "Downtown Monterey's anchor craft brewery at 426 Alvarado St. The kitchen leans locally sourced and the beer program is still hop-forward — West Coast IPAs are the calling card — but the lagers, Belgian-inspired beers, and experimental batches give it more range than a simple brewpub stop.",
     category: "artisan",
     lat: 36.5993012,
     lng: -121.894812,
-    website: "https://alvaradostreetbrewery.com",
+    website: "https://asb.beer",
   },
   {
-    name: "Wild Plum Cafe & Bakery",
+    name: "The Wild Plum Cafe",
     city: "Monterey",
-    note: "All-vegetarian cafe and bakery that has supplied Peninsula restaurants with whole-grain breads and pastries for years. The approach complements Parker-Lusseau's French lamination — whole grain, seasonal, rooted in ingredient integrity rather than technique display. Breakfast and lunch; closes midafternoon. On Munras Ave.",
+    note: "Organic, sustainable cafe and bakery at 731 Munras Ave, Suite B. Not a vegetarian-only spot: the draw is house-baked bread, breakfast and lunch plates, sandwiches, salads, pastries, and a full espresso bar rooted in local, handcrafted ingredients.",
     category: "artisan",
     lat: 36.5948644,
     lng: -121.8930916,
-    website: "https://wildplum.com",
+    website: "https://www.thewildplumcafe.com",
   },
 ];
 
@@ -507,6 +517,5 @@ export async function seedIfEmpty() {
     }
   } catch (err) {
     logger.error({ err }, "Seed failed");
-    throw err;
   }
 }
