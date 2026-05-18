@@ -123,8 +123,8 @@ const SEED_DATA = [
     city: "Carmel Valley",
     note: "Terroir-first tasting room at 19 E. Carmel Valley Road in the Village, built around a real place thesis — Monterey Bay fog, marine influence, geology, and overlooked coastal vineyards. Named winemaking team, coastal California focus, and a depth of storytelling that goes beyond most Village stops. Thursday–Monday, 11am–5pm; reservations recommended.",
     category: "winery",
-    lat: 36.4783,
-    lng: -121.7300,
+    lat: 36.4777217,
+    lng: -121.7288216,
     website: "https://www.ibrandwinery.com/visit",
   },
   {
