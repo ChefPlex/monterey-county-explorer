@@ -112,7 +112,7 @@ const SEED_DATA = [
   {
     name: "Joyce Wine Co.",
     city: "Carmel Valley",
-    note: "Family-rooted Monterey winery with organic farming practices and a low-intervention, no-additive philosophy. Old-vine and new estate work with fruit from neighboring family-owned vineyards; estate winery in Soledad, tasting room at 1 E Carmel Valley Road in the Village. Phone: 831-659-2885.",
+    note: "Family-rooted Monterey winery with organic farming practices and a low-intervention, no-additive philosophy. Old-vine and new estate work with fruit from neighboring family-owned vineyards; estate winery in Soledad, tasting room at 1 E Carmel Valley Road in the Village.",
     category: "winery",
     lat: 36.4782269,
     lng: -121.7302119,
@@ -401,7 +401,7 @@ const SEED_DATA = [
   {
     name: "The Farm",
     city: "Salinas",
-    note: "CCOF-certified organic demonstration farm at Hwy 68 and Spreckels Blvd in Salinas. Organic produce, farm tours, family activities, roughly thirty crops, flowers, CSA, and a bakery. Store open May through October, Monday–Saturday, 9am–5pm; bakery pickup available in the off-season.",
+    note: "Working organic farm and agricultural education destination on the outskirts of Salinas, at Hwy 68 and Spreckels Blvd. CCOF-certified, with about thirty crops, a CSA, flowers, farm tours, and a bakery that keeps running in the off-season for pickups. Farm store open May through October, Monday–Saturday, 9am–5pm — a real Salinas Valley farming operation you can walk through.",
     category: "farmstand",
     lat: 36.633565,
     lng: -121.670221,
